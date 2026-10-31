@@ -1,0 +1,53 @@
+id: diverticulitis
+name: Diverticulitis
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Constant LLQ pain over days with fever and LLQ tenderness, sometimes a mass, in a middle-aged or older patient;
+  in Asian patients right-sided (cecal / ascending) diverticulitis is common and mimics appendicitis.
+
+symptoms:
+  - when: pain_location = llq | rlq | suprapubic
+    text: LLQ pain (RLQ in right-sided disease — common in Asia)
+  - when: pain_pattern = constant
+    text: Constant pain
+  - when: onset = hours | gradual
+    text: Develops over hours to days
+  - when: duration = h6_24 | d1_3 | d4_7
+    text: Usually presents after 1–3 days
+  - when: assoc_sys = fever
+    text: Fever
+  - when: assoc_gi = constipation | diarrhea | bowel_change
+    text: Change in bowel habit
+  - when: assoc_gi = nausea | anorexia
+    text: Nausea, anorexia
+  - when: assoc_gu = frequency | dysuria
+    text: Urinary symptoms (bladder irritation; pneumaturia = colovesical fistula)
+  - when: risk = diverticular
+    text: Known diverticulosis or prior attack
+
+pe:
+  - when: tenderness = llq | rlq
+    text: Localized LLQ (or RLQ) tenderness
+  - when: vitals = fever
+    text: Fever
+  - when: palpable = mass
+    text: Tender mass (phlegmon or abscess)
+  - when: guarding = voluntary | involuntary
+    text: Localized guarding
+  - when: rebound = present
+    text: Diffuse peritonitis suggests perforation
+
+labs:
+  - Leukocytosis, raised CRP (very high CRP suggests complicated disease)
+  - Urinalysis (may show pyuria)
+
+imaging:
+  - CT abdomen / pelvis with IV contrast — confirms diagnosis, detects abscess or perforation
+  - Colonoscopy 6–8 weeks after recovery for complicated disease or if not recently done (exclude cancer)
+
+pitfalls:
+  - Colorectal cancer can mimic diverticulitis — ensure colonoscopy follow-up.
+  - Elderly and immunosuppressed patients have fewer signs and more complications.
+  - Right-sided diverticulitis is frequently mistaken for appendicitis.

@@ -16,7 +16,7 @@ from pathlib import Path
 
 import yaml
 
-APP_VERSION = "0.1.0"
+APP_VERSION = "0.2.0"
 
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "src"
@@ -53,8 +53,12 @@ class Errors:
 
 
 def load_yaml(path):
-    with open(path, encoding="utf-8") as f:
-        return yaml.safe_load(f)
+    try:
+        with open(path, encoding="utf-8") as f:
+            return yaml.safe_load(f)
+    except yaml.YAMLError as exc:
+        raise SystemExit(f"ERROR: YAML syntax error in {path.relative_to(ROOT)}:\n{exc}\n"
+                         "(Hint: a value starting with a quote, or containing ': ' or ' #', must be fully quoted.)")
 
 
 def check_keys(e, where, obj, allowed):

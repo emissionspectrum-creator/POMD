@@ -1,0 +1,43 @@
+id: infectious_ileocecitis
+name: Infectious ileocecitis
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Acute RLQ pain with fever and diarrhea from Yersinia, Campylobacter, or Salmonella infection of the terminal
+  ileum and cecum — a classic appendicitis mimic ("pseudoappendicitis").
+
+symptoms:
+  - when: pain_location = rlq | periumbilical
+    text: RLQ pain
+  - when: assoc_gi = diarrhea
+    text: Diarrhea, sometimes preceding the pain
+  - when: assoc_sys = fever
+    text: Fever
+  - when: assoc_gi = nausea | vomiting
+    text: Nausea, vomiting
+  - when: duration = h6_24 | d1_3 | d4_7
+    text: Days
+  - when: risk = sick_contacts | travel
+    text: Suspicious food (undercooked pork, poultry), travel, sick contacts
+
+pe:
+  - when: tenderness = rlq
+    text: RLQ tenderness
+  - when: vitals = fever
+    text: Fever
+  - when: guarding = soft | voluntary
+    text: Usually less peritonism than appendicitis
+  - when: rebound = absent
+    text: Rebound usually absent
+
+labs:
+  - Leukocytosis, raised CRP
+  - Stool culture (request Yersinia culture specifically if suspected)
+
+imaging:
+  - Ultrasound or CT — thickened terminal ileum / cecum, enlarged mesenteric nodes, normal appendix
+
+pitfalls:
+  - The appendix must be clearly seen as normal before attributing RLQ pain to ileocecitis.
+  - Persistent or recurrent symptoms suggest Crohn's disease or intestinal tuberculosis.

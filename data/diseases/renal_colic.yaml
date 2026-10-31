@@ -1,0 +1,56 @@
+id: renal_colic
+name: Renal colic (urolithiasis)
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Sudden severe colicky flank pain radiating to the groin in a restless patient who cannot find a comfortable
+  position, with hematuria, nausea and vomiting.
+
+symptoms:
+  - when: pain_location = flank_r | flank_l | rlq | llq
+    text: Flank pain (lower quadrant as the stone descends)
+  - when: onset = sudden
+    text: Sudden onset
+  - when: pain_quality = colicky | sharp
+    text: Colicky, sharp
+  - when: pain_pattern = waves
+    text: Comes in waves
+  - when: severity = s7 | s8 | s9 | s10
+    text: Severe
+  - when: radiation = groin
+    text: Radiates to the groin, testis, or labia
+  - when: relieving = no_position
+    text: No position of comfort
+  - when: assoc_gu = hematuria
+    text: Hematuria
+  - when: assoc_gu = frequency | dysuria
+    text: Urgency or frequency (distal ureteric stone)
+  - when: assoc_gi = nausea | vomiting
+    text: Nausea and vomiting
+  - when: risk = kidney_stones
+    text: Previous stones
+
+pe:
+  - when: general = restless
+    text: Restless, writhing
+  - when: cva_tenderness = right | left
+    text: CVA tenderness
+  - when: guarding = soft
+    text: Soft abdomen, no peritonism
+  - when: vitals = no fever
+    text: Afebrile (fever + obstruction = emergency)
+
+labs:
+  - Urinalysis (hematuria in most, but not all)
+  - Creatinine; CBC and urine culture if fever
+
+imaging:
+  - Non-contrast CT KUB (low-dose) or ultrasound for hydronephrosis
+  - Ultrasound first in pregnancy and young patients with prior stones
+
+pitfalls:
+  - Fever with an obstructed kidney is a urologic emergency — needs decompression.
+  - First "renal colic" over 60 — exclude ruptured AAA.
+  - Absence of hematuria does not exclude a stone; hematuria also occurs with AAA and appendicitis.
+  - In women, consider ovarian torsion and ectopic pregnancy.

@@ -1,0 +1,52 @@
+id: acute_coronary_syndrome
+name: Acute coronary syndrome
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Epigastric pain or pressure, sometimes the only symptom of myocardial ischemia (especially inferior MI),
+  in an older, diabetic, or atherosclerotic patient — with exertional trigger, diaphoresis, dyspnea, or radiation to chest, arm, or jaw.
+
+symptoms:
+  - when: pain_location = epigastric
+    text: Epigastric pain or "indigestion"
+  - when: pain_quality = pressure | dull | burning
+    text: Pressure, heaviness, or burning
+  - when: precipitant = exertion
+    text: Triggered by exertion or emotional stress
+  - when: radiation = chest_arm_jaw
+    text: Radiates to the chest, arm, neck, or jaw
+  - when: assoc_other = chest_pain | dyspnea
+    text: Chest discomfort or dyspnea
+  - when: assoc_other = diaphoresis
+    text: Diaphoresis
+  - when: assoc_gi = nausea | vomiting
+    text: Nausea and vomiting (common with inferior MI)
+  - when: risk = atherosclerosis | diabetes | smoking
+    text: Coronary risk factors — known vascular disease, diabetes, smoking
+  - when: age_group = age_40_59 | age_60_plus
+    text: Older age
+
+pe:
+  - when: general = pale_diaphoretic
+    text: Pale, diaphoretic
+  - when: tenderness = none
+    text: Abdomen non-tender — pain without tenderness
+  - when: guarding = soft
+    text: Soft abdomen
+  - when: vitals = tachycardia | hypotension
+    text: Tachycardia, bradycardia (inferior MI), or hypotension
+
+labs:
+  - High-sensitivity troponin at presentation and repeated per protocol
+  - Electrolytes, glucose; lipase and liver tests to look for an abdominal mimic
+
+imaging:
+  - 12-lead ECG within 10 minutes; repeat if symptoms persist (include right-sided leads for inferior MI)
+  - Chest X-ray; echocardiography as indicated
+
+pitfalls:
+  - Women, diabetics, and the elderly often present without chest pain.
+  - A "GI cocktail" response does not exclude cardiac ischemia.
+  - Epigastric pain with normal abdominal exam in a patient with risk factors — get an ECG before calling it gastritis.
+  - Aortic dissection can also present with epigastric or back pain; check pulses and blood pressure in both arms.

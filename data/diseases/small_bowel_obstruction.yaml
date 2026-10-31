@@ -1,0 +1,55 @@
+id: small_bowel_obstruction
+name: Small bowel obstruction
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Colicky periumbilical pain coming in waves with vomiting, distension and inability to pass stool or flatus,
+  usually from adhesions after surgery or a hernia; constant pain or fever suggests strangulation.
+
+symptoms:
+  - when: pain_location = periumbilical | diffuse
+    text: Periumbilical or diffuse pain
+  - when: pain_quality = colicky | cramping
+    text: Colicky, crampy pain
+  - when: pain_pattern = waves
+    text: Comes in waves; becoming constant suggests ischemia
+  - when: assoc_gi = vomiting
+    text: Vomiting — early and bilious in proximal obstruction
+  - when: assoc_gi = obstipation
+    text: No stool or flatus (may still pass stool early)
+  - when: assoc_gi = bloating
+    text: Abdominal distension / bloating
+  - when: relieving = vomiting
+    text: Temporarily eased by vomiting
+  - when: risk = prior_surgery | hernia
+    text: Prior abdominal surgery (adhesions) or a known hernia
+
+pe:
+  - when: abd_contour = mild | marked
+    text: Distension, tympanic to percussion
+  - when: bowel_sounds = high_pitched | hyper
+    text: High-pitched, tinkling bowel sounds (absent later)
+  - when: hernia = incarcerated
+    text: Tender, irreducible hernia — always check groin and scars
+  - when: tenderness = periumbilical | diffuse
+    text: Diffuse mild tenderness
+  - when: general = dehydrated
+    text: Dehydration
+  - when: vitals = tachycardia | fever
+    text: Tachycardia or fever (suspect strangulation)
+  - when: rebound = present
+    text: Peritoneal signs — strangulation or perforation
+
+labs:
+  - Electrolytes, creatinine (dehydration, hypokalemia, metabolic alkalosis from vomiting)
+  - Leukocytosis and raised lactate point to strangulation, but normal values do not exclude it
+
+imaging:
+  - CT abdomen / pelvis with IV contrast — transition point, closed loop, ischemia
+  - Plain X-ray — dilated loops with air-fluid levels (limited sensitivity)
+
+pitfalls:
+  - Constant pain, fever, tachycardia, or peritonism suggest strangulation — needs surgery, not just a nasogastric tube.
+  - Elderly women — look for a femoral hernia; patients without prior surgery need a cause sought (hernia, tumor, gallstone ileus).
+  - Passage of flatus does not exclude a partial or closed-loop obstruction.

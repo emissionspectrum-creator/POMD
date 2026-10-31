@@ -1,0 +1,52 @@
+id: functional_dyspepsia
+name: Functional dyspepsia
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Chronic or recurrent epigastric pain or burning, postprandial fullness, or early satiety without
+  alarm features and with no structural cause found on evaluation.
+
+symptoms:
+  - when: pain_location = epigastric
+    text: Epigastric pain or burning
+  - when: pain_quality = burning | pressure | dull
+    text: Burning, fullness, or vague discomfort
+  - when: duration = m1_3 | gt3m
+    text: Chronic (Rome IV — symptoms for the last 3 months, onset ≥ 6 months ago)
+  - when: assoc_gi = early_satiety | bloating
+    text: Early satiety, postprandial fullness or bloating
+  - when: meal_relation = worse_eating
+    text: Often triggered by meals (postprandial distress type)
+  - when: episodes = recurrent
+    text: Recurrent, fluctuating course
+  - when: assoc_sys = no weight_loss
+    text: No weight loss
+  - when: assoc_gi = no melena | hematemesis | dysphagia | vomiting
+    text: No GI bleeding, dysphagia, or persistent vomiting
+  - when: age_group = under_40 | age_40_59
+    text: Usually younger patients
+
+pe:
+  - when: tenderness = none | epigastric
+    text: Normal exam or mild epigastric tenderness
+  - when: guarding = soft
+    text: Soft abdomen
+  - when: palpable = no mass
+    text: No mass
+  - when: skin = no pallor
+    text: No pallor
+
+labs:
+  - CBC normal (anemia is an alarm feature)
+  - H. pylori test-and-treat
+
+imaging:
+  - EGD for alarm features or older age; in high gastric-cancer-incidence regions many guidelines use a lower age threshold
+  - Ultrasound only if biliary symptoms are suspected
+
+pitfalls:
+  - A diagnosis of exclusion — reassess when new alarm features appear.
+  - Overlaps with GERD, IBS, and gastroparesis; ask about each.
+  - Medication causes (NSAIDs, iron, potassium, bisphosphonates, metformin, GLP-1 agonists) should be considered.
+  - Abdominal wall pain (positive Carnett's sign) is a common unrecognized cause of persistent localized pain.

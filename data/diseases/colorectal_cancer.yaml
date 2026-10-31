@@ -1,0 +1,54 @@
+id: colorectal_cancer
+name: Colorectal cancer
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Change in bowel habit, rectal bleeding or iron-deficiency anemia with weight loss in a patient over 50 (or with a
+  family history); left-sided tumors obstruct and bleed, right-sided tumors present with anemia.
+
+symptoms:
+  - when: assoc_gi = bowel_change | constipation | diarrhea
+    text: Change in bowel habit
+  - when: assoc_gi = hematochezia | melena
+    text: Rectal bleeding or melena (right-sided)
+  - when: assoc_sys = weight_loss
+    text: Weight loss
+  - when: assoc_sys = malaise
+    text: Fatigue (anemia)
+  - when: assoc_gi = tenesmus
+    text: Tenesmus (rectal cancer)
+  - when: assoc_gi = obstipation | bloating
+    text: Obstructive symptoms
+  - when: onset = gradual
+    text: Insidious
+  - when: duration = w1_4 | m1_3 | gt3m
+    text: Weeks to months
+  - when: age_group = age_40_59 | age_60_plus
+    text: Mostly over 50 (rising incidence in younger adults)
+  - when: risk = gi_cancer_fhx | ibd
+    text: Family history, long-standing IBD
+
+pe:
+  - when: skin = pallor
+    text: Pallor
+  - when: palpable = mass | hepatomegaly
+    text: Abdominal mass; hepatomegaly (metastases)
+  - when: rectal = mass | fresh_blood | melena
+    text: Rectal mass or blood on rectal exam
+  - when: abd_contour = mild | marked
+    text: Distension if obstructing
+
+labs:
+  - CBC, ferritin (iron-deficiency anemia), liver tests
+  - Fecal immunochemical test (FIT) is for screening, not for symptomatic patients
+  - CEA for staging / follow-up, not diagnosis
+
+imaging:
+  - Colonoscopy with biopsy
+  - CT chest / abdomen / pelvis for staging; pelvic MRI for rectal cancer
+
+pitfalls:
+  - Iron-deficiency anemia in a man or post-menopausal woman needs both upper and lower endoscopy.
+  - Do not attribute rectal bleeding to hemorrhoids without examining the colon in at-risk patients.
+  - Obstructing cancer can present as large bowel obstruction or perforation.

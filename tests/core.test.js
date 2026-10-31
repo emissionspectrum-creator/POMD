@@ -116,6 +116,19 @@ test('presence feature status uses per-option state', () => {
   assert.equal(Core.featureStatus(noFever, s, items), 'match');
 });
 
+test('presence feature with several options: any-present vs none-present', () => {
+  const { items } = fixture();
+  const s = {};
+  const anyOf = { item: 'sx', options: ['fever', 'jaundice'], state: 'present' };
+  const noneOf = { item: 'sx', options: ['fever', 'jaundice'], state: 'absent' };
+  Core.toggle(s, items.sx, 'fever'); Core.toggle(s, items.sx, 'fever'); // fever absent
+  assert.equal(Core.featureStatus(anyOf, s, items), 'different');
+  assert.equal(Core.featureStatus(noneOf, s, items), 'match');
+  Core.toggle(s, items.sx, 'jaundice'); // jaundice present
+  assert.equal(Core.featureStatus(anyOf, s, items), 'match');
+  assert.equal(Core.featureStatus(noneOf, s, items), 'different');
+});
+
 test('match count, time course, group order', () => {
   const { items } = fixture();
   const disease = {
@@ -188,7 +201,7 @@ test('PE text: exclusive raw fragment, frag_neg, lead only when filled', () => {
   Core.toggle(s, items.vit, 'fever');
   Core.toggle(s, items.vit, 'fever');
   Core.toggle(s, items.vit, 'tachy');
-  assert.equal(Core.composeText(spec, s, items), 'Vital signs: afebrile, tachycardic.\nAbdomen: non-tender.');
+  assert.equal(Core.composeText(spec, s, items), 'Vital signs: tachycardic, afebrile.\nAbdomen: non-tender.');
   Core.toggle(s, items.tender, 'ruq');
   assert.match(Core.composeText(spec, s, items), /Abdomen: tenderness over the RUQ\.$/);
 });

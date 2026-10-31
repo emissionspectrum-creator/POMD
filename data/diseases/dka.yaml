@@ -1,0 +1,51 @@
+id: dka
+name: Diabetic ketoacidosis
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Diffuse abdominal pain with vomiting, polyuria and polydipsia, dehydration and Kussmaul breathing in a
+  diabetic patient (or as the first presentation of diabetes); pain tracks the severity of acidosis.
+
+symptoms:
+  - when: pain_location = diffuse | epigastric | periumbilical
+    text: Diffuse or epigastric pain
+  - when: assoc_gi = nausea | vomiting
+    text: Nausea and vomiting
+  - when: assoc_other = polyuria
+    text: Polyuria and polydipsia
+  - when: assoc_other = dyspnea
+    text: Deep, rapid breathing
+  - when: assoc_sys = weight_loss | malaise
+    text: Weight loss, fatigue
+  - when: assoc_other = confusion
+    text: Drowsiness or confusion
+  - when: risk = diabetes
+    text: Known diabetes (missed insulin, infection, SGLT2 inhibitor) — or new type 1 diabetes
+  - when: duration = lt6h | h6_24 | d1_3
+    text: Develops over hours to a day or two
+
+pe:
+  - when: vitals = tachypnea
+    text: Kussmaul respiration
+  - when: general = dehydrated
+    text: Dry mucous membranes, dehydration
+  - when: vitals = tachycardia | hypotension
+    text: Tachycardia, hypotension
+  - when: tenderness = diffuse | none
+    text: Diffuse tenderness without localized peritonism
+  - when: general = confused
+    text: Altered mental status
+
+labs:
+  - Glucose, blood ketones (β-hydroxybutyrate), venous blood gas, anion gap
+  - Electrolytes (potassium!), creatinine, osmolality
+  - Lipase and amylase can be raised without pancreatitis
+
+imaging:
+  - Not needed for DKA itself; image if pain persists after acidosis improves
+
+pitfalls:
+  - Euglycemic DKA on SGLT2 inhibitors — glucose may be < 250 mg/dL.
+  - DKA can be caused by an abdominal emergency (appendicitis, pancreatitis); persistent pain after correcting acidosis needs a search.
+  - Total-body potassium is low even when serum potassium is normal or high.

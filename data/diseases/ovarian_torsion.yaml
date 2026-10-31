@@ -1,0 +1,46 @@
+id: ovarian_torsion
+name: Ovarian torsion
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Sudden severe unilateral lower abdominal pain with nausea and vomiting in a woman with an ovarian cyst or mass;
+  pain may be intermittent with partial torsion. Normal Doppler flow does not exclude it.
+
+symptoms:
+  - when: sex = female
+    text: Female, often reproductive age (also children, pregnancy)
+  - when: onset = sudden
+    text: Sudden onset, sometimes after exertion
+  - when: pain_location = rlq | llq | suprapubic
+    text: Unilateral lower abdominal / pelvic pain
+  - when: severity = s7 | s8 | s9 | s10
+    text: Severe
+  - when: pain_pattern = waves | attacks
+    text: Intermittent with partial torsion / detorsion
+  - when: assoc_gi = nausea | vomiting
+    text: Nausea and vomiting (common)
+  - when: precipitant = exertion
+    text: May follow exercise or sudden movement
+
+pe:
+  - when: pelvic = adnexal_mass | adnexal_tender
+    text: Adnexal tenderness or mass
+  - when: tenderness = rlq | llq | suprapubic
+    text: Lower abdominal tenderness
+  - when: vitals = fever
+    text: Low-grade fever suggests necrosis
+  - when: rebound = present
+    text: Peritonism (late)
+
+labs:
+  - hCG; CBC (mild leukocytosis)
+
+imaging:
+  - Pelvic / transvaginal ultrasound with Doppler — enlarged ovary with peripheral follicles, mass, "whirlpool" sign
+  - Diagnosis is ultimately surgical (laparoscopy)
+
+pitfalls:
+  - Preserved Doppler flow does not exclude torsion.
+  - Often misdiagnosed as renal colic or gastroenteritis because of vomiting.
+  - Time to detorsion determines ovarian salvage — involve gynecology early.

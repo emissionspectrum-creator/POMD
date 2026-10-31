@@ -109,7 +109,9 @@ pitfalls: [純文字...]
 
 比對規則（`core.featureStatus`）：
 - single／multi：該項目有點選且包含任一列出的選項 → **Match**；有點選但都不是 → **Different**；沒點 → **Not asked**。
-- presence：只看列出的那些選項。狀態與期望相同 → Match；被點成相反狀態 → Different；沒點 → Not asked。
+- presence：只看列出的那些選項。
+  - `item = a | b`（典型為「有」）：任一為 present → Match；沒有 present 但有 absent → Different；都沒點 → Not asked。
+  - `item = no a | b`（典型為「都沒有」）：任一為 present → Different；沒有 present 且至少一個 absent → Match；都沒點 → Not asked。
 - 右欄標亮 = 任一特徵為 Match；數字 = Match 數。時程徽章另外計算，不算進數字。
 
 ### 文字組裝（`hpi`／`pe_text`）
@@ -132,7 +134,7 @@ hpi:
 - `[...]`：選擇性片段，裡面的 placeholder 有任何一個是空的就整段省略（不可巢狀）。
 - part 裡有「必填」placeholder（不在 `[...]` 內、無預設）是空的 → 整個 part 省略。
 - 句子只有在至少一個 placeholder 有實際內容時才輸出（或 `always: true`）。
-- presence 項目的後綴：`{x+}` 只列 present（以 and 連接），`{x-}` 只列 absent（以 or 連接，用於 "Denied ..."），`{x*}` 依選項順序列出兩者，absent 用 `frag_neg`。
+- presence 項目的後綴：`{x+}` 只列 present（以 and 連接），`{x-}` 只列 absent（以 or 連接，用於 "Denied ..."），`{x*}` 先列 present、再列 absent（各依選項順序），absent 用 `frag_neg`（避免 "no A, B" 的歧義）。
 - 多個項目合併成一個清單：`{assoc_gi+,assoc_sys+}`。
 - `[ ] { } |` 是保留字元，模板文字中不要另作他用。
 - 每句首字自動大寫。
@@ -145,6 +147,8 @@ hpi:
 - 疾病說明卡為右側滑出面板，蓋住鑑別診斷欄，可按 × 或 Esc 關閉；內容隨點選即時更新。說明卡額外顯示「典型時程」與目前 duration 的比對。
 - Different 狀態下，說明卡會顯示目前實際點了什麼（selected: ...）。
 - Early appendicitis 與 acute appendicitis 合併為同一疾病 `acute_appendicitis`，同時列在 Periumbilical／Diffuse 與 RLQ 群組。
+- 除 DESIGN 第 6 節表格外，另把部分疾病放進第二個位置群組：acute pancreatitis → LUQ、diverticulitis → RLQ、ectopic pregnancy／ovarian torsion → LLQ、ruptured AAA → Flank。
+- 疾病內容加入台灣臨床脈絡（Klebsiella 肝膿瘍、B 肝 flare、腸結核、草藥 DILI、胃癌盛行率與 EGD 年齡門檻）。
 - 「New patient」按鈕：有點選時需在 3 秒內點兩次才清空（避免誤觸，又不跳對話框）。
 - 除了 DESIGN 要求的「Copy HPI + PE」，另外提供 Copy HPI、Copy PE（病歷常分 S／O 兩欄）。
 - Copy 先用 Clipboard API，失敗時改用隱藏 textarea + `execCommand('copy')`。

@@ -1,0 +1,56 @@
+id: perforated_peptic_ulcer
+name: Perforated peptic ulcer
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Sudden, severe epigastric pain that rapidly becomes generalized, with a rigid, silent abdomen, in a patient
+  with ulcer history, NSAID use or smoking; free air on upright X-ray or CT.
+
+symptoms:
+  - when: onset = sudden
+    text: Abrupt onset — patients often recall the exact moment
+  - when: pain_location = epigastric | diffuse
+    text: Epigastric pain becoming diffuse
+  - when: pain_migration = local_to_diffuse
+    text: Spreads from the epigastrium over the whole abdomen
+  - when: severity = s8 | s9 | s10
+    text: Severe pain
+  - when: aggravating = movement
+    text: Worse with any movement or breathing
+  - when: relieving = lying_still
+    text: Lies still to avoid pain
+  - when: radiation = r_shoulder
+    text: Shoulder-tip pain from diaphragmatic irritation
+  - when: risk = nsaid | pud | smoking | hpylori
+    text: NSAID / aspirin use, prior ulcer, smoking, H. pylori
+  - when: precipitant = nsaid
+    text: Recent NSAID or steroid use
+
+pe:
+  - when: guarding = rigid | involuntary
+    text: Board-like rigidity / involuntary guarding
+  - when: rebound = present
+    text: Rebound tenderness
+  - when: tenderness = epigastric | diffuse
+    text: Epigastric then diffuse tenderness
+  - when: bowel_sounds = hypo | absent
+    text: Reduced or absent bowel sounds
+  - when: general = lying_still
+    text: Lying still, reluctant to move
+  - when: vitals = tachycardia | fever
+    text: Tachycardia; fever develops later
+
+labs:
+  - Leukocytosis; lipase can be mildly raised
+  - Lactate, creatinine, and electrolytes for resuscitation
+
+imaging:
+  - Erect chest X-ray — free subdiaphragmatic air (absent in a sizable minority)
+  - CT abdomen — more sensitive for small amounts of free air and locating the perforation
+
+pitfalls:
+  - Elderly patients, those on steroids, and the immunosuppressed may have few peritoneal signs.
+  - Absence of free air on X-ray does not exclude perforation.
+  - A raised lipase can mislead toward pancreatitis.
+  - Initial chemical peritonitis may briefly "improve" before bacterial peritonitis sets in.

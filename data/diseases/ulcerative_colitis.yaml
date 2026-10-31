@@ -1,0 +1,56 @@
+id: ulcerative_colitis
+name: Ulcerative colitis
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Bloody diarrhea with urgency, tenesmus and crampy lower abdominal pain over weeks, often relieved by
+  defecation; severe flares bring fever, tachycardia, and risk of toxic megacolon.
+
+symptoms:
+  - when: assoc_gi = bloody_diarrhea | hematochezia
+    text: Bloody diarrhea (the cardinal symptom)
+  - when: assoc_gi = tenesmus
+    text: Urgency and tenesmus
+  - when: pain_location = llq | suprapubic | diffuse
+    text: Crampy LLQ or lower abdominal pain
+  - when: pain_quality = cramping
+    text: Crampy
+  - when: relieving = defecation
+    text: Relieved by defecation
+  - when: duration = w1_4 | m1_3 | gt3m
+    text: Weeks or longer
+  - when: nocturnal = wakes
+    text: Nocturnal bowel movements
+  - when: assoc_sys = fever | weight_loss
+    text: Fever and weight loss in severe flares
+  - when: risk = ibd
+    text: Known IBD
+  - when: episodes = recurrent
+    text: Relapsing–remitting course
+
+pe:
+  - when: tenderness = llq | diffuse
+    text: LLQ or diffuse tenderness
+  - when: rectal = fresh_blood
+    text: Blood on rectal exam
+  - when: vitals = fever | tachycardia
+    text: Fever, tachycardia (severe colitis)
+  - when: abd_contour = mild | marked
+    text: Distension — consider toxic megacolon
+  - when: skin = pallor
+    text: Pallor
+
+labs:
+  - CBC, CRP, albumin, electrolytes
+  - Stool culture and C. difficile in every flare; fecal calprotectin
+  - CMV testing in steroid-refractory severe colitis
+
+imaging:
+  - Colonoscopy (flexible sigmoidoscopy in a severe flare) with biopsies
+  - Plain X-ray in severe colitis — colon > 6 cm suggests toxic megacolon
+
+pitfalls:
+  - Always exclude infection, especially C. difficile, before escalating therapy.
+  - Severe colitis (≥ 6 bloody stools / day plus systemic toxicity) needs admission.
+  - Screen for HBV and latent TB before biologics or high-dose steroids.

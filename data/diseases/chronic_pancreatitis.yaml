@@ -1,0 +1,54 @@
+id: chronic_pancreatitis
+name: Chronic pancreatitis
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Recurrent or constant epigastric pain radiating to the back, worse after meals, in a heavy drinker or
+  smoker, eventually with weight loss, steatorrhea and diabetes.
+
+symptoms:
+  - when: pain_location = epigastric | luq
+    text: Epigastric (or LUQ) pain
+  - when: radiation = back
+    text: Radiates to the back
+  - when: meal_relation = worse_eating
+    text: Worse after meals
+  - when: relieving = leaning_forward
+    text: Eased by leaning forward
+  - when: episodes = recurrent
+    text: Recurrent attacks or continuous pain
+  - when: duration = m1_3 | gt3m
+    text: Chronic course
+  - when: assoc_gi = steatorrhea
+    text: Steatorrhea (late — exocrine insufficiency)
+  - when: assoc_sys = weight_loss
+    text: Weight loss
+  - when: assoc_other = food_fear
+    text: Avoids eating because of pain
+  - when: risk = alcohol | smoking | diabetes
+    text: Heavy alcohol use, smoking; diabetes develops later
+
+pe:
+  - when: tenderness = epigastric
+    text: Epigastric tenderness
+  - when: guarding = soft
+    text: Usually soft, no peritonism
+  - when: palpable = mass
+    text: Mass if a pseudocyst is present
+  - when: skin = icterus
+    text: Jaundice if the distal CBD is compressed
+
+labs:
+  - Lipase is often normal or only mildly raised
+  - Fecal elastase (exocrine function), glucose / HbA1c, fat-soluble vitamins
+  - Liver tests (biliary stricture)
+
+imaging:
+  - CT — calcifications, duct dilatation, atrophy, pseudocysts
+  - MRCP and EUS for early disease; EUS to exclude a mass
+
+pitfalls:
+  - Pancreatic cancer can mimic or complicate chronic pancreatitis — new weight loss, jaundice, or diabetes needs imaging.
+  - Ongoing pain may come from a pseudocyst, duct obstruction, or opioid-induced hyperalgesia.
+  - Lipase does not track disease activity.

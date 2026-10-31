@@ -1,0 +1,48 @@
+id: splenic_rupture
+name: Splenic rupture
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  LUQ pain with left shoulder-tip pain (Kehr sign) and signs of hemorrhage after trauma, or
+  spontaneously in an enlarged, diseased spleen (infectious mononucleosis, hematologic malignancy).
+
+symptoms:
+  - when: pain_location = luq | diffuse
+    text: LUQ pain, becoming diffuse with hemoperitoneum
+  - when: precipitant = trauma
+    text: Blunt abdominal or lower left chest trauma — rupture may be delayed by days
+  - when: radiation = l_shoulder
+    text: Left shoulder-tip pain (Kehr sign)
+  - when: onset = sudden
+    text: Sudden onset
+  - when: assoc_other = syncope
+    text: Lightheadedness or syncope
+  - when: risk = splenomegaly_mono | anticoag
+    text: Splenomegaly, recent mononucleosis, anticoagulation
+
+pe:
+  - when: vitals = hypotension | tachycardia
+    text: Tachycardia and hypotension
+  - when: general = pale_diaphoretic
+    text: Pale, diaphoretic
+  - when: tenderness = luq | diffuse
+    text: LUQ or diffuse tenderness
+  - when: guarding = voluntary | involuntary
+    text: Guarding
+  - when: abd_contour = mild | marked
+    text: Distension with significant hemoperitoneum
+
+labs:
+  - Hemoglobin (may be normal early), type and crossmatch, coagulation
+  - Monospot / EBV serology in spontaneous cases
+
+imaging:
+  - FAST if unstable
+  - Contrast CT if hemodynamically stable
+
+pitfalls:
+  - Hemoglobin lags behind blood loss.
+  - Delayed rupture can occur days after seemingly minor trauma.
+  - Spontaneous rupture in mononucleosis can follow trivial strain — advise against contact sports for several weeks.
+  - Lower left rib fractures should raise suspicion of splenic injury.

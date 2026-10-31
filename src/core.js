@@ -73,14 +73,17 @@
     if (!sel || !item) return 'none';
     var i;
     if (item.type === 'presence') {
-      var want = feature.state || 'present';
-      var anySet = false;
+      // "item = a | b"    → any of a, b present = match
+      // "item = no a | b" → none of a, b present (at least one marked absent) = match
+      var present = false;
+      var absent = false;
       for (i = 0; i < feature.options.length; i++) {
         var v = sel[feature.options[i]];
-        if (v === want) return 'match';
-        if (v) anySet = true;
+        if (v === 'present') present = true;
+        else if (v === 'absent') absent = true;
       }
-      return anySet ? 'different' : 'none';
+      if (feature.state === 'absent') return present ? 'different' : (absent ? 'match' : 'none');
+      return present ? 'match' : (absent ? 'different' : 'none');
     }
     for (i = 0; i < feature.options.length; i++) {
       if (sel[feature.options[i]]) return 'match';
@@ -166,20 +169,17 @@
     var sel = state[item.id];
     if (!sel) return [];
     if (item.type === 'presence') {
-      var out = [];
+      var pos = [];
+      var neg = [];
       item.options.forEach(function (o) {
-        var v = sel[o.id];
-        if (!v) return;
-        if (mode === '+' && v === 'present') out.push(o.frag);
-        else if (mode === '-' && v === 'absent') out.push(o.frag);
-        else if ((mode === '*' || mode === '') && v) {
-          out.push(v === 'present' ? o.frag : (o.frag_neg || 'no ' + o.frag));
-        }
+        if (sel[o.id] === 'present') pos.push(o.frag);
+        else if (sel[o.id] === 'absent') neg.push(mode === '-' ? o.frag : (o.frag_neg || 'no ' + o.frag));
       });
-      if (mode === '*' || mode === '') {
-        return out.length ? [joinList(out, item.join || 'and')] : [];
-      }
-      return out;
+      if (mode === '+') return pos;
+      if (mode === '-') return neg;
+      // '*' (and default): positive findings first, then negatives — avoids "no A, B" ambiguity
+      var all = pos.concat(neg);
+      return all.length ? [joinList(all, item.join || 'and')] : [];
     }
     var opts = selectedOptions(item, state);
     if (!opts.length) return [];

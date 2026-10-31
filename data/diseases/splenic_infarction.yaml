@@ -1,0 +1,47 @@
+id: splenic_infarction
+name: Splenic infarction
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Acute LUQ pain, sometimes pleuritic or radiating to the left shoulder, with fever, in a patient with an
+  embolic source (atrial fibrillation, endocarditis) or a hematologic / hypercoagulable disorder.
+
+symptoms:
+  - when: pain_location = luq
+    text: LUQ pain
+  - when: onset = sudden | hours
+    text: Acute onset
+  - when: aggravating = deep_breath
+    text: Pleuritic component
+  - when: radiation = l_shoulder
+    text: Radiates to the left shoulder
+  - when: assoc_sys = fever | chills
+    text: Fever (common, especially with endocarditis)
+  - when: assoc_gi = nausea | vomiting
+    text: Nausea or vomiting
+  - when: risk = af | hypercoagulable
+    text: Atrial fibrillation, malignancy, myeloproliferative or hypercoagulable disorder
+
+pe:
+  - when: tenderness = luq
+    text: LUQ tenderness
+  - when: palpable = splenomegaly
+    text: Splenomegaly (hematologic causes)
+  - when: chest = irregular | murmur
+    text: Irregular rhythm or a new murmur (embolic source)
+  - when: vitals = fever
+    text: Fever
+
+labs:
+  - Leukocytosis, raised LDH; CBC and smear for hematologic disease
+  - Blood cultures if endocarditis is possible
+
+imaging:
+  - Contrast CT — wedge-shaped, peripheral low-attenuation area
+  - Echocardiography (transesophageal if endocarditis suspected) to find an embolic source
+
+pitfalls:
+  - Often missed because LUQ pain is attributed to the stomach or chest; up to a third have minimal symptoms.
+  - Look for the underlying cause — endocarditis needs prolonged antibiotics, AF needs anticoagulation.
+  - Large infarcts can progress to abscess or rupture.

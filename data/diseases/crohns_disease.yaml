@@ -1,0 +1,56 @@
+id: crohns_disease
+name: Crohn's disease
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Recurrent RLQ crampy pain with chronic diarrhea, weight loss and low-grade fever in a young adult,
+  sometimes with perianal fistula / abscess or a tender RLQ mass from terminal ileal disease.
+
+symptoms:
+  - when: pain_location = rlq | periumbilical
+    text: RLQ or periumbilical pain
+  - when: pain_quality = cramping | colicky
+    text: Crampy, often postprandial (stricturing disease)
+  - when: meal_relation = worse_eating
+    text: Worse after eating
+  - when: duration = w1_4 | m1_3 | gt3m
+    text: Weeks to months, relapsing
+  - when: assoc_gi = diarrhea
+    text: Chronic diarrhea (usually non-bloody)
+  - when: assoc_sys = weight_loss | fever
+    text: Weight loss, low-grade fever
+  - when: assoc_sys = malaise
+    text: Fatigue
+  - when: age_group = under_40
+    text: Peak onset 15–35
+  - when: risk = ibd | smoking
+    text: Known IBD; smoking increases risk
+  - when: episodes = recurrent
+    text: Relapsing course
+
+pe:
+  - when: tenderness = rlq
+    text: RLQ tenderness
+  - when: palpable = mass
+    text: Tender RLQ mass (inflammatory mass or abscess)
+  - when: rectal = perianal
+    text: Perianal fistula, abscess, or skin tags
+  - when: skin = pallor
+    text: Pallor
+  - when: vitals = fever
+    text: Low-grade fever
+
+labs:
+  - CBC (anemia, thrombocytosis), CRP, albumin, ferritin, B12
+  - Fecal calprotectin; stool culture and C. difficile to exclude infection
+
+imaging:
+  - Ileocolonoscopy with ileal biopsies
+  - CT or MR enterography for small bowel extent, strictures, fistulas, abscess
+
+pitfalls:
+  - Intestinal tuberculosis mimics ileocecal Crohn's — important in Taiwan; exclude before starting immunosuppression.
+  - Acute presentation can mimic appendicitis.
+  - Normal CRP does not exclude active disease in some patients.
+  - Before biologics or steroids, screen for HBV and latent TB.

@@ -1,0 +1,48 @@
+id: constipation
+name: Constipation
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Crampy lower or diffuse abdominal discomfort and bloating with infrequent, hard, or difficult-to-pass stools,
+  eased by defecation; look for medication, metabolic, and structural causes.
+
+symptoms:
+  - when: assoc_gi = constipation
+    text: Infrequent, hard, or difficult stools
+  - when: pain_quality = cramping | dull | pressure
+    text: Crampy or dull discomfort
+  - when: pain_location = llq | diffuse | suprapubic
+    text: Lower abdominal or diffuse
+  - when: assoc_gi = bloating
+    text: Bloating
+  - when: relieving = defecation
+    text: Relieved by defecation
+  - when: risk = chronic_constipation | retention_drugs
+    text: Chronic constipation; opioids, anticholinergics, iron, calcium-channel blockers
+  - when: assoc_sys = no weight_loss
+    text: No weight loss
+  - when: assoc_gi = no hematochezia | melena
+    text: No GI bleeding
+
+pe:
+  - when: abd_contour = mild | flat
+    text: Mild distension or normal contour
+  - when: tenderness = llq | none | diffuse
+    text: Mild LLQ tenderness, palpable stool in the sigmoid
+  - when: guarding = soft
+    text: Soft abdomen
+  - when: rectal = hard_stool
+    text: Hard stool in the rectal vault
+
+labs:
+  - CBC, glucose, calcium, TSH for new or refractory constipation
+
+imaging:
+  - Plain X-ray only if fecal loading or obstruction is a question
+  - Colonoscopy for alarm features or new constipation after 50
+
+pitfalls:
+  - New-onset constipation in an older adult may be colorectal cancer.
+  - Overflow diarrhea from fecal impaction is easily mistaken for diarrhea.
+  - Obstipation with distension and vomiting is obstruction, not constipation.

@@ -1,0 +1,49 @@
+id: sigmoid_volvulus
+name: Sigmoid volvulus
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Massive abdominal distension with colicky pain and obstipation in an elderly, often institutionalized or
+  neurologically impaired patient with chronic constipation; risk of strangulation and perforation.
+
+symptoms:
+  - when: assoc_gi = obstipation
+    text: No stool or flatus
+  - when: assoc_gi = bloating
+    text: Marked distension
+  - when: pain_quality = colicky | cramping
+    text: Colicky pain
+  - when: pain_location = llq | diffuse
+    text: LLQ or diffuse pain
+  - when: assoc_gi = vomiting
+    text: Vomiting (late)
+  - when: age_group = age_60_plus
+    text: Elderly
+  - when: risk = chronic_constipation | retention_drugs
+    text: Chronic constipation, psychotropic or anticholinergic drugs, neurologic disease
+  - when: episodes = recurrent
+    text: Previous similar episodes are common
+
+pe:
+  - when: abd_contour = marked
+    text: Massive, tympanic distension
+  - when: tenderness = diffuse | llq | none
+    text: Variable tenderness — peritonism suggests gangrene
+  - when: rectal = empty
+    text: Empty rectum
+  - when: vitals = fever | tachycardia | hypotension
+    text: Fever, tachycardia, hypotension — strangulation
+
+labs:
+  - Electrolytes, creatinine, CBC, lactate
+
+imaging:
+  - Plain X-ray — "coffee bean" dilated sigmoid loop
+  - CT — whirl sign, transition point, ischemia
+  - Endoscopic detorsion if no peritonitis; most recur without elective surgery
+
+pitfalls:
+  - Signs of ischemia or perforation mean emergency surgery, not endoscopy.
+  - Cecal volvulus occurs in younger patients and is not amenable to endoscopic detorsion.
+  - Distinguish from colonic pseudo-obstruction (Ogilvie) on CT.

@@ -1,0 +1,56 @@
+id: gastric_cancer
+name: Gastric cancer
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Persistent epigastric discomfort with early satiety, anorexia and weight loss in an older patient,
+  sometimes with iron-deficiency anemia, melena, or vomiting from outlet obstruction.
+
+symptoms:
+  - when: pain_location = epigastric
+    text: Epigastric discomfort, often vague
+  - when: onset = gradual
+    text: Insidious onset
+  - when: duration = w1_4 | m1_3 | gt3m
+    text: Weeks to months
+  - when: assoc_gi = early_satiety | anorexia
+    text: Early satiety and anorexia
+  - when: assoc_sys = weight_loss
+    text: Unintentional weight loss
+  - when: assoc_gi = melena | hematemesis
+    text: Melena or hematemesis
+  - when: assoc_gi = vomiting
+    text: Persistent vomiting (gastric outlet obstruction)
+  - when: assoc_gi = dysphagia
+    text: Dysphagia (cardia / GE junction tumors)
+  - when: age_group = age_40_59 | age_60_plus
+    text: Usually over 50
+  - when: risk = hpylori | gi_cancer_fhx | smoking
+    text: H. pylori, family history, smoking
+
+pe:
+  - when: skin = pallor
+    text: Pallor (iron-deficiency anemia)
+  - when: palpable = mass
+    text: Epigastric mass (advanced)
+  - when: skin = virchow
+    text: Left supraclavicular (Virchow) node
+  - when: palpable = hepatomegaly | ascites
+    text: Hepatomegaly or ascites (metastatic)
+  - when: tenderness = epigastric | none
+    text: Mild epigastric tenderness or none
+
+labs:
+  - CBC — iron-deficiency anemia; ferritin
+  - Albumin; liver tests
+  - Tumor markers (CEA, CA 19-9) are not for diagnosis
+
+imaging:
+  - EGD with multiple biopsies of any ulcer or suspicious mucosa
+  - CT chest / abdomen / pelvis for staging; EUS for local staging
+
+pitfalls:
+  - PPI therapy can temporarily heal a malignant ulcer and relieve symptoms — biopsy gastric ulcers and confirm healing.
+  - Diffuse-type (signet ring) cancer may occur in younger patients and show subtle endoscopic findings.
+  - Treat dyspepsia with any alarm feature as possible malignancy until endoscopy.

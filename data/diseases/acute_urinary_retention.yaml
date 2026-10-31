@@ -1,0 +1,46 @@
+id: acute_urinary_retention
+name: Acute urinary retention
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Painful inability to void with suprapubic fullness and a palpable bladder, usually in an older man with BPH,
+  often precipitated by anticholinergic or opioid drugs, constipation, or infection.
+
+symptoms:
+  - when: assoc_gu = cannot_void
+    text: Unable to pass urine
+  - when: pain_location = suprapubic
+    text: Suprapubic pain and fullness
+  - when: sex = male
+    text: Mostly men
+  - when: age_group = age_60_plus
+    text: Older age
+  - when: risk = bph | retention_drugs
+    text: BPH; anticholinergics, opioids, decongestants
+  - when: assoc_gi = constipation
+    text: Constipation (precipitant)
+  - when: onset = hours | sudden
+    text: Develops over hours
+
+pe:
+  - when: palpable = bladder
+    text: Distended, palpable bladder, dull to percussion
+  - when: tenderness = suprapubic
+    text: Suprapubic tenderness
+  - when: rectal = hard_stool | normal
+    text: Rectal exam — prostate size, fecal impaction
+  - when: general = restless
+    text: Restless and uncomfortable
+
+labs:
+  - Creatinine and electrolytes; urinalysis and culture
+
+imaging:
+  - Bladder scan / ultrasound — post-void residual
+  - Catheterization is diagnostic and therapeutic
+
+pitfalls:
+  - Painless retention may present with overflow incontinence.
+  - Consider spinal cord compression or cauda equina when there are neurologic symptoms.
+  - Check renal function — chronic retention can cause obstructive uropathy.

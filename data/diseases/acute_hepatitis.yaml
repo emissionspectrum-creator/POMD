@@ -1,0 +1,51 @@
+id: acute_hepatitis
+name: Acute hepatitis
+must_not_miss: false
+timecourse: [acute, subacute]
+status: draft
+one_liner: >
+  Dull RUQ ache with malaise, anorexia and nausea, followed by dark urine and jaundice, with tender
+  hepatomegaly and markedly raised transaminases — viral, drug / herbal, alcoholic, or a flare of chronic hepatitis B.
+
+symptoms:
+  - when: pain_location = ruq | epigastric
+    text: Dull RUQ discomfort
+  - when: pain_quality = dull
+    text: Dull, aching quality
+  - when: onset = gradual | hours
+    text: Gradual onset after a prodrome
+  - when: assoc_sys = malaise
+    text: Malaise and fatigue
+  - when: assoc_gi = anorexia | nausea
+    text: Anorexia and nausea
+  - when: assoc_sys = jaundice | dark_urine
+    text: Jaundice and dark urine
+  - when: assoc_sys = fever
+    text: Low-grade fever in the prodrome
+  - when: risk = alcohol | liver_disease | new_meds | travel
+    text: Alcohol, known HBV / HCV, new drug or herbal supplement, travel
+
+pe:
+  - when: skin = icterus
+    text: Scleral icterus
+  - when: palpable = hepatomegaly | liver_tender
+    text: Tender hepatomegaly / pain on fist percussion
+  - when: tenderness = ruq
+    text: RUQ tenderness
+  - when: general = confused
+    text: Confusion signals acute liver failure
+
+labs:
+  - AST/ALT often > 10× ULN in viral, drug, or ischemic hepatitis; AST:ALT > 2 with AST < 300 suggests alcohol
+  - Bilirubin and INR (INR ≥ 1.5 = severe; with encephalopathy = acute liver failure)
+  - IgM anti-HAV, HBsAg + IgM anti-HBc, HBV DNA, anti-HCV / HCV RNA, IgM anti-HEV
+  - Acetaminophen level when relevant; autoimmune markers if no other cause
+
+imaging:
+  - Ultrasound — exclude biliary obstruction, assess liver and hepatic veins
+
+pitfalls:
+  - In chronic HBV carriers, a flare (e.g. after stopping antivirals or during chemotherapy / immunosuppression) can be severe.
+  - Ask specifically about herbal products, supplements, and recently started drugs.
+  - Rising INR or new confusion means acute liver failure — refer urgently.
+  - Biliary obstruction from a passing stone can briefly produce very high transaminases.

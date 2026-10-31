@@ -1,0 +1,53 @@
+id: acute_gastroenteritis
+name: Acute gastroenteritis
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Diffuse crampy abdominal pain with vomiting and watery diarrhea of short duration, often with sick contacts
+  or a suspicious meal; the abdomen is soft without localized peritonism.
+
+symptoms:
+  - when: pain_location = diffuse | periumbilical
+    text: Diffuse or periumbilical crampy pain
+  - when: pain_quality = cramping | colicky
+    text: Crampy
+  - when: pain_pattern = waves
+    text: Comes in waves, often before bowel movements
+  - when: assoc_gi = diarrhea
+    text: Watery diarrhea
+  - when: assoc_gi = vomiting | nausea
+    text: Vomiting and nausea
+  - when: assoc_sys = fever
+    text: Low-grade fever
+  - when: relieving = defecation
+    text: Briefly relieved by passing stool
+  - when: duration = lt6h | h6_24 | d1_3
+    text: Short history — hours to a few days
+  - when: risk = sick_contacts | travel
+    text: Sick contacts, suspicious food, travel
+
+pe:
+  - when: guarding = soft
+    text: Soft abdomen
+  - when: tenderness = diffuse | none | periumbilical
+    text: Mild diffuse tenderness or none
+  - when: bowel_sounds = hyper
+    text: Hyperactive bowel sounds
+  - when: general = dehydrated
+    text: Dry mucous membranes if dehydrated
+  - when: rebound = absent
+    text: No rebound tenderness
+
+labs:
+  - Often none needed; electrolytes and creatinine if dehydrated
+  - Stool studies for bloody diarrhea, high fever, severe illness, immunocompromise, recent antibiotics (C. difficile), or prolonged symptoms
+
+imaging:
+  - Not routinely needed — image if there are focal signs or peritonism
+
+pitfalls:
+  - Vomiting without diarrhea is not gastroenteritis until proven otherwise (obstruction, appendicitis, DKA, MI, raised intracranial pressure).
+  - Early appendicitis, especially pelvic, can cause diarrhea.
+  - Severe pain with minimal diarrhea in an older patient — think mesenteric ischemia.
+  - Recheck if pain becomes localized or persists beyond 48–72 h.

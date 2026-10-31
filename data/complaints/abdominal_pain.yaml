@@ -70,16 +70,33 @@ imaging:
 ddx:
   - group: RUQ
     locations: [ruq]
-    diseases: [biliary_colic, acute_cholecystitis]
+    diseases: [biliary_colic, acute_cholecystitis, choledocholithiasis, acute_cholangitis, acute_hepatitis,
+               liver_abscess, rll_pneumonia]
   - group: Epigastric
     locations: [epigastric]
-    diseases: [peptic_ulcer_disease, acute_pancreatitis, biliary_colic]
+    diseases: [peptic_ulcer_disease, perforated_peptic_ulcer, functional_dyspepsia, gerd, gastritis,
+               acute_pancreatitis, chronic_pancreatitis, gastric_cancer, acute_coronary_syndrome, biliary_colic]
+  - group: LUQ
+    locations: [luq]
+    diseases: [splenic_infarction, splenic_rupture, acute_pancreatitis]
   - group: Periumbilical / Diffuse
     locations: [periumbilical, diffuse]
-    diseases: [acute_appendicitis, acute_mesenteric_ischemia]
+    diseases: [acute_appendicitis, small_bowel_obstruction, acute_mesenteric_ischemia, acute_gastroenteritis,
+               ibs, constipation, perforation_peritonitis, ruptured_aaa, dka]
   - group: RLQ
     locations: [rlq]
-    diseases: [acute_appendicitis]
+    diseases: [acute_appendicitis, crohns_disease, infectious_ileocecitis, ectopic_pregnancy, ovarian_torsion,
+               diverticulitis]
+  - group: LLQ
+    locations: [llq]
+    diseases: [diverticulitis, ischemic_colitis, ulcerative_colitis, colorectal_cancer, sigmoid_volvulus,
+               ectopic_pregnancy, ovarian_torsion]
+  - group: Suprapubic
+    locations: [suprapubic]
+    diseases: [cystitis, acute_urinary_retention, pid]
+  - group: Flank
+    locations: [flank_r, flank_l]
+    diseases: [renal_colic, acute_pyelonephritis, ruptured_aaa]
 
 # Generated text. Template syntax: see CLAUDE.md → "Text templates".
 hpi:

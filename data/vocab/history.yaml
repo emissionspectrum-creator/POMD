@@ -334,12 +334,16 @@
     - "How much alcohol do you drink in a typical week? Do you take painkillers like ibuprofen, aspirin, or blood thinners?"
   options:
     - {id: gallstones, label: Known gallstones, frag: known gallstones}
+    - {id: biliary_procedure, label: Biliary stent / prior ERCP or biliary surgery, frag: a biliary stent or prior biliary intervention}
     - {id: alcohol, label: Heavy alcohol use, frag: heavy alcohol use}
     - {id: nsaid, label: Regular NSAID / aspirin, frag: regular NSAID or aspirin use}
     - {id: anticoag, label: Anticoagulant use, frag: anticoagulant use}
+    - {id: new_meds, label: New drug / herbal supplement, frag: a recently started medication or herbal supplement}
+    - {id: retention_drugs, label: Anticholinergic / opioid drugs, frag: anticholinergic or opioid medication use}
     - {id: af, label: Atrial fibrillation, frag: atrial fibrillation}
     - {id: atherosclerosis, label: CAD / PAD / stroke, frag: atherosclerotic vascular disease}
     - {id: smoking, label: Smoking, frag: smoking}
+    - {id: aaa, label: Known AAA, frag: a known abdominal aortic aneurysm}
     - {id: diabetes, label: Diabetes, frag: diabetes mellitus}
     - {id: hypertriglyceridemia, label: Hypertriglyceridemia, frag: hypertriglyceridemia}
     - {id: prior_surgery, label: Prior abdominal surgery, frag: prior abdominal surgery}

@@ -1,0 +1,47 @@
+id: ischemic_colitis
+name: Ischemic colitis
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Sudden mild-to-moderate crampy left-sided abdominal pain followed within 24 hours by bloody diarrhea or
+  hematochezia in an older patient with vascular risk factors.
+
+symptoms:
+  - when: onset = sudden | hours
+    text: Sudden or rapid onset
+  - when: pain_location = llq | diffuse
+    text: Left-sided (LLQ) pain
+  - when: pain_quality = cramping
+    text: Crampy
+  - when: assoc_gi = hematochezia | bloody_diarrhea
+    text: Bloody diarrhea or hematochezia within 24 h
+  - when: assoc_gi = diarrhea
+    text: Urge to defecate
+  - when: age_group = age_60_plus
+    text: Usually over 60
+  - when: risk = atherosclerosis | diabetes | chronic_constipation
+    text: Vascular disease, diabetes, constipation, recent hypotension
+
+pe:
+  - when: tenderness = llq
+    text: Mild LLQ tenderness
+  - when: guarding = soft
+    text: Usually soft (peritonism = transmural necrosis)
+  - when: rectal = fresh_blood
+    text: Blood on rectal exam
+  - when: vitals = tachycardia
+    text: Tachycardia if severe
+
+labs:
+  - CBC, lactate, electrolytes, creatinine
+  - Stool culture and C. difficile to exclude infectious colitis
+
+imaging:
+  - CT with contrast — segmental colonic wall thickening (watershed areas such as the splenic flexure and rectosigmoid)
+  - Colonoscopy (gentle, minimal insufflation) within 48 h to confirm
+
+pitfalls:
+  - Isolated right-sided ischemic colitis can signal SMA disease — consider CT angiography for acute mesenteric ischemia.
+  - Severe pain out of proportion is more typical of small bowel ischemia than ischemic colitis.
+  - Peritonitis, gangrene, or pneumatosis require surgery.

@@ -1,0 +1,47 @@
+id: acute_pyelonephritis
+name: Acute pyelonephritis
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Fever, chills and flank pain with CVA tenderness, often preceded by dysuria and frequency, with nausea and
+  vomiting; mostly young women.
+
+symptoms:
+  - when: pain_location = flank_r | flank_l
+    text: Flank pain
+  - when: pain_quality = dull
+    text: Dull, constant ache
+  - when: assoc_sys = fever | chills
+    text: Fever and chills
+  - when: assoc_gu = dysuria | frequency
+    text: Dysuria and frequency
+  - when: assoc_gi = nausea | vomiting
+    text: Nausea and vomiting
+  - when: duration = h6_24 | d1_3 | d4_7
+    text: Over 1–3 days
+  - when: sex = female
+    text: More common in women
+
+pe:
+  - when: vitals = fever
+    text: Fever
+  - when: cva_tenderness = right | left
+    text: CVA tenderness
+  - when: vitals = tachycardia | hypotension
+    text: Tachycardia; hypotension if urosepsis
+  - when: guarding = soft
+    text: Abdomen soft
+
+labs:
+  - Urinalysis and urine culture (before antibiotics)
+  - CBC, CRP, creatinine; blood cultures if septic
+
+imaging:
+  - Ultrasound or CT if no improvement after 48–72 h, sepsis, suspected obstruction or abscess
+  - Imaging early in men, diabetics, and recurrent cases
+
+pitfalls:
+  - Obstruction with infection needs urgent drainage.
+  - Emphysematous pyelonephritis in poorly controlled diabetes — CT.
+  - Pregnant women need admission and close monitoring.

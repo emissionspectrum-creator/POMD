@@ -1,0 +1,48 @@
+id: ruptured_aaa
+name: Ruptured abdominal aortic aneurysm
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Sudden severe abdominal, back, or flank pain with syncope or hypotension in an older male smoker;
+  a pulsatile mass may be felt. Classic triad is present in only about half.
+
+symptoms:
+  - when: onset = sudden
+    text: Sudden onset
+  - when: severity = s8 | s9 | s10
+    text: Severe pain
+  - when: pain_location = diffuse | periumbilical | flank_l | flank_r
+    text: Abdominal, back, or flank pain
+  - when: radiation = back | groin
+    text: Radiates to the back, flank, or groin
+  - when: assoc_other = syncope
+    text: Syncope or near-syncope
+  - when: age_group = age_60_plus
+    text: Usually over 60
+  - when: sex = male
+    text: Men more than women
+  - when: risk = aaa | smoking | atherosclerosis
+    text: Known AAA, smoking, atherosclerotic disease
+
+pe:
+  - when: vitals = hypotension | tachycardia
+    text: Hypotension, tachycardia
+  - when: palpable = pulsatile
+    text: Pulsatile, tender epigastric / periumbilical mass (often not felt in obese patients)
+  - when: general = pale_diaphoretic
+    text: Pale and diaphoretic
+  - when: skin = ecchymosis
+    text: Flank or periumbilical ecchymosis (retroperitoneal blood)
+
+labs:
+  - Type and crossmatch, CBC, coagulation, creatinine — do not delay surgery for results
+
+imaging:
+  - Bedside ultrasound of the aorta if unstable
+  - CT angiography if stable enough
+
+pitfalls:
+  - Commonly misdiagnosed as renal colic — first "renal colic" in a patient over 60 needs the aorta imaged.
+  - Hypotension may be transient; a contained rupture can look stable.
+  - A normal-sized aorta on ultrasound does not exclude aortic dissection.

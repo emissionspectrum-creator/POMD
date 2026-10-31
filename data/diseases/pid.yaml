@@ -1,0 +1,54 @@
+id: pid
+name: Pelvic inflammatory disease
+must_not_miss: false
+timecourse: [acute, subacute]
+status: draft
+one_liner: >
+  Bilateral lower abdominal / pelvic pain with abnormal vaginal discharge, dyspareunia, and fever in a sexually
+  active woman, with cervical motion, uterine, or adnexal tenderness.
+
+symptoms:
+  - when: sex = female
+    text: Sexually active woman
+  - when: pain_location = suprapubic | rlq | llq
+    text: Bilateral lower abdominal or pelvic pain
+  - when: onset = gradual | hours
+    text: Gradual onset, often during or after menses
+  - when: assoc_gu = vaginal_discharge
+    text: Abnormal vaginal discharge
+  - when: assoc_gu = dyspareunia
+    text: Dyspareunia
+  - when: assoc_gu = vaginal_bleeding
+    text: Intermenstrual or postcoital bleeding
+  - when: assoc_sys = fever
+    text: Fever (not always)
+  - when: risk = sti_risk
+    text: New or multiple sexual partners, prior STI
+  - when: radiation = r_shoulder
+    text: RUQ / right shoulder pain (Fitz-Hugh–Curtis perihepatitis)
+
+pe:
+  - when: pelvic = cmt
+    text: Cervical motion tenderness
+  - when: pelvic = adnexal_tender
+    text: Adnexal tenderness (usually bilateral)
+  - when: pelvic = cervical_discharge
+    text: Mucopurulent cervical discharge
+  - when: pelvic = adnexal_mass
+    text: Adnexal mass suggests tubo-ovarian abscess
+  - when: tenderness = suprapubic | rlq | llq
+    text: Lower abdominal tenderness
+  - when: vitals = fever
+    text: Fever
+
+labs:
+  - hCG (exclude ectopic pregnancy)
+  - NAAT for gonorrhea and chlamydia; CBC, CRP; HIV and syphilis screening
+
+imaging:
+  - Transvaginal ultrasound if severe, or to exclude tubo-ovarian abscess
+
+pitfalls:
+  - Clinical diagnosis has a low threshold — treat empirically when minimum criteria are met.
+  - Always exclude ectopic pregnancy and appendicitis.
+  - Treat partners; follow up within 72 h.

@@ -1,0 +1,54 @@
+id: acute_cholangitis
+name: Acute cholangitis
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Fever with rigors, jaundice and RUQ pain (Charcot triad) from infection above an obstructed bile duct,
+  usually a stone; hypotension and confusion signal severe disease needing urgent drainage.
+
+symptoms:
+  - when: assoc_sys = fever | chills
+    text: Fever, often with rigors
+  - when: assoc_sys = jaundice
+    text: Jaundice
+  - when: pain_location = ruq | epigastric
+    text: RUQ or epigastric pain
+  - when: assoc_sys = dark_urine | pale_stool
+    text: Dark urine, pale stools
+  - when: assoc_other = confusion
+    text: Confusion (Reynolds pentad — severe)
+  - when: duration = lt6h | h6_24 | d1_3
+    text: Acute presentation over hours to days
+  - when: risk = gallstones | biliary_procedure
+    text: Gallstones, biliary stent, prior ERCP or biliary surgery
+
+pe:
+  - when: vitals = fever
+    text: Fever
+  - when: skin = icterus
+    text: Scleral icterus
+  - when: tenderness = ruq
+    text: RUQ tenderness
+  - when: vitals = tachycardia
+    text: Tachycardia
+  - when: vitals = hypotension
+    text: Hypotension (severe / septic)
+  - when: general = confused | ill
+    text: Ill-appearing or confused
+
+labs:
+  - Leukocytosis (or leukopenia), raised CRP
+  - Cholestatic liver tests (bilirubin, ALP, GGT)
+  - Blood cultures before antibiotics; lactate, creatinine, platelets, INR for severity grading
+
+imaging:
+  - RUQ ultrasound — duct dilatation, stones
+  - CT if the cause is unclear (tumor, stent occlusion); MRCP when stable
+  - ERCP (or percutaneous drainage) — timing by severity
+
+pitfalls:
+  - The full Charcot triad is present in only about half of patients; the elderly may present with confusion or hypotension alone.
+  - Do not wait for imaging to start antibiotics and fluids.
+  - Blocked biliary stents cause cholangitis without stones.
+  - Grade severity (e.g. Tokyo Guidelines) — organ dysfunction means urgent drainage.

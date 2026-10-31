@@ -1,0 +1,55 @@
+id: perforation_peritonitis
+name: Hollow viscus perforation / peritonitis
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Severe, constant, diffuse abdominal pain worsened by any movement, with the patient lying still, a rigid
+  abdomen, rebound tenderness, fever and tachycardia — from perforation of the stomach, bowel, or appendix.
+
+symptoms:
+  - when: pain_location = diffuse
+    text: Diffuse pain (may start localized)
+  - when: pain_migration = local_to_diffuse
+    text: Localized pain spreading over the whole abdomen
+  - when: onset = sudden | hours
+    text: Sudden (perforation) or progressive onset
+  - when: pain_pattern = constant
+    text: Constant pain
+  - when: severity = s8 | s9 | s10
+    text: Severe
+  - when: aggravating = movement
+    text: Worse with movement, coughing, bumps in the road
+  - when: relieving = lying_still
+    text: Lies still
+  - when: assoc_sys = fever
+    text: Fever
+  - when: assoc_gi = vomiting | anorexia
+    text: Vomiting, anorexia
+
+pe:
+  - when: guarding = rigid | involuntary
+    text: Rigidity / involuntary guarding
+  - when: rebound = present
+    text: Rebound tenderness; pain with percussion or heel drop
+  - when: tenderness = diffuse
+    text: Diffuse tenderness
+  - when: bowel_sounds = hypo | absent
+    text: Reduced or absent bowel sounds
+  - when: general = lying_still | ill
+    text: Ill-appearing, lying still
+  - when: vitals = fever | tachycardia | hypotension
+    text: Fever, tachycardia, hypotension (sepsis)
+
+labs:
+  - Leukocytosis (or leukopenia), raised CRP and lactate
+  - Electrolytes, creatinine, coagulation, blood cultures, type and screen
+
+imaging:
+  - Erect chest X-ray for free air
+  - CT abdomen / pelvis — free air, fluid, source
+
+pitfalls:
+  - Steroids, immunosuppression, old age, and spinal cord injury blunt peritoneal signs.
+  - Analgesia does not mask peritonitis enough to delay diagnosis — give it.
+  - Spontaneous bacterial peritonitis in cirrhosis presents subtly (fever, encephalopathy) and is managed medically.

@@ -1,0 +1,47 @@
+id: rll_pneumonia
+name: Right lower lobe pneumonia
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Fever, cough and pleuritic RUQ or upper abdominal pain from diaphragmatic pleural irritation, with
+  crackles at the right base and a benign abdominal exam.
+
+symptoms:
+  - when: pain_location = ruq | epigastric
+    text: RUQ or upper abdominal pain
+  - when: aggravating = deep_breath
+    text: Worse with deep breathing or coughing (pleuritic)
+  - when: assoc_other = cough
+    text: Cough, sometimes productive
+  - when: assoc_other = dyspnea
+    text: Shortness of breath
+  - when: assoc_sys = fever | chills
+    text: Fever and chills
+  - when: duration = h6_24 | d1_3 | d4_7
+    text: Acute onset over days
+
+pe:
+  - when: chest = crackles_r
+    text: Crackles or bronchial breath sounds at the right base
+  - when: vitals = fever
+    text: Fever
+  - when: vitals = tachypnea | hypoxemia
+    text: Tachypnea, low oxygen saturation
+  - when: guarding = soft
+    text: Abdomen soft; tenderness, if any, is mild and not peritoneal
+  - when: abd_signs = no murphy
+    text: Murphy's sign negative
+
+labs:
+  - Leukocytosis, raised CRP; procalcitonin if available
+  - Liver tests and lipase are usually normal
+
+imaging:
+  - Chest X-ray (PA and lateral) — lower lobe consolidation can hide behind the diaphragm on a supine film
+  - Lung bases are visible on abdominal CT — always review them
+
+pitfalls:
+  - Always auscultate the lung bases in RUQ or upper abdominal pain.
+  - Children and the elderly often have fewer respiratory symptoms.
+  - Pulmonary embolism with infarction and pleural effusion can produce the same picture.

@@ -1,0 +1,44 @@
+id: gastritis
+name: Gastritis / gastropathy
+must_not_miss: false
+timecourse: [acute, subacute, chronic]
+status: draft
+one_liner: >
+  Epigastric burning or discomfort with nausea, often after NSAIDs or alcohol or with H. pylori infection;
+  erosive forms can bleed. A histologic / endoscopic diagnosis, not a clinical one.
+
+symptoms:
+  - when: pain_location = epigastric
+    text: Epigastric discomfort
+  - when: pain_quality = burning | dull | gnawing
+    text: Burning or gnawing
+  - when: precipitant = nsaid | alcohol
+    text: After NSAIDs or alcohol
+  - when: assoc_gi = nausea | vomiting
+    text: Nausea, sometimes vomiting
+  - when: assoc_gi = anorexia | early_satiety
+    text: Anorexia or early satiety
+  - when: assoc_gi = hematemesis | melena
+    text: Hematemesis or melena (erosive / hemorrhagic gastritis)
+  - when: risk = nsaid | alcohol | hpylori
+    text: Regular NSAIDs, heavy drinking, H. pylori
+
+pe:
+  - when: tenderness = epigastric | none
+    text: Mild epigastric tenderness or normal exam
+  - when: guarding = soft
+    text: Soft abdomen
+  - when: rectal = melena
+    text: Melena if bleeding
+
+labs:
+  - CBC if bleeding is suspected
+  - H. pylori testing
+
+imaging:
+  - EGD when bleeding, alarm features, or persistent symptoms
+
+pitfalls:
+  - The label "gastritis" is often used loosely for functional dyspepsia — endoscopic findings correlate poorly with symptoms.
+  - Stress-related mucosal disease in critically ill patients presents with bleeding rather than pain.
+  - Chronic atrophic gastritis (H. pylori, autoimmune) raises gastric cancer risk and can cause B12 or iron deficiency.

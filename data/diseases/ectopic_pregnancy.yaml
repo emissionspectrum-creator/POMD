@@ -1,0 +1,52 @@
+id: ectopic_pregnancy
+name: Ectopic pregnancy
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Unilateral lower abdominal pain with vaginal bleeding after a missed period in a woman of reproductive age;
+  rupture causes sudden severe pain, shoulder-tip pain, syncope, and shock.
+
+symptoms:
+  - when: sex = female
+    text: Woman of reproductive age
+  - when: repro_status = period_late | preg_possible | pregnant
+    text: Missed or late period; pregnancy possible
+  - when: pain_location = rlq | llq | suprapubic
+    text: Unilateral lower abdominal or pelvic pain
+  - when: assoc_gu = vaginal_bleeding
+    text: Vaginal bleeding or spotting
+  - when: onset = sudden
+    text: Sudden severe pain suggests rupture
+  - when: radiation = r_shoulder | l_shoulder
+    text: Shoulder-tip pain (hemoperitoneum)
+  - when: assoc_other = syncope
+    text: Syncope or dizziness
+  - when: risk = sti_risk
+    text: Prior PID / STI (also prior ectopic, tubal surgery, IVF, IUD)
+
+pe:
+  - when: pelvic = adnexal_tender | cmt
+    text: Adnexal tenderness, cervical motion tenderness
+  - when: pelvic = adnexal_mass
+    text: Adnexal mass (often not palpable)
+  - when: tenderness = rlq | llq | suprapubic
+    text: Lower abdominal tenderness
+  - when: vitals = hypotension | tachycardia
+    text: Tachycardia, hypotension (rupture)
+  - when: rebound = present
+    text: Peritoneal signs (hemoperitoneum)
+
+labs:
+  - Urine / serum hCG in every woman of reproductive age with abdominal pain
+  - Quantitative β-hCG trend; CBC; blood type and Rh
+
+imaging:
+  - Transvaginal ultrasound — no intrauterine pregnancy with positive hCG, adnexal mass, free fluid
+  - FAST in unstable patients
+
+pitfalls:
+  - Histories of "no chance of pregnancy" are unreliable — test everyone.
+  - A pregnancy of unknown location needs serial hCG and follow-up ultrasound, not reassurance.
+  - Heterotopic pregnancy is more common after assisted reproduction.
+  - Pain can be mild before rupture.

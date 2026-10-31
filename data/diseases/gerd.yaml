@@ -1,0 +1,47 @@
+id: gerd
+name: Gastroesophageal reflux disease
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Retrosternal or epigastric burning (heartburn) and acid regurgitation, worse after meals and lying down,
+  relieved by antacids or PPIs.
+
+symptoms:
+  - when: assoc_gi = heartburn
+    text: Heartburn and acid regurgitation (the key symptoms)
+  - when: pain_location = epigastric
+    text: Epigastric or retrosternal location
+  - when: pain_quality = burning
+    text: Burning quality
+  - when: meal_relation = worse_eating
+    text: Worse after meals
+  - when: aggravating = lying_flat
+    text: Worse lying down or bending over
+  - when: relieving = antacid
+    text: Relieved by antacids or PPIs
+  - when: duration = m1_3 | gt3m
+    text: Chronic, recurrent
+  - when: assoc_other = cough
+    text: Chronic cough or hoarseness (extra-esophageal)
+  - when: assoc_gi = no dysphagia
+    text: No dysphagia (dysphagia is an alarm feature)
+
+pe:
+  - when: tenderness = none | epigastric
+    text: Usually normal exam
+  - when: guarding = soft
+    text: Soft abdomen
+
+labs:
+  - No routine labs; CBC if bleeding or anemia is suspected
+
+imaging:
+  - Empiric PPI trial in typical symptoms without alarm features
+  - EGD for alarm features, refractory symptoms, or long-standing symptoms with Barrett's risk
+  - pH / impedance monitoring if the diagnosis is uncertain
+
+pitfalls:
+  - Cardiac chest pain can be described as "burning" — exclude ACS first in at-risk patients.
+  - Dysphagia, weight loss, bleeding, or anemia require endoscopy.
+  - Poor PPI response — check adherence and dosing timing, then consider functional heartburn, eosinophilic esophagitis, or other causes.

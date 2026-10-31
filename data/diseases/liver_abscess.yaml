@@ -1,0 +1,53 @@
+id: liver_abscess
+name: Liver abscess
+must_not_miss: true
+timecourse: [acute, subacute]
+status: draft
+one_liner: >
+  Fever with rigors and RUQ pain or tenderness over days to weeks, often in a diabetic patient; in
+  Taiwan Klebsiella pneumoniae is the leading cause and can spread to the eye and CNS.
+
+symptoms:
+  - when: assoc_sys = fever | chills
+    text: High fever with chills or rigors (may be the only symptom)
+  - when: pain_location = ruq
+    text: RUQ pain (absent in many patients)
+  - when: pain_quality = dull
+    text: Dull, constant ache
+  - when: duration = d4_7 | w1_4
+    text: Days to weeks
+  - when: aggravating = deep_breath
+    text: Pleuritic pain or right shoulder discomfort from diaphragmatic irritation
+  - when: assoc_sys = malaise | weight_loss
+    text: Malaise, anorexia, weight loss
+  - when: risk = diabetes | immunocompromised | biliary_procedure
+    text: Diabetes, immunocompromise, biliary disease or intervention
+  - when: risk = travel
+    text: Travel to endemic areas (amebic abscess)
+
+pe:
+  - when: vitals = fever
+    text: Fever
+  - when: palpable = liver_tender | hepatomegaly
+    text: Liver tenderness on fist percussion, hepatomegaly
+  - when: tenderness = ruq
+    text: RUQ tenderness
+  - when: chest = crackles_r
+    text: Reduced breath sounds / crackles at the right base (effusion, atelectasis)
+  - when: vitals = tachycardia | hypotension
+    text: Tachycardia; hypotension if septic
+
+labs:
+  - Leukocytosis, markedly raised CRP; raised ALP is common
+  - Blood cultures (positive in many Klebsiella cases); glucose / HbA1c
+  - Amebic serology when exposure is possible
+
+imaging:
+  - Ultrasound or contrast CT — CT is more sensitive and guides drainage
+  - Percutaneous aspiration / drainage for diagnosis and treatment
+
+pitfalls:
+  - Fever without localizing symptoms is a common presentation — image the liver in febrile diabetics.
+  - Klebsiella liver abscess can cause endophthalmitis and meningitis; ask about visual symptoms and examine the eyes.
+  - Consider colonoscopy after recovery in cryptogenic Klebsiella abscess (association with colorectal neoplasia).
+  - Early lesions on ultrasound can look solid and be mistaken for a tumor.

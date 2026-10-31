@@ -1,0 +1,51 @@
+id: choledocholithiasis
+name: Choledocholithiasis
+must_not_miss: false
+timecourse: [acute, subacute]
+status: draft
+one_liner: >
+  Biliary-type RUQ or epigastric pain with jaundice, dark urine and pale stools from a stone in the common
+  bile duct; liver tests show a cholestatic pattern, often fluctuating as the stone moves.
+
+symptoms:
+  - when: pain_location = ruq | epigastric
+    text: RUQ or epigastric pain (may be painless)
+  - when: pain_pattern = attacks | constant
+    text: Biliary-type attacks, sometimes more persistent
+  - when: assoc_sys = jaundice
+    text: Jaundice, often fluctuating
+  - when: assoc_sys = dark_urine | pale_stool
+    text: Dark urine and pale stools
+  - when: assoc_sys = pruritus
+    text: Pruritus
+  - when: assoc_gi = nausea | vomiting
+    text: Nausea or vomiting
+  - when: assoc_sys = no fever
+    text: No fever (fever + jaundice = think cholangitis)
+  - when: risk = gallstones | biliary_procedure
+    text: Known gallstones or prior cholecystectomy / biliary procedure
+
+pe:
+  - when: skin = icterus
+    text: Scleral icterus
+  - when: tenderness = ruq | epigastric
+    text: Mild RUQ / epigastric tenderness
+  - when: vitals = no fever
+    text: Afebrile
+  - when: abd_signs = no murphy
+    text: Murphy's sign usually negative
+
+labs:
+  - Raised bilirubin (direct), ALP and GGT; AST/ALT may spike early (even > 500) then fall quickly
+  - Lipase to exclude associated gallstone pancreatitis
+
+imaging:
+  - RUQ ultrasound — dilated CBD (stone itself is often not seen)
+  - MRCP or EUS when the probability is intermediate
+  - ERCP for high probability (stone seen on imaging, cholangitis, or bilirubin > 4 mg/dL with a dilated duct)
+
+pitfalls:
+  - A normal ultrasound does not exclude CBD stones; ultrasound misses many distal stones.
+  - Early in obstruction transaminases may dominate and mimic acute hepatitis.
+  - Painless jaundice with weight loss suggests malignant obstruction (pancreatic head, cholangiocarcinoma), not a stone.
+  - Stones can form or remain after cholecystectomy.

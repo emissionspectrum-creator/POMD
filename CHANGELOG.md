@@ -1,5 +1,27 @@
 # CHANGELOG
 
+## 2026-10-31 — v0.2.0（M2 腹痛完整內容）
+
+**新增**
+- 依 DESIGN.md 第 6 節補齊腹痛鑑別診斷，共 41 個疾病（新增 35 個，皆為 `draft`，待佑達審核）：
+  - RUQ：choledocholithiasis、acute cholangitis★、acute hepatitis、liver abscess★、RLL pneumonia
+  - Epigastric：perforated peptic ulcer★、functional dyspepsia、GERD、gastritis、chronic pancreatitis、gastric cancer、ACS★
+  - LUQ：splenic infarction、splenic rupture★
+  - Periumbilical／Diffuse：SBO★、acute gastroenteritis、IBS、constipation、hollow viscus perforation／peritonitis★、ruptured AAA★、DKA★
+  - RLQ：Crohn's disease、infectious ileocecitis、ectopic pregnancy★、ovarian torsion★
+  - LLQ：diverticulitis、ischemic colitis、ulcerative colitis、colorectal cancer、sigmoid volvulus★
+  - Suprapubic：cystitis、acute urinary retention、PID
+  - Flank：renal colic、acute pyelonephritis
+- 鑑別診斷分組補齊；除 DESIGN 表格外另做的跨組安排：acute pancreatitis 也列在 LUQ；diverticulitis 也列在 RLQ（亞洲右側憩室炎常見）；ectopic pregnancy、ovarian torsion 也列在 LLQ（左右側皆可能）；ruptured AAA 也列在 Flank（常被誤認為腎絞痛）。
+- 危險因子新增：known AAA、biliary stent／prior biliary intervention、new drug／herbal supplement（DILI）、anticholinergic／opioid drugs（尿滯留、便秘）。
+- 內容加入台灣臨床脈絡：Klebsiella 肝膿瘍與糖尿病、眼內炎；B 肝帶原者 flare；腸結核與 Crohn's 鑑別；生物製劑前篩檢 HBV／TB。
+
+**修改**
+- presence 比對語意：`item = no a | b` 改為「全部都沒有」才算 Match（任一為 present 即 Different），符合「No GI bleeding」這類多選項陰性特徵的臨床意義；`item = a | b` 仍為「任一有」。新增對應測試。
+- PE 的 `{x*}` 輸出改為先列陽性、再列陰性，避免 "no cervical motion tenderness, adnexal tenderness" 這種歧義句。
+- 輸出區高度 190px → 160px，讓 1366×768 螢幕的三欄有更多空間。
+- `build.py` 遇到 YAML 語法錯誤時，改為顯示檔名與提示，不再丟出 traceback。
+
 ## 2026-10-31 — v0.1.0（M1 骨架）
 
 **新增**

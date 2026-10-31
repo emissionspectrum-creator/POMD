@@ -1,0 +1,47 @@
+id: cystitis
+name: Cystitis
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Suprapubic discomfort with dysuria, frequency and urgency, sometimes hematuria, without fever or flank pain —
+  most often in women.
+
+symptoms:
+  - when: pain_location = suprapubic
+    text: Suprapubic discomfort
+  - when: assoc_gu = dysuria
+    text: Dysuria
+  - when: assoc_gu = frequency
+    text: Frequency and urgency
+  - when: assoc_gu = hematuria
+    text: Hematuria
+  - when: assoc_sys = no fever
+    text: No fever (fever or flank pain = pyelonephritis)
+  - when: assoc_gu = no vaginal_discharge
+    text: No vaginal discharge (discharge suggests vaginitis / cervicitis)
+  - when: sex = female
+    text: Mostly women; in men consider prostatitis or complicated UTI
+  - when: duration = lt6h | h6_24 | d1_3
+    text: Short history
+
+pe:
+  - when: tenderness = suprapubic | none
+    text: Suprapubic tenderness or normal exam
+  - when: vitals = no fever
+    text: Afebrile
+  - when: cva_tenderness = none
+    text: No CVA tenderness
+
+labs:
+  - Urine dipstick (leukocyte esterase, nitrite), urinalysis
+  - Urine culture for men, pregnancy, recurrence, treatment failure, or complicated UTI
+  - hCG when relevant
+
+imaging:
+  - Not needed in uncomplicated cystitis
+
+pitfalls:
+  - UTI in men is considered complicated — evaluate for prostatitis or retention.
+  - Recurrent hematuria without infection needs urologic evaluation.
+  - Pelvic appendicitis and PID can cause pyuria and urinary symptoms.

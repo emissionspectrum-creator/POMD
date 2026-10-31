@@ -1,0 +1,54 @@
+id: ibs
+name: Irritable bowel syndrome
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Recurrent abdominal pain related to defecation and associated with a change in stool frequency or form,
+  for at least 3 months, without alarm features — a positive diagnosis, not just one of exclusion.
+
+symptoms:
+  - when: relieving = defecation
+    text: Pain related to defecation (improves or worsens)
+  - when: assoc_gi = diarrhea | constipation | bowel_change
+    text: Change in stool frequency or form (IBS-D, IBS-C, or mixed)
+  - when: assoc_gi = bloating
+    text: Bloating and distension
+  - when: pain_quality = cramping
+    text: Crampy pain
+  - when: pain_location = llq | diffuse | periumbilical
+    text: Often lower abdominal or variable location
+  - when: duration = m1_3 | gt3m
+    text: Chronic (Rome IV — at least 1 day / week for 3 months, onset ≥ 6 months ago)
+  - when: episodes = recurrent
+    text: Recurrent episodes, often with stress
+  - when: nocturnal = no_wake
+    text: Does not wake the patient at night
+  - when: assoc_sys = no weight_loss | fever
+    text: No weight loss or fever
+  - when: assoc_gi = no hematochezia | melena | bloody_diarrhea
+    text: No GI bleeding
+  - when: age_group = under_40 | age_40_59
+    text: Onset usually before 50
+
+pe:
+  - when: tenderness = none | llq | diffuse
+    text: Normal exam or mild non-specific tenderness
+  - when: guarding = soft
+    text: Soft abdomen
+  - when: palpable = no mass
+    text: No mass
+  - when: skin = no pallor
+    text: No pallor
+
+labs:
+  - CBC, CRP; fecal calprotectin in diarrhea-predominant symptoms to screen for IBD
+  - Celiac serology in diarrhea-predominant symptoms (lower prevalence in Taiwan); thyroid function as indicated
+
+imaging:
+  - Colonoscopy for alarm features, age ≥ 45–50 without prior screening, or persistent diarrhea (microscopic colitis)
+
+pitfalls:
+  - New symptoms after age 50, rectal bleeding, weight loss, nocturnal symptoms, anemia, or family history of colorectal cancer / IBD require evaluation.
+  - Microscopic colitis, bile acid diarrhea, and lactose intolerance can mimic IBS-D.
+  - Avoid repeated investigation once the diagnosis is confidently made.
