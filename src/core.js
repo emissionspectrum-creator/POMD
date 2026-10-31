@@ -149,6 +149,25 @@
     return promoted.concat(rest);
   }
 
+  // Flat, de-duplicated disease list sorted by match count (high → low).
+  // Ties keep the location order from orderGroups(), so promoted groups come first.
+  // Returns [{ id, n, groups: [group label...] }].
+  function rankByMatches(complaint, diseases, state, items) {
+    var byId = {};
+    var list = [];
+    orderGroups(complaint, state).forEach(function (entry) {
+      entry.group.diseases.forEach(function (id) {
+        if (!byId[id]) {
+          byId[id] = { id: id, n: matchCount(diseases[id], state, items), groups: [], order: list.length };
+          list.push(byId[id]);
+        }
+        byId[id].groups.push(entry.group.group);
+      });
+    });
+    list.sort(function (a, b) { return (b.n - a.n) || (a.order - b.order); });
+    return list.map(function (x) { return { id: x.id, n: x.n, groups: x.groups }; });
+  }
+
   // ---------- text generation ----------
 
   function joinList(arr, conj) {
@@ -314,6 +333,7 @@
     selectedTimecourses: selectedTimecourses,
     timecourseStatus: timecourseStatus,
     orderGroups: orderGroups,
+    rankByMatches: rankByMatches,
     joinList: joinList,
     renderTemplate: renderTemplate,
     composeText: composeText

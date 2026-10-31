@@ -14,6 +14,7 @@
   var complaint = DATA.complaints[0];
   var state = {};
   var openDiseaseId = null;
+  var ddxSort = 'location'; // 'location' | 'matches' — a view preference, kept across New patient
   var clearArmTimer = null;
 
   var TC_SHORT = { acute: 'A', subacute: 'S', chronic: 'C' };
@@ -103,28 +104,47 @@
     }
   }
 
+  function dxHtml(id, n, tcSel, groups) {
+    var d = diseases[id];
+    var cls = 'dx' + (n ? ' hit' : '') + (openDiseaseId === id ? ' open' : '');
+    var h = '<li><button type="button" class="' + cls + '" data-disease="' + esc(id) + '"' +
+      (d.must_not_miss ? ' title="Must-not-miss"' : '') + '>';
+    h += '<span class="dx-name">' + esc(d.name);
+    if (groups) h += '<span class="dx-groups">' + esc(groups.join(' \u00B7 ')) + '</span>';
+    h += '</span><span class="dx-meta">';
+    d.timecourse.forEach(function (t) {
+      h += '<span class="tc' + (tcSel.indexOf(t) >= 0 ? ' on' : '') + '" title="' + t + '">' + TC_SHORT[t] + '</span>';
+    });
+    if (n) h += '<b class="count" title="typical features selected">' + n + '</b>';
+    return h + '</span></button></li>';
+  }
+
   function renderDdx() {
     var tcSel = Core.selectedTimecourses(complaint, state, items);
     var h = '';
-    Core.orderGroups(complaint, state).forEach(function (entry) {
-      var g = entry.group;
-      h += '<div class="group' + (entry.promoted ? ' promoted' : '') + '"><h3>' + esc(g.group) + '</h3><ul>';
-      g.diseases.forEach(function (id) {
-        var d = diseases[id];
-        var n = Core.matchCount(d, state, items);
-        var cls = 'dx' + (d.must_not_miss ? ' mnm' : '') + (n ? ' hit' : '') + (openDiseaseId === id ? ' open' : '');
-        h += '<li><button type="button" class="' + cls + '" data-disease="' + esc(id) + '">';
-        h += '<span class="dx-name">' + (d.must_not_miss ? '★ ' : '') + esc(d.name) + '</span>';
-        h += '<span class="dx-meta">';
-        d.timecourse.forEach(function (t) {
-          h += '<span class="tc' + (tcSel.indexOf(t) >= 0 ? ' on' : '') + '" title="' + t + '">' + TC_SHORT[t] + '</span>';
-        });
-        if (n) h += '<b class="count" title="typical features selected">' + n + '</b>';
-        h += '</span></button></li>';
+    if (ddxSort === 'matches') {
+      h += '<div class="group"><ul>';
+      Core.rankByMatches(complaint, diseases, state, items).forEach(function (x) {
+        h += dxHtml(x.id, x.n, tcSel, x.groups);
       });
       h += '</ul></div>';
-    });
+    } else {
+      Core.orderGroups(complaint, state).forEach(function (entry) {
+        var g = entry.group;
+        h += '<div class="group' + (entry.promoted ? ' promoted' : '') + '"><h3>' + esc(g.group) + '</h3><ul>';
+        g.diseases.forEach(function (id) {
+          h += dxHtml(id, Core.matchCount(diseases[id], state, items), tcSel, null);
+        });
+        h += '</ul></div>';
+      });
+    }
     $('ddx').innerHTML = h;
+    var segs = document.querySelectorAll('[data-sort]');
+    for (var i = 0; i < segs.length; i++) {
+      var on = segs[i].getAttribute('data-sort') === ddxSort;
+      segs[i].classList.toggle('on', on);
+      segs[i].setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
   }
 
   function featureListHtml(features) {
@@ -152,8 +172,8 @@
     if (!d) { card.hidden = true; card.innerHTML = ''; return; }
     var tcSel = Core.selectedTimecourses(complaint, state, items);
     var tcSt = Core.timecourseStatus(d, tcSel);
-    var h = '<div class="card-head' + (d.must_not_miss ? ' mnm' : '') + '">';
-    h += '<h2>' + (d.must_not_miss ? '★ ' : '') + esc(d.name) + '</h2>';
+    var h = '<div class="card-head">';
+    h += '<h2>' + esc(d.name) + '</h2>';
     h += '<button type="button" class="card-close" data-close-card title="Close (Esc)">×</button></div>';
     h += '<div class="card-badges">';
     if (d.must_not_miss) h += '<span class="badge mnm">Must-not-miss</span>';
@@ -284,6 +304,9 @@
       openDiseaseId = null;
       renderDdx();
       renderCard();
+    } else if (t.hasAttribute('data-sort')) {
+      ddxSort = t.getAttribute('data-sort');
+      renderDdx();
     } else if (t.hasAttribute('data-copy')) {
       onCopy(t.getAttribute('data-copy'));
     } else if (t.id === 'btn-new') {

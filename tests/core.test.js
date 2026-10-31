@@ -154,6 +154,26 @@ test('match count, time course, group order', () => {
   assert.deepEqual(Core.orderGroups(complaint, { loc: { llq: true } }).map((e) => e.group.group), ['LLQ', 'RUQ']);
 });
 
+test('rankByMatches: de-duplicated, sorted by count, ties keep location order', () => {
+  const { items } = fixture();
+  const diseases = {
+    a: { symptoms: [{ item: 'loc', options: ['ruq'] }], pe: [] },
+    b: { symptoms: [{ item: 'loc', options: ['llq'] }, { item: 'sev', options: ['s7'] }], pe: [] },
+    c: { symptoms: [{ item: 'sev', options: ['s7'] }], pe: [] }
+  };
+  const complaint = {
+    location_item: 'loc',
+    ddx: [{ group: 'RUQ', locations: ['ruq'], diseases: ['a', 'c'] }, { group: 'LLQ', locations: ['llq'], diseases: ['b', 'c'] }]
+  };
+  const s = {};
+  assert.deepEqual(Core.rankByMatches(complaint, diseases, s, items).map((x) => x.id), ['a', 'c', 'b']);
+  Core.toggle(s, items.sev, 's7');
+  Core.toggle(s, items.loc, 'llq');
+  const r = Core.rankByMatches(complaint, diseases, s, items);
+  assert.deepEqual(r.map((x) => [x.id, x.n]), [['b', 2], ['c', 1], ['a', 0]]);
+  assert.deepEqual(r.find((x) => x.id === 'c').groups, ['LLQ', 'RUQ']);
+});
+
 test('joinList', () => {
   assert.equal(Core.joinList(['a'], 'and'), 'a');
   assert.equal(Core.joinList(['a', 'b'], 'or'), 'a or b');

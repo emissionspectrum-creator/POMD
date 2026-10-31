@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2026-10-31 — v0.2.0 後續修改（使用者要求）
+
+**修改**
+- Differential 取消 must-not-miss 標示：不再用紅字、★、加粗，圖例也移除。說明卡標題同步移除 ★ 與紅字，只保留中性灰色的 "Must-not-miss" 徽章。
+- Differential 新增排序切換：**By location**（原本的位置分組）／**By matches**（不分組、去重複，依 typical feature 符合數量由高到低排序；同分時維持位置順序，已點選位置的群組在前；每個疾病下方以小字標出所屬位置群組）。排序模式在 New patient 後保留。
+  - 這是 DESIGN.md「不做排序」的例外，由使用者明確要求；只依符合數量排序，不做加權。
+- `core.js` 新增 `rankByMatches()` 與對應測試。
+
 ## 2026-10-31 — v0.2.0（M2 腹痛完整內容）
 
 **新增**

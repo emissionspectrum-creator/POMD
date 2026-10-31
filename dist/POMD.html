@@ -98,6 +98,17 @@ h2 {
   border-bottom: 2px solid var(--brand);
   padding-bottom: 2px;
 }
+h2 .seg { float: right; display: inline-flex; font-size: 11px; font-weight: 400; }
+.seg button {
+  border: 1px solid #b8c2cc;
+  background: #fff;
+  color: var(--text);
+  padding: 0 7px;
+  line-height: 1.6;
+}
+.seg button:first-child { border-radius: 4px 0 0 4px; }
+.seg button:last-child { border-radius: 0 4px 4px 0; border-left: 0; }
+.seg button.on { background: var(--brand); border-color: var(--brand); color: #fff; }
 h2 .sub { font-size: 11px; font-weight: 400; color: var(--muted); }
 h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 10px 0 2px; }
 
@@ -155,7 +166,6 @@ h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: 
 /* ---------- differential ---------- */
 
 .legend { display: flex; flex-wrap: wrap; gap: 4px 10px; }
-.lg.mnm { color: var(--mnm); font-weight: 600; }
 .lg.hit { background: var(--hit-bg); padding: 0 4px; border-radius: 3px; }
 
 .group { margin-bottom: 4px; }
@@ -178,7 +188,7 @@ h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: 
   color: var(--text);
 }
 .dx:hover { background: #eef2f6; }
-.dx.mnm { color: var(--mnm); font-weight: 600; }
+.dx-groups { display: block; font-size: 10.5px; font-weight: 400; color: var(--muted); }
 .dx.hit { background: var(--hit-bg); border-left-color: var(--hit-line); }
 .dx.open { border-color: var(--sel); border-left-color: var(--sel); }
 .dx-name { flex: 1; }
@@ -228,12 +238,11 @@ h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: 
 #card[hidden] { display: none; }
 .card-head { display: flex; align-items: flex-start; gap: 8px; }
 .card-head h2 { flex: 1; border: 0; margin: 4px 0; font-size: 17px; }
-.card-head.mnm h2 { color: var(--mnm); }
 .card-close { border: 0; background: none; font-size: 22px; line-height: 1; color: var(--muted); padding: 0 4px; }
 .card-close:hover { color: var(--text); }
 .card-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 4px; }
 .badge { font-size: 11px; border-radius: 3px; padding: 0 5px; border: 1px solid #cfd5dc; color: var(--muted); }
-.badge.mnm { background: var(--mnm); border-color: var(--mnm); color: #fff; }
+.badge.mnm { background: #e9edf2; border-color: #9aa5b1; color: var(--text); }
 .badge.status-draft { background: #f1f3f5; }
 .badge.status-reviewed { background: var(--match-bg); color: var(--match); border-color: var(--match); }
 .badge.tcb.match { background: var(--match-bg); color: var(--match); border-color: var(--match); }
@@ -324,9 +333,12 @@ h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: 
     <ul id="imaging" class="suggest"></ul>
   </section>
   <section class="col" id="col-ddx">
-    <h2>Differential</h2>
+    <h2>Differential
+      <span class="seg" role="group" aria-label="Sort differential">
+        <button type="button" data-sort="location" class="on">By location</button><button type="button" data-sort="matches">By matches</button>
+      </span>
+    </h2>
     <p class="hint legend">
-      <span class="lg mnm">★ must-not-miss</span>
       <span class="lg hit">highlighted = typical feature selected <b class="count">n</b></span>
       <span class="lg">time course <span class="tc">A</span><span class="tc">S</span><span class="tc">C</span></span>
     </p>
@@ -506,6 +518,25 @@ window.POMD_DATA = {"version":"0.2.0","items":{"sex":{"id":"sex","label":"Sex","
     return promoted.concat(rest);
   }
 
+  // Flat, de-duplicated disease list sorted by match count (high → low).
+  // Ties keep the location order from orderGroups(), so promoted groups come first.
+  // Returns [{ id, n, groups: [group label...] }].
+  function rankByMatches(complaint, diseases, state, items) {
+    var byId = {};
+    var list = [];
+    orderGroups(complaint, state).forEach(function (entry) {
+      entry.group.diseases.forEach(function (id) {
+        if (!byId[id]) {
+          byId[id] = { id: id, n: matchCount(diseases[id], state, items), groups: [], order: list.length };
+          list.push(byId[id]);
+        }
+        byId[id].groups.push(entry.group.group);
+      });
+    });
+    list.sort(function (a, b) { return (b.n - a.n) || (a.order - b.order); });
+    return list.map(function (x) { return { id: x.id, n: x.n, groups: x.groups }; });
+  }
+
   // ---------- text generation ----------
 
   function joinList(arr, conj) {
@@ -671,6 +702,7 @@ window.POMD_DATA = {"version":"0.2.0","items":{"sex":{"id":"sex","label":"Sex","
     selectedTimecourses: selectedTimecourses,
     timecourseStatus: timecourseStatus,
     orderGroups: orderGroups,
+    rankByMatches: rankByMatches,
     joinList: joinList,
     renderTemplate: renderTemplate,
     composeText: composeText
@@ -698,6 +730,7 @@ window.POMD_DATA = {"version":"0.2.0","items":{"sex":{"id":"sex","label":"Sex","
   var complaint = DATA.complaints[0];
   var state = {};
   var openDiseaseId = null;
+  var ddxSort = 'location'; // 'location' | 'matches' — a view preference, kept across New patient
   var clearArmTimer = null;
 
   var TC_SHORT = { acute: 'A', subacute: 'S', chronic: 'C' };
@@ -787,28 +820,47 @@ window.POMD_DATA = {"version":"0.2.0","items":{"sex":{"id":"sex","label":"Sex","
     }
   }
 
+  function dxHtml(id, n, tcSel, groups) {
+    var d = diseases[id];
+    var cls = 'dx' + (n ? ' hit' : '') + (openDiseaseId === id ? ' open' : '');
+    var h = '<li><button type="button" class="' + cls + '" data-disease="' + esc(id) + '"' +
+      (d.must_not_miss ? ' title="Must-not-miss"' : '') + '>';
+    h += '<span class="dx-name">' + esc(d.name);
+    if (groups) h += '<span class="dx-groups">' + esc(groups.join(' \u00B7 ')) + '</span>';
+    h += '</span><span class="dx-meta">';
+    d.timecourse.forEach(function (t) {
+      h += '<span class="tc' + (tcSel.indexOf(t) >= 0 ? ' on' : '') + '" title="' + t + '">' + TC_SHORT[t] + '</span>';
+    });
+    if (n) h += '<b class="count" title="typical features selected">' + n + '</b>';
+    return h + '</span></button></li>';
+  }
+
   function renderDdx() {
     var tcSel = Core.selectedTimecourses(complaint, state, items);
     var h = '';
-    Core.orderGroups(complaint, state).forEach(function (entry) {
-      var g = entry.group;
-      h += '<div class="group' + (entry.promoted ? ' promoted' : '') + '"><h3>' + esc(g.group) + '</h3><ul>';
-      g.diseases.forEach(function (id) {
-        var d = diseases[id];
-        var n = Core.matchCount(d, state, items);
-        var cls = 'dx' + (d.must_not_miss ? ' mnm' : '') + (n ? ' hit' : '') + (openDiseaseId === id ? ' open' : '');
-        h += '<li><button type="button" class="' + cls + '" data-disease="' + esc(id) + '">';
-        h += '<span class="dx-name">' + (d.must_not_miss ? '★ ' : '') + esc(d.name) + '</span>';
-        h += '<span class="dx-meta">';
-        d.timecourse.forEach(function (t) {
-          h += '<span class="tc' + (tcSel.indexOf(t) >= 0 ? ' on' : '') + '" title="' + t + '">' + TC_SHORT[t] + '</span>';
-        });
-        if (n) h += '<b class="count" title="typical features selected">' + n + '</b>';
-        h += '</span></button></li>';
+    if (ddxSort === 'matches') {
+      h += '<div class="group"><ul>';
+      Core.rankByMatches(complaint, diseases, state, items).forEach(function (x) {
+        h += dxHtml(x.id, x.n, tcSel, x.groups);
       });
       h += '</ul></div>';
-    });
+    } else {
+      Core.orderGroups(complaint, state).forEach(function (entry) {
+        var g = entry.group;
+        h += '<div class="group' + (entry.promoted ? ' promoted' : '') + '"><h3>' + esc(g.group) + '</h3><ul>';
+        g.diseases.forEach(function (id) {
+          h += dxHtml(id, Core.matchCount(diseases[id], state, items), tcSel, null);
+        });
+        h += '</ul></div>';
+      });
+    }
     $('ddx').innerHTML = h;
+    var segs = document.querySelectorAll('[data-sort]');
+    for (var i = 0; i < segs.length; i++) {
+      var on = segs[i].getAttribute('data-sort') === ddxSort;
+      segs[i].classList.toggle('on', on);
+      segs[i].setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
   }
 
   function featureListHtml(features) {
@@ -836,8 +888,8 @@ window.POMD_DATA = {"version":"0.2.0","items":{"sex":{"id":"sex","label":"Sex","
     if (!d) { card.hidden = true; card.innerHTML = ''; return; }
     var tcSel = Core.selectedTimecourses(complaint, state, items);
     var tcSt = Core.timecourseStatus(d, tcSel);
-    var h = '<div class="card-head' + (d.must_not_miss ? ' mnm' : '') + '">';
-    h += '<h2>' + (d.must_not_miss ? '★ ' : '') + esc(d.name) + '</h2>';
+    var h = '<div class="card-head">';
+    h += '<h2>' + esc(d.name) + '</h2>';
     h += '<button type="button" class="card-close" data-close-card title="Close (Esc)">×</button></div>';
     h += '<div class="card-badges">';
     if (d.must_not_miss) h += '<span class="badge mnm">Must-not-miss</span>';
@@ -968,6 +1020,9 @@ window.POMD_DATA = {"version":"0.2.0","items":{"sex":{"id":"sex","label":"Sex","
       openDiseaseId = null;
       renderDdx();
       renderCard();
+    } else if (t.hasAttribute('data-sort')) {
+      ddxSort = t.getAttribute('data-sort');
+      renderDdx();
     } else if (t.hasAttribute('data-copy')) {
       onCopy(t.getAttribute('data-copy'));
     } else if (t.id === 'btn-new') {
