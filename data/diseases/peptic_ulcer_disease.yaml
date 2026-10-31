@@ -1,0 +1,56 @@
+id: peptic_ulcer_disease
+name: Peptic ulcer disease
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Recurrent burning or gnawing epigastric pain related to meals, often waking the patient at night and
+  relieved by antacids, in a patient with H. pylori infection or NSAID / aspirin use.
+
+symptoms:
+  - when: pain_location = epigastric
+    text: Epigastric pain, well localized
+  - when: pain_quality = burning | gnawing
+    text: Burning or gnawing, hunger-like pain
+  - when: meal_relation = better_eating | worse_hungry | worse_eating
+    text: Meal-related — duodenal ulcer classically eased by food and worse when hungry; gastric ulcer often worse after eating
+  - when: nocturnal = wakes
+    text: Wakes the patient at night (typical of duodenal ulcer)
+  - when: relieving = antacid
+    text: Relieved by antacids or acid suppression
+  - when: episodes = recurrent
+    text: Episodic, recurring over weeks to months
+  - when: assoc_gi = nausea | bloating | early_satiety
+    text: Nausea, bloating, or early satiety
+  - when: risk = nsaid | hpylori | pud
+    text: NSAID / aspirin use, H. pylori, or a prior ulcer
+  - when: assoc_gi = melena | hematemesis
+    text: Melena or hematemesis signal a bleeding ulcer
+  - when: assoc_sys = no weight_loss
+    text: No weight loss (weight loss raises concern for malignancy)
+
+pe:
+  - when: tenderness = epigastric
+    text: Mild epigastric tenderness
+  - when: guarding = soft
+    text: Soft abdomen without peritoneal signs (rigidity suggests perforation)
+  - when: skin = pallor
+    text: Pallor if there is chronic blood loss
+  - when: rectal = melena
+    text: Melena on rectal exam if bleeding
+
+labs:
+  - CBC — iron-deficiency anemia from occult bleeding
+  - H. pylori test (urea breath test or stool antigen; hold PPI for 2 weeks beforehand)
+  - Otherwise usually normal
+
+imaging:
+  - EGD for alarm features (bleeding, anemia, weight loss, dysphagia, persistent vomiting) or age ≥ 60
+  - Biopsy every gastric ulcer and confirm healing by repeat EGD
+
+pitfalls:
+  - Symptoms alone cannot reliably separate PUD, functional dyspepsia, and gastric cancer.
+  - NSAID-related ulcers are often painless and first present with bleeding or perforation.
+  - Sudden severe pain with rigidity means perforation; persistent vomiting suggests gastric outlet obstruction.
+  - PPI use, antibiotics, and bismuth cause false-negative H. pylori tests.
+  - Exclude ACS in older patients with new "epigastric" pain, especially on exertion.

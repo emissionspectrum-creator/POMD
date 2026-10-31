@@ -1,0 +1,63 @@
+id: acute_cholecystitis
+name: Acute cholecystitis
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Constant RUQ pain lasting more than several hours with fever, RUQ tenderness and a positive
+  Murphy's sign, usually from persistent cystic duct obstruction by a gallstone.
+
+symptoms:
+  - when: pain_location = ruq | epigastric
+    text: RUQ (sometimes epigastric) pain
+  - when: pain_pattern = constant
+    text: Constant pain, unlike the self-limited attacks of biliary colic
+  - when: duration = h6_24 | d1_3 | d4_7
+    text: Lasting more than ~6 hours, typically 1 day or longer at presentation
+  - when: radiation = r_shoulder
+    text: May radiate to the right shoulder or scapula
+  - when: aggravating = deep_breath | movement
+    text: Worse with deep breathing or movement
+  - when: assoc_sys = fever
+    text: Fever
+  - when: assoc_gi = nausea | vomiting
+    text: Nausea and vomiting
+  - when: assoc_gi = anorexia
+    text: Anorexia
+  - when: episodes = recurrent
+    text: Often preceded by episodes of biliary colic
+  - when: risk = gallstones
+    text: Known gallstones
+
+pe:
+  - when: vitals = fever
+    text: Fever (may be absent in the elderly)
+  - when: vitals = tachycardia
+    text: Tachycardia
+  - when: tenderness = ruq
+    text: RUQ tenderness
+  - when: abd_signs = murphy
+    text: Positive Murphy's sign
+  - when: guarding = voluntary | involuntary
+    text: Guarding in the RUQ
+  - when: palpable = gallbladder
+    text: Palpable, tender gallbladder in some patients
+  - when: skin = no icterus
+    text: Usually anicteric; marked jaundice suggests a CBD stone, Mirizzi syndrome, or cholangitis
+
+labs:
+  - Leukocytosis and raised CRP
+  - Mild rises in bilirubin, ALP, or transaminases are common
+  - Bilirubin > ~4 mg/dL or a high ALP / GGT → look for a CBD stone
+
+imaging:
+  - RUQ ultrasound — stones, wall thickening > 4 mm, pericholecystic fluid, sonographic Murphy's sign
+  - Cholescintigraphy (HIDA) if ultrasound is equivocal
+  - CT for suspected complications (gangrene, emphysematous cholecystitis, perforation, abscess)
+
+pitfalls:
+  - Elderly and diabetic patients may have little fever, minimal tenderness, and a negative Murphy's sign.
+  - Acalculous cholecystitis occurs in critically ill, post-operative, or prolonged-fasting patients.
+  - Fever with jaundice and hypotension or confusion is cholangitis, not simple cholecystitis.
+  - Right lower lobe pneumonia and inferior MI can mimic RUQ pain.
+  - Grade severity (e.g. Tokyo Guidelines) to decide on early cholecystectomy vs drainage.

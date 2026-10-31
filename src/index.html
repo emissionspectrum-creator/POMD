@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POMD — Chief complaint work-up</title>
+<style>
+/*__CSS__*/
+</style>
+</head>
+<body>
+<header id="topbar">
+  <span class="brand">POMD</span>
+  <label class="ctl">Chief complaint
+    <select id="complaint-select"></select>
+  </label>
+  <label class="ctl toggle"><input type="checkbox" id="toggle-ask"> Show English phrasing</label>
+  <button type="button" id="btn-new" class="btn">New patient</button>
+  <span class="spacer"></span>
+  <span class="version">__VERSION__</span>
+</header>
+
+<main id="cols">
+  <section class="col" id="col-history">
+    <h2>History</h2>
+    <p class="hint">Click to select · click again to clear · <span class="hint-presence">symptoms: 1× present, 2× absent, 3× clear</span></p>
+    <div id="history"></div>
+  </section>
+  <section class="col" id="col-pe">
+    <h2>Physical exam</h2>
+    <div id="pe"></div>
+    <h2>Labs <span class="sub">suggested</span></h2>
+    <ul id="labs" class="suggest"></ul>
+    <h2>Imaging / Endoscopy <span class="sub">suggested</span></h2>
+    <ul id="imaging" class="suggest"></ul>
+  </section>
+  <section class="col" id="col-ddx">
+    <h2>Differential</h2>
+    <p class="hint legend">
+      <span class="lg mnm">★ must-not-miss</span>
+      <span class="lg hit">highlighted = typical feature selected <b class="count">n</b></span>
+      <span class="lg">time course <span class="tc">A</span><span class="tc">S</span><span class="tc">C</span></span>
+    </p>
+    <div id="ddx"></div>
+  </section>
+</main>
+
+<footer id="output">
+  <div class="out-box">
+    <div class="out-head">HPI <button type="button" class="btn small" data-copy="hpi">Copy HPI</button></div>
+    <div id="out-hpi" class="out-text"></div>
+  </div>
+  <div class="out-box">
+    <div class="out-head">PE <button type="button" class="btn small" data-copy="pe">Copy PE</button></div>
+    <div id="out-pe" class="out-text"></div>
+  </div>
+  <div class="out-actions">
+    <button type="button" class="btn primary" data-copy="all">Copy HPI + PE</button>
+    <span id="copy-status" role="status"></span>
+  </div>
+</footer>
+
+<aside id="card" hidden aria-label="Disease card"></aside>
+
+<script>
+/*__DATA__*/
+</script>
+<script>
+/*__CORE__*/
+</script>
+<script>
+/*__APP__*/
+</script>
+</body>
+</html>

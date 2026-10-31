@@ -1,0 +1,138 @@
+id: abdominal_pain
+name: Abdominal pain
+location_item: pain_location   # selecting a location promotes ddx groups listing it in `locations`
+timecourse_item: duration      # options' `tc` tags drive the acute / chronic badges
+
+# Left column, roughly LQQOPERA order. Items are defined in data/vocab/history.yaml.
+history:
+  - section: Patient
+    items: [sex, age_group, repro_status]
+  - section: Location
+    items: [pain_location, pain_migration]
+  - section: Quality
+    items: [pain_quality, pain_pattern]
+  - section: Quantity
+    items: [severity, nocturnal]
+  - section: Onset / duration
+    items: [onset, duration, episodes]
+  - section: Precipitating factors
+    items: [precipitant]
+  - section: Exacerbating / relieving
+    items: [meal_relation, aggravating, relieving]
+  - section: Radiation
+    items: [radiation]
+  - section: Associated symptoms
+    items: [assoc_gi, assoc_sys, assoc_gu, assoc_other]
+  - section: Relevant history
+    items: [risk]
+
+# Middle column. Items are defined in data/vocab/pe.yaml.
+pe:
+  - section: General & vitals
+    items: [general, vitals, skin, chest]
+  - section: Abdomen
+    items: [abd_contour, bowel_sounds, guarding, tenderness, rebound, abd_signs, palpable, cva_tenderness, hernia]
+  - section: Rectal & pelvic
+    items: [rectal, pelvic]
+
+# Suggestion lists only (not clickable, not compared).
+labs:
+  - {name: CBC with differential, note: "leukocytosis, anemia, thrombocytopenia"}
+  - {name: "Liver panel: AST, ALT, ALP, GGT, total / direct bilirubin", note: "hepatitis vs cholestasis pattern"}
+  - {name: Lipase (or amylase), note: "≥3× ULN supports acute pancreatitis"}
+  - {name: "BUN, creatinine, Na, K, glucose", note: "volume status, DKA, renal function before contrast"}
+  - {name: CRP, note: "inflammation; trend is more useful than a single value"}
+  - {name: Lactate, note: "raised in mesenteric ischemia and shock — but normal early on"}
+  - {name: Urinalysis, note: "hematuria (stone), pyuria (UTI); note: appendicitis can cause sterile pyuria"}
+  - {name: Urine or serum hCG, note: "every woman of reproductive age before imaging"}
+  - {name: Troponin + ECG, note: "upper abdominal pain with cardiac risk factors"}
+  - {name: "PT/INR, aPTT", note: "liver dysfunction, anticoagulation, before procedures"}
+  - {name: Blood gas with ketones, note: "suspected DKA or severe sepsis"}
+  - {name: Blood cultures, note: "fever with suspected cholangitis, abscess, or pyelonephritis"}
+  - {name: Stool occult blood / stool studies, note: "chronic pain with anemia; infectious diarrhea"}
+  - {name: Type and screen, note: "GI bleeding or suspected rupture"}
+
+imaging:
+  - {name: Abdominal ultrasound (RUQ), note: "first-line for gallstones, cholecystitis, bile duct dilatation, liver lesions"}
+  - {name: Plain abdominal X-ray (supine + erect), note: "obstruction, volvulus; limited sensitivity otherwise"}
+  - {name: Erect chest X-ray, note: "free subdiaphragmatic air; lower-lobe pneumonia"}
+  - {name: CT abdomen / pelvis with IV contrast, note: "most undifferentiated acute abdominal pain in adults"}
+  - {name: CT angiography, note: "suspected mesenteric ischemia or AAA"}
+  - {name: "Bedside POCUS (FAST, aorta)", note: "unstable patient; free fluid, AAA"}
+  - {name: MRCP / EUS, note: "suspected bile duct stones with intermediate probability"}
+  - {name: ERCP, note: "therapeutic — cholangitis, confirmed CBD stones"}
+  - {name: Upper endoscopy (EGD), note: "dyspepsia with alarm features or age ≥60, upper GI bleeding"}
+  - {name: Colonoscopy, note: "change in bowel habit, rectal bleeding, suspected IBD or colorectal cancer"}
+  - {name: Pelvic / transvaginal ultrasound, note: "ectopic pregnancy, ovarian torsion, tubo-ovarian abscess"}
+  - {name: Renal ultrasound / non-contrast CT KUB, note: "suspected urolithiasis"}
+
+# Right column. Groups reference disease ids (data/diseases/<id>.yaml); a disease may appear in several groups.
+ddx:
+  - group: RUQ
+    locations: [ruq]
+    diseases: [biliary_colic, acute_cholecystitis]
+  - group: Epigastric
+    locations: [epigastric]
+    diseases: [peptic_ulcer_disease, acute_pancreatitis, biliary_colic]
+  - group: Periumbilical / Diffuse
+    locations: [periumbilical, diffuse]
+    diseases: [acute_appendicitis, acute_mesenteric_ischemia]
+  - group: RLQ
+    locations: [rlq]
+    diseases: [acute_appendicitis]
+
+# Generated text. Template syntax: see CLAUDE.md → "Text templates".
+hpi:
+  joiner: " "
+  sentences:
+    - always: true
+      parts:
+        - "{sex|the patient}[, aged {age_group},] presented with {pain_location|abdominal pain}[ {duration}]"
+        - "{onset}"
+        - "{pain_migration}"
+        - "{pain_quality}"
+        - "{pain_pattern}"
+        - "{severity}"
+        - "{nocturnal}"
+        - "{precipitant}"
+        - "{meal_relation}"
+        - "{aggravating}"
+        - "{relieving}"
+        - "{radiation}"
+    - parts: ["{episodes}"]
+    - lead: "Associated with "
+      parts: ["{assoc_gi+,assoc_sys+,assoc_gu+,assoc_other+}"]
+    - lead: "Denied "
+      parts: ["{assoc_gi-,assoc_sys-,assoc_gu-,assoc_other-}"]
+    - parts: ["{repro_status}"]
+    - lead: "Relevant history includes "
+      parts: ["{risk+}"]
+    - lead: "No history of "
+      parts: ["{risk-}"]
+
+pe_text:
+  joiner: "\n"
+  sentences:
+    - lead: "General: "
+      parts: ["{general}"]
+    - lead: "Vital signs: "
+      parts: ["{vitals*}"]
+    - lead: "Skin & eyes: "
+      parts: ["{skin*}"]
+    - lead: "Chest: "
+      parts: ["{chest*}"]
+    - lead: "Abdomen: "
+      parts:
+        - "{abd_contour}"
+        - "{bowel_sounds}"
+        - "{guarding}"
+        - "{tenderness}"
+        - "{rebound}"
+        - "{abd_signs*}"
+        - "{palpable*}"
+        - "{cva_tenderness}"
+        - "{hernia}"
+    - lead: "Rectal exam: "
+      parts: ["{rectal}"]
+    - lead: "Pelvic exam: "
+      parts: ["{pelvic*}"]

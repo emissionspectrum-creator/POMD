@@ -1,0 +1,63 @@
+id: acute_appendicitis
+name: Acute appendicitis
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Vague periumbilical pain that migrates to the RLQ over 12–24 hours, followed by anorexia, nausea and
+  low-grade fever, with localized RLQ tenderness. Early in the course the pain is periumbilical only.
+
+symptoms:
+  - when: pain_migration = peri_to_rlq
+    text: Periumbilical pain migrating to the RLQ (the most useful historical clue)
+  - when: pain_location = rlq | periumbilical
+    text: RLQ pain, or periumbilical in the early phase
+  - when: onset = hours
+    text: Develops over hours
+  - when: duration = h6_24 | d1_3
+    text: Usually presents within 1–2 days
+  - when: pain_pattern = constant
+    text: Constant pain
+  - when: aggravating = movement
+    text: Worse with movement, coughing, or bumps in the road
+  - when: assoc_gi = anorexia
+    text: Anorexia (its absence makes appendicitis less likely)
+  - when: assoc_gi = nausea | vomiting
+    text: Nausea or vomiting, usually after the pain begins
+  - when: assoc_sys = fever
+    text: Low-grade fever; high fever suggests perforation
+  - when: episodes = first
+    text: First episode
+
+pe:
+  - when: tenderness = rlq
+    text: RLQ tenderness
+  - when: abd_signs = mcburney
+    text: McBurney's point tenderness
+  - when: abd_signs = rovsing
+    text: Rovsing's sign
+  - when: abd_signs = psoas | obturator
+    text: Psoas sign (retrocecal) or obturator sign (pelvic appendix)
+  - when: rebound = present
+    text: Rebound tenderness
+  - when: guarding = voluntary | involuntary
+    text: Guarding in the RLQ
+  - when: vitals = fever
+    text: Low-grade fever
+
+labs:
+  - Leukocytosis with neutrophilia; CRP rises after 12–24 h
+  - Normal WBC and CRP together make appendicitis much less likely but do not exclude it
+  - Urinalysis may show a few WBC / RBC from bladder or ureter irritation
+  - hCG in every woman of reproductive age
+
+imaging:
+  - CT abdomen / pelvis with IV contrast in most adults
+  - Ultrasound first in children, pregnant women, and young women; MRI in pregnancy if ultrasound is non-diagnostic
+
+pitfalls:
+  - Retrocecal appendix causes flank or back pain with little anterior tenderness; pelvic appendix causes suprapubic pain, diarrhea, or urinary symptoms.
+  - Elderly and immunocompromised patients present late and atypically, with high perforation rates.
+  - In pregnancy the pain may sit higher in the right flank or RUQ.
+  - A sudden improvement in pain may mean perforation, not resolution.
+  - In young women consider ectopic pregnancy, ovarian torsion, and PID; scores such as Alvarado or AIR help stratify but do not replace reassessment.

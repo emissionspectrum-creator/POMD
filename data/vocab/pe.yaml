@@ -1,0 +1,170 @@
+# Shared physical-exam vocabulary.
+# For presence items, `frag` is used when the finding is present and `frag_neg` when it is absent
+# (default for absent: "no " + frag).
+
+# ---------- General & vitals ----------
+
+- id: general
+  label: General appearance
+  type: multi
+  join: ","
+  options:
+    - {id: comfortable, label: Comfortable / NAD, frag: in no acute distress, exclusive: true}
+    - {id: ill, label: Ill-appearing, frag: ill-appearing, red_flag: true}
+    - {id: lying_still, label: Lying still, frag: "lying still, reluctant to move"}
+    - {id: restless, label: Restless / writhing, frag: "restless, unable to find a comfortable position"}
+    - {id: pale_diaphoretic, label: Pale / diaphoretic, frag: pale and diaphoretic, red_flag: true}
+    - {id: dehydrated, label: Dry mucous membranes, frag: dry mucous membranes}
+    - {id: confused, label: Altered mental status, frag: confused, red_flag: true}
+
+- id: vitals
+  label: Vital signs
+  type: presence
+  join: ","
+  options:
+    - {id: fever, label: Fever, frag: febrile, frag_neg: afebrile}
+    - {id: tachycardia, label: Tachycardia, frag: tachycardic, frag_neg: heart rate normal}
+    - {id: hypotension, label: Hypotension, frag: hypotensive, frag_neg: normotensive, red_flag: true}
+    - {id: tachypnea, label: Tachypnea / Kussmaul, frag: tachypneic, frag_neg: respiratory rate normal}
+    - {id: hypoxemia, label: Low SpO₂, frag: hypoxemic, frag_neg: oxygen saturation normal}
+
+- id: skin
+  label: Skin & eyes
+  type: presence
+  join: ","
+  options:
+    - {id: icterus, label: Jaundice / icterus, frag: scleral icterus, frag_neg: anicteric sclerae}
+    - {id: pallor, label: Pallor, frag: conjunctival pallor, frag_neg: no pallor}
+    - {id: ecchymosis, label: Flank / periumbilical ecchymosis, frag: flank or periumbilical ecchymosis (Grey Turner / Cullen sign)}
+    - {id: liver_stigmata, label: Stigmata of chronic liver disease, frag: stigmata of chronic liver disease}
+    - {id: virchow, label: Left supraclavicular node, frag: a palpable left supraclavicular lymph node, frag_neg: no supraclavicular lymphadenopathy}
+
+- id: chest
+  label: Chest & heart
+  type: presence
+  join: ","
+  options:
+    - {id: crackles_r, label: Right basal crackles, frag: crackles at the right lung base, frag_neg: no basal crackles}
+    - {id: irregular, label: Irregularly irregular rhythm, frag: irregularly irregular heart rhythm, frag_neg: regular heart rhythm}
+    - {id: murmur, label: Murmur, frag: a heart murmur}
+
+# ---------- Abdomen ----------
+
+- id: abd_contour
+  label: Contour
+  type: single
+  options:
+    - {id: flat, label: Not distended, frag: non-distended}
+    - {id: mild, label: Mildly distended, frag: mildly distended}
+    - {id: marked, label: Markedly distended / tympanic, frag: markedly distended and tympanic}
+
+- id: bowel_sounds
+  label: Bowel sounds
+  type: single
+  options:
+    - {id: normal, label: Normal, frag: normoactive bowel sounds}
+    - {id: hyper, label: Hyperactive, frag: hyperactive bowel sounds}
+    - {id: high_pitched, label: High-pitched / tinkling, frag: "high-pitched, tinkling bowel sounds"}
+    - {id: hypo, label: Hypoactive, frag: hypoactive bowel sounds}
+    - {id: absent, label: Absent, frag: absent bowel sounds}
+
+- id: guarding
+  label: Wall / guarding
+  type: single
+  options:
+    - {id: soft, label: Soft, frag: soft}
+    - {id: voluntary, label: Voluntary guarding, frag: voluntary guarding}
+    - {id: involuntary, label: Involuntary guarding, frag: involuntary guarding, red_flag: true}
+    - {id: rigid, label: Board-like rigidity, frag: board-like rigidity, red_flag: true}
+
+- id: tenderness
+  label: Tenderness
+  type: multi
+  template: "tenderness over the {}"
+  options:
+    - {id: none, label: Non-tender, frag: non-tender, exclusive: true}
+    - {id: epigastric, label: Epigastric, frag: epigastrium}
+    - {id: ruq, label: RUQ, frag: RUQ}
+    - {id: luq, label: LUQ, frag: LUQ}
+    - {id: periumbilical, label: Periumbilical, frag: periumbilical region}
+    - {id: rlq, label: RLQ, frag: RLQ}
+    - {id: llq, label: LLQ, frag: LLQ}
+    - {id: suprapubic, label: Suprapubic, frag: suprapubic region}
+    - {id: diffuse, label: Diffuse, frag: entire abdomen}
+
+- id: rebound
+  label: Rebound
+  type: single
+  options:
+    - {id: present, label: Present, frag: rebound tenderness, red_flag: true}
+    - {id: absent, label: Absent, frag: no rebound tenderness}
+
+- id: abd_signs
+  label: Special signs
+  type: presence
+  join: ","
+  options:
+    - {id: murphy, label: Murphy's sign, frag: positive Murphy's sign, frag_neg: negative Murphy's sign}
+    - {id: mcburney, label: McBurney's point, frag: McBurney's point tenderness}
+    - {id: rovsing, label: Rovsing's sign, frag: positive Rovsing's sign, frag_neg: negative Rovsing's sign}
+    - {id: psoas, label: Psoas sign, frag: positive psoas sign, frag_neg: negative psoas sign}
+    - {id: obturator, label: Obturator sign, frag: positive obturator sign, frag_neg: negative obturator sign}
+    - {id: carnett, label: Carnett's sign, frag: positive Carnett's sign, frag_neg: negative Carnett's sign}
+    - {id: out_of_proportion, label: Pain out of proportion to exam, frag: pain out of proportion to the examination findings, frag_neg: pain proportionate to the examination findings, red_flag: true}
+
+- id: palpable
+  label: Organs / masses
+  type: presence
+  join: ","
+  options:
+    - {id: hepatomegaly, label: Hepatomegaly, frag: hepatomegaly}
+    - {id: liver_tender, label: Liver tender / fist percussion, frag: liver tenderness on fist percussion}
+    - {id: splenomegaly, label: Splenomegaly, frag: splenomegaly}
+    - {id: gallbladder, label: Palpable gallbladder, frag: a palpable gallbladder}
+    - {id: mass, label: Abdominal mass, frag: a palpable abdominal mass, frag_neg: no palpable mass}
+    - {id: pulsatile, label: Pulsatile mass, frag: a pulsatile mass, frag_neg: no pulsatile mass}
+    - {id: bladder, label: Distended bladder, frag: "a distended, palpable bladder"}
+    - {id: ascites, label: Shifting dullness, frag: shifting dullness}
+
+- id: cva_tenderness
+  label: CVA tenderness
+  type: multi
+  template: "{} CVA tenderness"
+  options:
+    - {id: none, label: None, frag: no CVA tenderness, exclusive: true}
+    - {id: right, label: Right, frag: right}
+    - {id: left, label: Left, frag: left}
+
+- id: hernia
+  label: Hernial orifices
+  type: single
+  options:
+    - {id: intact, label: Intact, frag: hernial orifices intact}
+    - {id: reducible, label: Reducible hernia, frag: a reducible hernia}
+    - {id: incarcerated, label: "Tender, irreducible hernia", frag: "a tender, irreducible hernia", red_flag: true}
+
+# ---------- Rectal & pelvic ----------
+
+- id: rectal
+  label: Digital rectal exam
+  type: multi
+  join: ","
+  options:
+    - {id: normal, label: Unremarkable, frag: unremarkable, exclusive: true}
+    - {id: melena, label: Melena on glove, frag: melena on the glove, red_flag: true}
+    - {id: fresh_blood, label: Fresh blood, frag: fresh blood on the glove}
+    - {id: tender, label: Tenderness, frag: rectal tenderness}
+    - {id: mass, label: Mass, frag: a palpable rectal mass}
+    - {id: perianal, label: Perianal fistula / abscess, frag: a perianal fistula or abscess}
+    - {id: empty, label: Empty vault, frag: an empty rectal vault}
+    - {id: hard_stool, label: Hard stool, frag: hard stool in the rectal vault}
+
+- id: pelvic
+  label: Pelvic exam
+  type: presence
+  join: ","
+  options:
+    - {id: cmt, label: Cervical motion tenderness, frag: cervical motion tenderness}
+    - {id: adnexal_tender, label: Adnexal tenderness, frag: adnexal tenderness}
+    - {id: adnexal_mass, label: Adnexal mass, frag: an adnexal mass}
+    - {id: cervical_discharge, label: Mucopurulent discharge, frag: mucopurulent cervical discharge}

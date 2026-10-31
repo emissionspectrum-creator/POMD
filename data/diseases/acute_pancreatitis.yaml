@@ -1,0 +1,68 @@
+id: acute_pancreatitis
+name: Acute pancreatitis
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Acute, constant, severe epigastric pain radiating to the back with nausea and vomiting, typically after
+  gallstone passage or heavy drinking; diagnosis requires two of pain, lipase ≥3× ULN, and imaging findings.
+
+symptoms:
+  - when: pain_location = epigastric | luq | ruq
+    text: Epigastric pain, sometimes LUQ or band-like across the upper abdomen
+  - when: onset = sudden | hours
+    text: Onset over minutes to hours
+  - when: pain_pattern = constant
+    text: Constant, boring pain
+  - when: severity = s7 | s8 | s9 | s10
+    text: Usually severe
+  - when: radiation = back
+    text: Radiates straight through to the back
+  - when: relieving = leaning_forward
+    text: Eased by sitting up and leaning forward
+  - when: aggravating = lying_flat
+    text: Worse lying supine
+  - when: meal_relation = worse_eating
+    text: Worse after eating
+  - when: precipitant = alcohol | fatty_meal
+    text: After an alcohol binge or a heavy meal
+  - when: assoc_gi = nausea | vomiting
+    text: Nausea and vomiting are prominent
+  - when: risk = gallstones | alcohol | hypertriglyceridemia
+    text: Gallstones, heavy alcohol use, or hypertriglyceridemia
+
+pe:
+  - when: tenderness = epigastric
+    text: Epigastric tenderness, often with less rigidity than the pain would suggest
+  - when: guarding = voluntary | soft
+    text: Voluntary guarding; true board-like rigidity is unusual
+  - when: vitals = tachycardia
+    text: Tachycardia
+  - when: vitals = fever
+    text: Low-grade fever
+  - when: bowel_sounds = hypo
+    text: Hypoactive bowel sounds (ileus)
+  - when: abd_contour = mild
+    text: Mild distension
+  - when: skin = icterus
+    text: Icterus suggests a biliary cause or CBD obstruction
+  - when: skin = ecchymosis
+    text: Grey Turner / Cullen sign — uncommon and late, indicates severe disease
+
+labs:
+  - Lipase ≥ 3× ULN (more specific than amylase); the level does not reflect severity
+  - ALT > 3× ULN early suggests a gallstone cause
+  - Triglycerides and calcium to identify the cause
+  - BUN, hematocrit, creatinine, and CRP to assess severity; rising BUN in the first 24–48 h is a bad sign
+
+imaging:
+  - Abdominal ultrasound in every patient to look for gallstones
+  - Contrast CT only if the diagnosis is uncertain or the patient fails to improve after 48–72 h
+  - MRCP or EUS for persistent bile duct stone suspicion or recurrent "idiopathic" pancreatitis
+
+pitfalls:
+  - Early CT underestimates necrosis; do not image routinely on day 1 if the diagnosis is clear.
+  - A raised lipase also occurs with perforated ulcer, mesenteric ischemia, bowel obstruction, and renal failure.
+  - Amylase can be falsely normal in hypertriglyceridemia-induced pancreatitis.
+  - Unexplained pancreatitis in a patient over 40–50 should prompt a search for a pancreatic tumor.
+  - Watch for organ failure (persistent > 48 h defines severe disease); aggressive early fluid support, avoid overload.

@@ -1,0 +1,60 @@
+id: acute_mesenteric_ischemia
+name: Acute mesenteric ischemia
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Sudden, severe periumbilical or diffuse pain out of proportion to a soft, minimally tender abdomen in
+  an older patient with atrial fibrillation or atherosclerotic disease; peritonitis and bloody stool appear late.
+
+symptoms:
+  - when: onset = sudden
+    text: Sudden onset (embolic); thrombotic and venous forms may develop over hours to days
+  - when: pain_location = periumbilical | diffuse
+    text: Periumbilical or diffuse, poorly localized pain
+  - when: severity = s8 | s9 | s10
+    text: Severe pain
+  - when: age_group = age_60_plus
+    text: Usually over 60
+  - when: risk = af | atherosclerosis | hypercoagulable
+    text: Atrial fibrillation, atherosclerotic disease, or a hypercoagulable state
+  - when: assoc_gi = vomiting | diarrhea
+    text: Vomiting and urge to defecate / diarrhea early
+  - when: assoc_gi = hematochezia | bloody_diarrhea
+    text: Bloody stool is a late sign of mucosal infarction
+  - when: assoc_other = food_fear
+    text: Prior postprandial pain and fear of eating (chronic mesenteric ischemia preceding thrombosis)
+  - when: assoc_sys = weight_loss
+    text: Weight loss from food avoidance (chronic mesenteric ischemia)
+
+pe:
+  - when: abd_signs = out_of_proportion
+    text: Pain out of proportion to the examination — the hallmark early finding
+  - when: guarding = soft
+    text: Abdomen soft early on
+  - when: tenderness = none | periumbilical | diffuse
+    text: Minimal or diffuse mild tenderness early
+  - when: chest = irregular
+    text: Irregularly irregular rhythm (atrial fibrillation)
+  - when: vitals = tachycardia
+    text: Tachycardia
+  - when: rebound = present
+    text: Rebound and rigidity appear only after transmural infarction (late)
+  - when: rectal = fresh_blood
+    text: Blood on rectal exam (late)
+
+labs:
+  - Leukocytosis, metabolic acidosis, raised lactate — but all may be normal early
+  - D-dimer is sensitive but non-specific
+  - Amylase / lipase and LDH may be mildly elevated
+
+imaging:
+  - CT angiography (arterial and portal venous phase) immediately when suspected — do not wait for lactate
+  - Plain films are often normal early; "thumbprinting" or pneumatosis are late findings
+
+pitfalls:
+  - A benign abdominal exam early on is the classic trap; the pain is real.
+  - A normal lactate does not exclude ischemia; by the time lactate rises, bowel is often necrotic.
+  - Non-occlusive mesenteric ischemia occurs in shock, heart failure, dialysis, vasopressor or digoxin use.
+  - Mesenteric venous thrombosis is more gradual and affects younger patients with hypercoagulable states, cirrhosis, or malignancy.
+  - Older patient with AF and severe abdominal pain → CT angiography first, not "observe and recheck".

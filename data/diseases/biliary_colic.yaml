@@ -1,0 +1,55 @@
+id: biliary_colic
+name: Biliary colic
+must_not_miss: false
+timecourse: [acute, chronic]   # acute attacks on a background of recurrent episodes
+status: draft
+one_liner: >
+  Steady, intense RUQ or epigastric pain lasting 30 minutes to a few hours, often after a fatty meal
+  or at night, from transient gallstone impaction in the cystic duct; the patient is well between attacks.
+
+symptoms:
+  - when: pain_location = ruq | epigastric
+    text: RUQ or epigastric pain
+  - when: pain_pattern = attacks
+    text: Discrete attacks lasting 30 min to a few hours, pain-free in between
+  - when: pain_quality = dull | pressure
+    text: Steady, intense ache — not truly "colicky" despite the name
+  - when: precipitant = fatty_meal
+    text: Often after a fatty or heavy meal, or at night
+  - when: radiation = r_shoulder | back
+    text: May radiate to the right shoulder / scapula or to the back
+  - when: assoc_gi = nausea | vomiting
+    text: Nausea, sometimes vomiting
+  - when: episodes = recurrent
+    text: Recurrent similar attacks
+  - when: assoc_sys = no fever
+    text: No fever
+  - when: assoc_sys = no jaundice
+    text: No jaundice
+  - when: risk = gallstones
+    text: Known gallstones
+
+pe:
+  - when: vitals = no fever
+    text: Afebrile
+  - when: tenderness = ruq | epigastric
+    text: Mild RUQ / epigastric tenderness during an attack; may be non-tender between attacks
+  - when: abd_signs = no murphy
+    text: Murphy's sign negative or equivocal
+  - when: guarding = soft
+    text: Soft abdomen, no peritoneal signs
+  - when: skin = no icterus
+    text: Anicteric
+
+labs:
+  - Usually normal — WBC, liver panel, and lipase within normal limits
+  - A transient AST/ALT rise can follow passage of a small stone
+
+imaging:
+  - RUQ ultrasound — gallstones without wall thickening or pericholecystic fluid
+
+pitfalls:
+  - Pain persisting beyond about 6 hours, fever, or leukocytosis suggests acute cholecystitis rather than colic.
+  - Jaundice, dark urine, or a cholestatic liver panel points to a common bile duct stone.
+  - Gallstones are common and often incidental; bloating or vague postprandial discomfort alone is usually not biliary.
+  - In older or diabetic patients with upper abdominal pain, exclude ACS before blaming the gallbladder.
