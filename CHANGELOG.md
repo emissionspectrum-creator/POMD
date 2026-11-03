@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2026-11-04 — 支援雲端 session
+
+**新增**
+- 建立 private GitHub repo `POMD` 並 push，讓 Claude Code 雲端 session（claude.ai/code）可以 clone 使用。
+- `.claude/settings.json` + `.claude/hooks/session-start.sh`：SessionStart hook，只在雲端環境（`CLAUDE_CODE_REMOTE=true`）安裝 PyYAML，讓 `build.py` 與測試能直接執行；本機不受影響。
+- `CLAUDE.md` 補充雲端 session 的注意事項。
+
 ## 2026-10-31 — v0.2.0 後續修改（使用者要求）
 
 **修改**

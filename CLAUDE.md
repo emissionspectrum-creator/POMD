@@ -48,6 +48,7 @@ node --test tests/*.test.js     # 單元測試 + 對 dist 資料的端對端測�
 - `build.py` 有 error 會中止；warning（例如疾病特徵用到主訴沒顯示的項目、疾病沒被任何主訴引用）要看過並處理或說明。
 - 版本號在 `build.py` 的 `APP_VERSION`，會顯示在畫面右上角。
 - 注意 `node --test tests/`（目錄）在 Node 22 會失敗，要用 `tests/*.test.js`。
+- 雲端 session（claude.ai/code）：repo 在 GitHub（private `POMD`），雲端從 GitHub clone。`.claude/hooks/session-start.sh` 只在 `CLAUDE_CODE_REMOTE=true` 時執行，自動安裝 PyYAML。雲端沒有本機的 playwright chromium，瀏覽器實測回本機做。雲端 session 的修改要 push 到分支，回本機前先 `git pull`。
 - 瀏覽器實測：可在 session scratchpad 安裝 `playwright-core`，搭配 `~/.cache/ms-playwright/chromium-*/chrome-linux64/chrome` 以 `file://` 開啟 dist 測試；不要把 playwright 裝進專案。
 
 ## 資料格式
