@@ -4,6 +4,7 @@
 
 **新增**
 - `session-start.sh` 擴充：本機與雲端都會在 session 開始時 fetch 並 rebase 到 `origin/main`；有未 commit 變更或衝突時不動作，只提出警告。
+- SessionStart hook 加上 `matcher: "startup|resume"`，只在新開或 resume session 時同步；對話壓縮（compact）、`/clear` 時不再執行，避免改到一半時誤報「有未 commit 變更」。
 - `CLAUDE.md` 新增「同步」一節：完成修改且 build／測試通過後直接 commit 並 push 到 `main`（使用者要求）；`dist/POMD.html` 因含 build 日期，衝突時以重新 build 解決。
 
 ## 2026-11-04 — 支援雲端 session
