@@ -56,7 +56,7 @@ node --test tests/*.test.js     # 單元測試 + 對 dist 資料的端對端測�
 
 - **開始**：`.claude/hooks/session-start.sh` 會在每個 session 開始時 `git fetch` 並把目前分支 rebase 到 `origin/main`；雲端另外會安裝 PyYAML。hook 的 `[sync]` 訊息若是 WARNING（有未 commit 的變更或 rebase 衝突），先告訴使用者，處理好再動手改。
 - **結束**：每完成一項修改、build 與測試都通過後，**直接 commit 並 push 到 `origin main`，不用再問**（使用者 2026-11-04 明確要求，覆寫全域「commit／push 前先問」）。步驟：
-  1. `git fetch origin main && git rebase origin/main`
+  1. 先 commit，再 `git fetch origin main && git rebase origin/main`（有未 commit 變更時無法 rebase）
   2. 若衝突只在 `dist/POMD.html`（內含 build 日期，兩邊各自 build 就會衝突）：`python3 build.py && git add dist/POMD.html && git rebase --continue`；其他檔案衝突 → 停下來問使用者。
   3. rebase 後若有拉到新的 `data/`／`src/` 變更，重新 build、跑測試，有變動就再 commit。
   4. `git push origin HEAD:main`（雲端 session 在 `claude/...` 分支上也一樣推到 `main`）。
