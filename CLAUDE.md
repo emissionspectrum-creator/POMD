@@ -48,8 +48,20 @@ node --test tests/*.test.js     # 單元測試 + 對 dist 資料的端對端測�
 - `build.py` 有 error 會中止；warning（例如疾病特徵用到主訴沒顯示的項目、疾病沒被任何主訴引用）要看過並處理或說明。
 - 版本號在 `build.py` 的 `APP_VERSION`，會顯示在畫面右上角。
 - 注意 `node --test tests/`（目錄）在 Node 22 會失敗，要用 `tests/*.test.js`。
-- 雲端 session（claude.ai/code）：repo 在 GitHub（private `POMD`），雲端從 GitHub clone。`.claude/hooks/session-start.sh` 只在 `CLAUDE_CODE_REMOTE=true` 時執行，自動安裝 PyYAML。雲端沒有本機的 playwright chromium，瀏覽器實測回本機做。雲端 session 的修改要 push 到分支，回本機前先 `git pull`。
 - 瀏覽器實測：可在 session scratchpad 安裝 `playwright-core`，搭配 `~/.cache/ms-playwright/chromium-*/chrome-linux64/chrome` 以 `file://` 開啟 dist 測試；不要把 playwright 裝進專案。
+
+## 同步（本機 ↔ 雲端 session）
+
+使用者有時在本機改、有時在另一台電腦用雲端 session（claude.ai/code）改。GitHub private repo `emissionspectrum-creator/POMD` 的 `main` 是唯一的共同版本。
+
+- **開始**：`.claude/hooks/session-start.sh` 會在每個 session 開始時 `git fetch` 並把目前分支 rebase 到 `origin/main`；雲端另外會安裝 PyYAML。hook 的 `[sync]` 訊息若是 WARNING（有未 commit 的變更或 rebase 衝突），先告訴使用者，處理好再動手改。
+- **結束**：每完成一項修改、build 與測試都通過後，**直接 commit 並 push 到 `origin main`，不用再問**（使用者 2026-11-04 明確要求，覆寫全域「commit／push 前先問」）。步驟：
+  1. `git fetch origin main && git rebase origin/main`
+  2. 若衝突只在 `dist/POMD.html`（內含 build 日期，兩邊各自 build 就會衝突）：`python3 build.py && git add dist/POMD.html && git rebase --continue`；其他檔案衝突 → 停下來問使用者。
+  3. rebase 後若有拉到新的 `data/`／`src/` 變更，重新 build、跑測試，有變動就再 commit。
+  4. `git push origin HEAD:main`（雲端 session 在 `claude/...` 分支上也一樣推到 `main`）。
+- 不要 force push。push 被拒（遠端又有新 commit）就回到步驟 1。
+- 雲端沒有本機的 playwright chromium，瀏覽器實測回本機做。
 
 ## 資料格式
 
