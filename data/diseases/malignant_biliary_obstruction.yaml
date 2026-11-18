@@ -1,0 +1,53 @@
+id: malignant_biliary_obstruction
+name: Malignant biliary obstruction (pancreatic head, cholangiocarcinoma)
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Painless, progressive jaundice with dark urine, pale stools and itching, often with weight loss and anorexia,
+  in an older patient — a cholestatic pattern with dilated bile ducts.
+
+symptoms:
+  - when: assoc_sys = jaundice | dark_urine | pale_stool
+    text: Progressive obstructive jaundice
+  - when: assoc_sys = pruritus
+    text: Itching
+  - when: assoc_sys = weight_loss
+    text: Weight loss
+  - when: assoc_gi = anorexia
+    text: Anorexia
+  - when: assoc_sys = no fever
+    text: Usually afebrile unless cholangitis
+  - when: age_group = age_60_plus | age_40_59
+    text: Older patient
+  - when: pain_location = epigastric | ruq
+    text: Vague epigastric or back pain (often painless)
+  - when: lft_duration = lt1m | m1_6
+    text: Weeks
+  - when: risk = diabetes
+    text: New-onset diabetes (pancreatic cancer)
+
+pe:
+  - when: skin = icterus
+    text: Jaundice
+  - when: palpable = gallbladder
+    text: Palpable non-tender gallbladder (Courvoisier)
+  - when: liver_pe = excoriations
+    text: Scratch marks
+  - when: palpable = hepatomegaly | mass
+    text: Hepatomegaly or mass
+
+labs:
+  - "Cholestatic pattern: ALP, GGT, direct bilirubin"
+  - "CA 19-9 (raised by obstruction itself), CEA"
+  - INR (vitamin K malabsorption)
+
+imaging:
+  - Ultrasound — dilated ducts
+  - Pancreas-protocol CT, MRCP; EUS with biopsy
+  - ERCP for drainage and brushing
+
+pitfalls:
+  - Painless jaundice in an older adult is cancer until proven otherwise.
+  - Hilar cholangiocarcinoma can cause intrahepatic duct dilatation without a dilated CBD.
+  - Liver flukes (Clonorchis) are a cholangiocarcinoma risk factor in parts of Asia.

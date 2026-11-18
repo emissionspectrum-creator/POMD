@@ -101,22 +101,37 @@
 
   // ---------- layout ----------
 
+  // Collapsible sub-items of a question (closed by default; see refresh for auto-open).
+  // They move with their question and cannot be reordered or hidden on their own.
+  function detailsHtml(itemId) {
+    var det = Core.itemDetails(complaint, itemId);
+    if (!det) return '';
+    var h = '<details class="details" data-details="' + esc(itemId) + '"><summary><span class="details-label">' +
+      esc(det.label) + '</span><span class="details-summary"></span></summary>';
+    if (det.note) h += '<p class="details-note">' + esc(det.note) + '</p>';
+    det.items.forEach(function (id) { h += itemBlockHtml(id, -1); });
+    return h + '</details>';
+  }
+
+  // idx < 0: a sub-item inside a details block (no layout controls).
   function itemBlockHtml(itemId, idx) {
+    var sub = idx < 0;
     var item = items[itemId];
     var kind = item.type === 'multi' ? 'multi' : (item.type === 'presence' ? '+ / −' : '');
     var h = '<div class="item" data-item-block="' + esc(item.id) + '">';
     h += '<div class="item-head">';
-    h += '<span class="drag-handle" draggable="true" data-drag="' + esc(item.id) + '" title="Drag to move">⠿</span>';
+    if (!sub) h += '<span class="drag-handle" draggable="true" data-drag="' + esc(item.id) + '" title="Drag to move">⠿</span>';
     h += '<span class="item-label">' + esc(Core.itemLabel(complaint, item)) + '</span>';
     if (kind) h += '<span class="item-kind">' + kind + '</span>';
     h += '<button type="button" class="item-clear" data-clear="' + esc(item.id) + '" title="Clear this item">clear</button>';
-    h += '<span class="item-edit">' +
+    if (!sub) h += '<span class="item-edit">' +
       '<button type="button" class="btn small" data-move="-1" data-id="' + esc(item.id) + '" title="Move up"' +
       (idx === 0 ? ' disabled' : '') + '>↑</button>' +
       '<button type="button" class="btn small" data-move="1" data-id="' + esc(item.id) + '" title="Move down"' +
       (idx === order.length - 1 ? ' disabled' : '') + '>↓</button>' +
       '<button type="button" class="btn small" data-hide="' + esc(item.id) + '" title="Hide this question">Hide</button>' +
-      '</span></div>';
+      '</span>';
+    h += '</div>';
     var ask = Core.itemAsk(complaint, item);
     if (ask.length) {
       h += '<ul class="ask">';
@@ -128,7 +143,7 @@
       h += '<button type="button" class="chip' + (o.red_flag ? ' rf' : '') + '" data-item="' + esc(item.id) +
         '" data-opt="' + esc(o.id) + '"' + (o.red_flag ? ' title="Red flag"' : '') + '>' + esc(o.label) + '</button>';
     });
-    h += '</div></div>';
+    h += '</div>' + (sub ? '' : detailsHtml(itemId)) + '</div>';
     return h;
   }
 
@@ -181,6 +196,15 @@
     var blocks = document.querySelectorAll('[data-item-block]');
     for (var j = 0; j < blocks.length; j++) {
       blocks[j].classList.toggle('answered', !!state[blocks[j].getAttribute('data-item-block')]);
+    }
+    var dets = document.querySelectorAll('[data-details]');
+    for (var k = 0; k < dets.length; k++) {
+      var det = Core.itemDetails(complaint, dets[k].getAttribute('data-details'));
+      var sum = det ? Core.detailsSummary(det, state, items) : '';
+      dets[k].querySelector('.details-summary').textContent = sum;
+      // Open when something inside gets selected (on load, or synced from the other page).
+      if (sum && !dets[k].getAttribute('data-had')) dets[k].open = true;
+      dets[k].setAttribute('data-had', sum ? '1' : '');
     }
   }
 

@@ -110,9 +110,10 @@ node --test --test-name-pattern="sanitizeState" tests/*.test.js   # 只跑名稱
 
 ### 主訴（`data/complaints/<id>.yaml`）
 
-- `group_item`：右欄的排序項目（腹痛 = `pain_location`，腹瀉 = `stool_character`）；點選後，`ddx` 中 `options` 有交集的群組排到最前面（presence 項目只看 present）。
+- `group_item`（選填）：右欄的排序項目（腹痛 = `pain_location`，腹瀉 = `stool_character`；肝功能異常不設，依病因固定順序）；點選後，`ddx` 中 `options` 有交集的群組排到最前面（presence 項目只看 present）。
 - `timecourse_item`：哪個項目代表時程；其選項的 `tc` 決定右欄 A／S／C 徽章的標亮。
 - `history`／`pe`：`[{section, items: [item id...]}]`，決定左欄、中欄的分段與順序。
+  - `{item: id, details: {label, note?, items: [...]}}`：可收合的細項（例如酒精的量），預設收合、有點選時自動展開，收合時顯示摘要（`Core.itemDetails`／`detailsSummary`）。細項只能掛在段落直屬的項目下（不能巢狀），不列入 `quick.show`，精簡版中跟著主項目移動。
   - `items` 的元素也可以寫成 `{item: id, options: [...], ask: [...], label: ...}`：只顯示該共用項目的部分選項（依詞彙原順序）、覆寫英文問法或標籤，只影響這個主訴（build 輸出到 `item_options`／`item_ask`／`item_label`；畫面用 `Core.itemOptions`／`itemAsk`／`itemLabel`）。概念已存在就用這個方式共用，不要為新主訴另立重複的選項。
   - 疾病特徵只在「項目有顯示且至少一個選項有提供」的主訴參與比對與說明卡（`Core.featureShown`），所以共用疾病可以同時寫兩個主訴的特徵；建議用 `# <complaint> complaint` 註解分段。
 - `labs`／`imaging`：`[{name, note}]`，純建議清單，不可點、不參與比對。

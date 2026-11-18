@@ -463,3 +463,55 @@ test('built data: diarrhea complaint — subsets, groups, shared diseases, HPI',
   assert.match(hpi, /Medications include antibiotics in the past 3 months\./);
   assert.equal(Core.composeText(c.pe_text, s, it), 'Abdomen: soft, non-tender.');
 });
+
+test('details blocks: sub-items count as shown and are summarized', () => {
+  const { items } = fixture();
+  const complaint = {
+    history: [{ section: 'A', items: ['loc'] }],
+    item_details: { loc: { label: 'More', items: ['sev', 'sx'] } }
+  };
+  assert.equal(Core.itemDetails(complaint, 'loc').label, 'More');
+  assert.equal(Core.itemDetails(complaint, 'sev'), null);
+  assert.ok(Core.shownItems(complaint).sev && Core.shownItems(complaint).sx);
+  assert.ok(Core.featureShown({ item: 'sev', options: ['s7'] }, complaint));
+  const s = {};
+  const det = Core.itemDetails(complaint, 'loc');
+  assert.equal(Core.detailsSummary(det, s, items), '');
+  Core.toggle(s, items.sev, 's7');
+  Core.toggle(s, items.sx, 'fever');
+  Core.toggle(s, items.sx, 'nausea');
+  Core.toggle(s, items.sx, 'nausea');
+  assert.equal(Core.detailsSummary(det, s, items), '7 · no Nausea · Fever');
+});
+
+test('orderGroups without group_item keeps the complaint order', () => {
+  const complaint = { ddx: [{ group: 'A' }, { group: 'B' }] };
+  assert.deepEqual(Core.orderGroups(complaint, { x: { y: true } }).map((e) => e.group.group), ['A', 'B']);
+});
+
+test('built data: abnormal liver tests — alcohol details, groups, HPI', () => {
+  const data = loadBuiltData();
+  const it = data.items;
+  const c = data.complaints.find((x) => x.id === 'abnormal_lft');
+  assert.ok(c);
+  assert.ok(!c.group_item);
+  const det = Core.itemDetails(c, 'alcohol_use');
+  assert.ok(det && det.items.includes('alcohol_amount') && det.note);
+  // details items are not separate quick-page questions
+  assert.ok(!c.quick.show.includes('alcohol_amount'));
+  const s = Core.defaultState(c, it);
+  Core.toggle(s, it.lft_duration, 'm1_6');
+  Core.toggle(s, it.alcohol_use, 'heavy');
+  Core.toggle(s, it.alcohol_type, 'kaoliang');
+  Core.toggle(s, it.alcohol_amount, 'g60_100');
+  Core.toggle(s, it.alcohol_years, 'y10_20');
+  Core.toggle(s, it.alcohol_last, 'still');
+  Core.toggle(s, it.assoc_sys, 'jaundice');
+  assert.equal(Core.detailsSummary(det, s, it), 'Kaoliang / spirits · 60–100 g/day · 10–20 yr · Still drinking');
+  assert.ok(Core.matchCount(data.diseases.alcoholic_hepatitis, s, it, c) >= 5);
+  assert.deepEqual(Core.selectedTimecourses(c, s, it), ['subacute']);
+  assert.equal(Core.orderGroups(c, s)[0].group.group, 'Alcohol');
+  const hpi = Core.composeText(c.hpi, s, it, { date_roc: '115/01/05' });
+  assert.equal(hpi, '(115/01/05) abnormal liver tests for 1–6 months. Associated with jaundice. ' +
+    'Drinks heavily, mainly kaoliang, about 60–100 g of alcohol a day, for 10–20 years, still drinking.');
+});

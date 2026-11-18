@@ -1,0 +1,40 @@
+id: muscle_injury
+name: Muscle injury (AST / ALT from muscle)
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Raised AST (more than ALT) with normal bilirubin, ALP and GGT after strenuous exercise, trauma, seizures,
+  statins, or myositis — the source is muscle, not liver; CK is markedly raised.
+
+symptoms:
+  - when: other_liver = exercise
+    text: Strenuous exercise or muscle injury
+  - when: liver_drugs = statin
+    text: Statin use
+  - when: lft_duration = lt1m | first_found
+    text: Acute
+  - when: assoc_sys = no jaundice
+    text: No jaundice
+  - when: alcohol_use = never | social
+    text: Little alcohol
+  - when: extraintestinal = thyrotoxic
+    text: Thyroid disease can cause myopathy
+
+pe:
+  - when: tenderness = none
+    text: Non-tender abdomen
+  - when: skin = no icterus
+    text: No jaundice
+
+labs:
+  - "CK (often > 5 × ULN); AST > ALT; GGT and bilirubin normal"
+  - "Creatinine, urinalysis (myoglobinuria); TSH"
+  - Repeat liver tests after 1–2 weeks of rest
+
+imaging:
+  - None needed
+
+pitfalls:
+  - Check CK before an extensive liver work-up for isolated AST elevation.
+  - Persistent CK elevation without exercise suggests myositis or hypothyroidism.

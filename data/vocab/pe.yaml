@@ -189,3 +189,26 @@
     - {id: oral_ulcers, label: Oral ulcers, frag: oral aphthous ulcers}
     - {id: goiter, label: Goiter, frag: a goiter, frag_neg: no goiter}
     - {id: tremor, label: Fine tremor, frag: a fine tremor, frag_neg: no tremor}
+
+# ---------- Abnormal liver tests (data/complaints/abnormal_lft.yaml) ----------
+
+- id: liver_pe
+  label: Chronic liver disease
+  type: presence
+  join: ","
+  options:
+    - {id: asterixis, label: Asterixis, frag: asterixis, frag_neg: no asterixis, red_flag: true}
+    - {id: spider, label: Spider angiomata, frag: spider angiomata}
+    - {id: palmar, label: Palmar erythema, frag: palmar erythema}
+    - {id: gynecomastia, label: Gynecomastia, frag: gynecomastia}
+    - {id: excoriations, label: Scratch marks, frag: excoriations}
+
+- id: congestion_pe
+  label: Congestion
+  type: presence
+  join: ","
+  options:
+    - {id: jvp, label: Raised JVP, frag: raised JVP, frag_neg: JVP not raised}
+    - {id: hjr, label: Hepatojugular reflux, frag: positive hepatojugular reflux}
+    - {id: edema, label: Pitting leg edema, frag: pitting leg edema, frag_neg: no leg edema}
+    - {id: crackles, label: Bibasal crackles, frag: bibasal crackles}

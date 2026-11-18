@@ -1,0 +1,47 @@
+id: hbv_flare
+name: HBV flare / reactivation
+must_not_miss: true
+timecourse: [acute, subacute]
+status: draft
+one_liner: >
+  Sudden rise in ALT (often > 5–10 × ULN) in a known or unrecognized HBV carrier — after stopping antivirals,
+  during chemotherapy or immunosuppression, or spontaneously — which can progress to hepatic decompensation.
+
+symptoms:
+  - when: viral_history = hbv
+    text: Known HBV carrier
+  - when: viral_history = hbv_stop
+    text: Recently stopped antiviral therapy
+  - when: viral_history = immunosupp
+    text: Chemotherapy, rituximab, steroids, or other immunosuppression
+  - when: lft_duration = lt1m | m1_6 | first_found
+    text: Recent rise
+  - when: assoc_sys = jaundice | malaise
+    text: Fatigue; jaundice in severe flares
+  - when: assoc_gi = anorexia | nausea
+    text: Anorexia, nausea
+  - when: other_liver = fhx_liver
+    text: Family history of HBV or liver cancer
+  - when: liver_warning = bruising | distension
+    text: Bleeding or ascites — decompensation
+
+pe:
+  - when: skin = icterus
+    text: Jaundice
+  - when: liver_pe = asterixis
+    text: Asterixis — decompensation
+  - when: palpable = ascites | splenomegaly
+    text: Ascites, splenomegaly (underlying cirrhosis)
+
+labs:
+  - "HBsAg, HBeAg, anti-HBe, HBV DNA (very high in flares), anti-HBc IgM (can be positive in flares)"
+  - INR, bilirubin, albumin — severity
+  - "Exclude HDV, HCV, HAV, HEV, drugs"
+
+imaging:
+  - Ultrasound — cirrhosis, HCC
+
+pitfalls:
+  - Screen HBsAg and anti-HBc before chemotherapy or immunosuppression and give prophylaxis — reactivation is preventable.
+  - Flares after stopping antivirals can be fatal in cirrhosis; restart treatment early.
+  - A flare can unmask an HCC — check AFP and imaging.

@@ -1,0 +1,41 @@
+id: autoimmune_hepatitis
+name: Autoimmune hepatitis
+must_not_miss: false
+timecourse: [acute, subacute, chronic]
+status: draft
+one_liner: >
+  Fluctuating hepatocellular injury, sometimes acute with jaundice, in a woman with other autoimmune disease,
+  raised IgG and positive ANA or anti-smooth muscle antibody; responds to steroids.
+
+symptoms:
+  - when: sex = female
+    text: Women more often (about 4:1)
+  - when: other_liver = autoimmune
+    text: Other autoimmune disease (thyroid, RA, Sjögren, celiac)
+  - when: extraintestinal = arthralgia
+    text: Arthralgia
+  - when: assoc_sys = malaise | jaundice
+    text: Fatigue; jaundice when acute
+  - when: alcohol_use = never | social
+    text: Little alcohol
+
+pe:
+  - when: skin = icterus
+    text: Jaundice when acute
+  - when: palpable = hepatomegaly | splenomegaly
+    text: Hepatosplenomegaly
+  - when: liver_pe = spider | palmar
+    text: Stigmata (cirrhosis at presentation in a third)
+
+labs:
+  - "ANA, anti-smooth muscle antibody, IgG (anti-LKM1 in children)"
+  - Exclude viral hepatitis and drugs (nitrofurantoin, minocycline cause AIH-like injury)
+  - Liver biopsy — interface hepatitis, plasma cells
+
+imaging:
+  - Ultrasound; elastography
+
+pitfalls:
+  - Autoantibodies can be negative in acute presentations; IgG may be normal.
+  - Treat early — untreated disease progresses to cirrhosis.
+  - Can overlap with PBC.

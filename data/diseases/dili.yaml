@@ -1,0 +1,49 @@
+id: dili
+name: Drug- / herb-induced liver injury (DILI)
+must_not_miss: false
+timecourse: [acute, subacute]
+status: draft
+one_liner: >
+  Raised liver tests — hepatocellular, cholestatic, or mixed — 5 days to 3 months after starting a drug, herbal
+  medicine, or supplement, improving after it is stopped; in Taiwan, herbs and supplements are major causes.
+
+symptoms:
+  - when: liver_drugs = antibiotics | anti_tb | azole | nsaid | statin | amiodarone | aed | methotrexate | chemo
+    text: A drug known to cause liver injury
+  - when: herbs = chinese_herbal | supplements | slimming
+    text: Chinese herbal medicine, supplements, or slimming / bodybuilding products
+  - when: drug_timing = lt3m | m3_6
+    text: Started within the past 3–6 months
+  - when: lft_duration = lt1m | m1_6 | first_found
+    text: Recent onset
+  - when: assoc_sys = jaundice | pruritus | dark_urine
+    text: Jaundice or itching in severe or cholestatic injury
+  - when: assoc_sys = fever
+    text: Fever, rash — hypersensitivity (DRESS)
+  - when: assoc_sys = malaise
+    text: Malaise, nausea
+  - when: alcohol_use = never | social
+    text: Little alcohol
+
+pe:
+  - when: skin = icterus
+    text: Jaundice (Hy's law — a sign of severity)
+  - when: palpable = liver_tender | hepatomegaly
+    text: Tender hepatomegaly
+  - when: liver_pe = no asterixis
+    text: No encephalopathy
+
+labs:
+  - "Pattern by R ratio (ALT/ULN ÷ ALP/ULN): ≥ 5 hepatocellular, ≤ 2 cholestatic"
+  - Exclude viral (HAV, HBV, HCV, HEV), autoimmune, biliary causes
+  - "INR and bilirubin — ALT > 3 × ULN with bilirubin > 2 × ULN (Hy's law) signals ~10% mortality"
+  - Eosinophilia suggests hypersensitivity
+
+imaging:
+  - Ultrasound to exclude biliary obstruction and other liver disease
+
+pitfalls:
+  - Patients often do not consider herbs, teas, or supplements to be "medicine" — ask specifically.
+  - Amoxicillin-clavulanate injury can appear weeks after the course ends.
+  - Anti-TB drug injury is common in Taiwan, especially in older patients, HBV carriers, and drinkers.
+  - LiverTox (NIH) is a useful reference for individual drugs.

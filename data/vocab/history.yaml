@@ -537,3 +537,203 @@
     - {id: pelvic_radiation, label: Pelvic radiotherapy, frag: pelvic radiotherapy}
     - {id: chronic_pancreatitis, label: Chronic pancreatitis, frag: chronic pancreatitis}
     - {id: hyperthyroid, label: Hyperthyroidism, frag: hyperthyroidism}
+
+# ---------- Abnormal liver tests (data/complaints/abnormal_lft.yaml) ----------
+
+- id: lft_duration
+  label: Abnormal for
+  type: single
+  ask:
+    - "When were you first told your liver tests were abnormal?"
+    - "Have you had a liver test before? Was it normal then?"
+  options:
+    - {id: first_found, label: First found / unknown, frag: found on recent testing}
+    - {id: lt1m, label: "<1 mo", frag: for less than 1 month, tc: [acute]}
+    - {id: m1_6, label: "1–6 mo", frag: for 1–6 months, tc: [subacute]}
+    - {id: gt6m, label: ">6 mo", frag: for more than 6 months, tc: [chronic]}
+
+- id: liver_warning
+  label: Warning signs
+  type: presence
+  ask:
+    - "Have you noticed you bruise or bleed easily — gums, nose, or after small cuts?"
+    - "Has your tummy been getting bigger or tighter?"
+  options:
+    - {id: bruising, label: Easy bruising / bleeding, frag: easy bruising or bleeding, red_flag: true}
+    - {id: distension, label: Abdominal swelling, frag: increasing abdominal girth}
+
+# Alcohol: the main question, with amount and duration in a collapsible details block.
+- id: alcohol_use
+  label: Alcohol
+  type: single
+  ask:
+    - "Do you drink alcohol? How often?"
+    - "Have you ever been a heavy drinker, or have you stopped drinking?"
+  options:
+    - {id: never, label: Never / rarely, frag: rarely or never drinks alcohol}
+    - {id: social, label: Occasional / social, frag: drinks socially}
+    - {id: regular, label: Regular drinker, frag: drinks regularly}
+    - {id: heavy, label: Heavy drinker, frag: drinks heavily, red_flag: true}
+    - {id: former, label: Former drinker, frag: former drinker}
+
+- id: alcohol_type
+  label: What
+  type: multi
+  template: "mainly {}"
+  ask:
+    - "What do you usually drink — beer, kaoliang, rice wine, tonic wine, wine, or whiskey?"
+  options:
+    - {id: beer, label: Beer, frag: beer}
+    - {id: kaoliang, label: Kaoliang / spirits, frag: kaoliang}
+    - {id: rice_wine, label: Rice wine, frag: rice wine}
+    - {id: tonic, label: Tonic / medicinal wine, frag: medicinal tonic wine}
+    - {id: wine, label: Wine, frag: wine}
+    - {id: whiskey, label: Whiskey / brandy, frag: whiskey or brandy}
+
+- id: alcohol_amount
+  label: Amount
+  type: single
+  ask:
+    - "How much do you drink on a typical day — how many bottles or glasses, and what size?"
+  options:
+    - {id: lt20, label: "<20 g/day", frag: less than 20 g of alcohol a day}
+    - {id: g20_40, label: "20–40 g/day", frag: about 20–40 g of alcohol a day}
+    - {id: g40_60, label: "40–60 g/day", frag: about 40–60 g of alcohol a day}
+    - {id: g60_100, label: "60–100 g/day", frag: about 60–100 g of alcohol a day, red_flag: true}
+    - {id: gt100, label: ">100 g/day", frag: more than 100 g of alcohol a day, red_flag: true}
+
+- id: alcohol_years
+  label: For how long
+  type: single
+  ask:
+    - "How many years have you been drinking like this?"
+  options:
+    - {id: lt5, label: "<5 yr", frag: for less than 5 years}
+    - {id: y5_10, label: "5–10 yr", frag: for 5–10 years}
+    - {id: y10_20, label: "10–20 yr", frag: for 10–20 years}
+    - {id: gt20, label: ">20 yr", frag: for more than 20 years}
+
+- id: alcohol_last
+  label: Last drink
+  type: single
+  ask:
+    - "When did you last have a drink?"
+    - "If you've stopped, how long ago was that?"
+  options:
+    - {id: still, label: Still drinking, frag: still drinking}
+    - {id: lt1m, label: Stopped <1 mo, frag: stopped less than 1 month ago}
+    - {id: m1_6, label: Stopped 1–6 mo, frag: stopped 1–6 months ago}
+    - {id: m6_12, label: Stopped 6–12 mo, frag: stopped 6–12 months ago}
+    - {id: gt1y, label: Stopped >1 yr, frag: stopped more than 1 year ago}
+
+- id: alcohol_pattern
+  label: Pattern
+  type: presence
+  ask:
+    - "Have you had a heavy drinking session recently?"
+    - "Do you drink every day? Do you need a drink in the morning, or get the shakes if you don't?"
+  options:
+    - {id: binge, label: Recent binge, frag: a recent binge}
+    - {id: daily, label: Drinks daily, frag: daily drinking}
+    - {id: morning, label: Morning drink / shakes, frag: morning drinking or withdrawal tremor, red_flag: true}
+
+- id: liver_drugs
+  label: Medications
+  type: presence
+  ask:
+    - "What medicines have you taken in the last three months, including short courses like antibiotics?"
+    - "Do you take painkillers like paracetamol? How many tablets a day?"
+  options:
+    - {id: antibiotics, label: "Antibiotics (e.g., amox-clav)", frag: antibiotics}
+    - {id: anti_tb, label: Anti-TB drugs, frag: anti-tuberculosis drugs}
+    - {id: azole, label: Azole antifungals, frag: azole antifungals}
+    - {id: apap, label: High-dose acetaminophen, frag: high-dose acetaminophen, red_flag: true}
+    - {id: nsaid, label: NSAIDs, frag: NSAIDs}
+    - {id: statin, label: Statin, frag: a statin}
+    - {id: amiodarone, label: Amiodarone, frag: amiodarone}
+    - {id: aed, label: Antiepileptics, frag: antiepileptic drugs}
+    - {id: methotrexate, label: Methotrexate, frag: methotrexate}
+    - {id: chemo, label: Chemotherapy / immunotherapy, frag: chemotherapy or immunotherapy}
+
+- id: herbs
+  label: Herbs / supplements
+  type: presence
+  ask:
+    - "Do you take any Chinese herbal medicine, health supplements, or slimming or muscle-building products?"
+  options:
+    - {id: chinese_herbal, label: Chinese herbal medicine, frag: Chinese herbal medicine}
+    - {id: supplements, label: Dietary supplements, frag: dietary supplements}
+    - {id: slimming, label: Weight-loss / bodybuilding products, frag: weight-loss or bodybuilding products}
+
+- id: drug_timing
+  label: Started
+  type: single
+  ask:
+    - "When did you start it? Was the dose changed recently?"
+  options:
+    - {id: lt3m, label: "<3 mo ago", frag: started within the past 3 months}
+    - {id: m3_6, label: "3–6 mo ago", frag: started 3–6 months ago}
+    - {id: long_term, label: "Long-term, unchanged", frag: taken long-term without recent change}
+
+- id: viral_history
+  label: Hepatitis B / C
+  type: presence
+  ask:
+    - "Have you ever been told you have hepatitis B or C? Are you on treatment, or have you stopped it?"
+    - "Are you having chemotherapy, steroids, or other drugs that lower your immunity?"
+  options:
+    - {id: hbv, label: Known HBV carrier, frag: chronic hepatitis B}
+    - {id: hbv_tx, label: On HBV antivirals, frag: current HBV antiviral therapy}
+    - {id: hbv_stop, label: Stopped HBV antivirals, frag: recent discontinuation of HBV antivirals, red_flag: true}
+    - {id: hcv, label: Known HCV, frag: hepatitis C}
+    - {id: hcv_cured, label: HCV treated / cured, frag: treated hepatitis C}
+    - {id: immunosupp, label: Chemo / immunosuppression, frag: chemotherapy or immunosuppressive therapy}
+
+- id: viral_exposure
+  label: Exposure
+  type: presence
+  ask:
+    - "Have you eaten raw shellfish or undercooked pork recently? Is anyone at home unwell with hepatitis?"
+    - "Any tattoos, piercings, blood transfusions, or dialysis? Have you ever injected drugs?"
+  options:
+    - {id: shellfish, label: Raw shellfish / undercooked pork, frag: raw shellfish or undercooked pork}
+    - {id: household, label: Household hepatitis contact, frag: a household contact with hepatitis}
+    - {id: tattoo, label: Tattoo / piercing, frag: tattoos or piercings}
+    - {id: idu, label: Injection drug use, frag: injection drug use}
+    - {id: transfusion, label: Transfusion / dialysis, frag: blood transfusion or dialysis}
+
+- id: metabolic
+  label: Metabolic
+  type: presence
+  ask:
+    - "Has your weight gone up in recent years? Have you been told you have high cholesterol or high blood pressure?"
+  options:
+    - {id: obesity, label: Overweight / central obesity, frag: obesity}
+    - {id: dyslipidemia, label: Dyslipidemia, frag: dyslipidemia}
+    - {id: hypertension, label: Hypertension, frag: hypertension}
+    - {id: weight_gain, label: Recent weight gain, frag: recent weight gain}
+
+- id: congestion_sx
+  label: Heart / circulation
+  type: presence
+  ask:
+    - "Do you get short of breath lying flat, or wake up at night gasping? Are your legs swollen?"
+    - "Have you been told you have heart failure or a heart valve problem?"
+    - "Have you recently been very unwell — low blood pressure, a collapse, or a serious infection?"
+  options:
+    - {id: orthopnea, label: Orthopnea / PND, frag: orthopnea or paroxysmal nocturnal dyspnea}
+    - {id: leg_swelling, label: Leg swelling, frag: leg swelling}
+    - {id: heart_failure, label: Known heart failure / valve disease, frag: heart failure or valvular heart disease}
+    - {id: shock, label: Recent hypotension / shock / sepsis, frag: "a recent episode of hypotension, shock, or sepsis", red_flag: true}
+
+- id: other_liver
+  label: Other clues
+  type: presence
+  ask:
+    - "Do you have any autoimmune conditions, such as thyroid disease, lupus, or rheumatoid arthritis?"
+    - "Does anyone in your family have liver disease?"
+    - "Have you done any unusually hard exercise or had a muscle injury recently?"
+  options:
+    - {id: autoimmune, label: Other autoimmune disease, frag: another autoimmune disease}
+    - {id: fhx_liver, label: Family history of liver disease, frag: a family history of liver disease}
+    - {id: exercise, label: Strenuous exercise / muscle injury, frag: recent strenuous exercise or muscle injury}

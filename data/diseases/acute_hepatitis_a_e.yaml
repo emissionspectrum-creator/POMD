@@ -1,0 +1,47 @@
+id: acute_hepatitis_a_e
+name: Acute viral hepatitis A / E
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  A few days of fever, malaise, anorexia and nausea followed by jaundice and dark urine, with ALT often > 1000,
+  after raw shellfish, undercooked pork (HEV), travel, or a household contact; usually self-limiting.
+
+symptoms:
+  - when: assoc_sys = fever | malaise
+    text: Prodrome of fever and malaise
+  - when: assoc_gi = anorexia | nausea | vomiting
+    text: Anorexia, nausea
+  - when: assoc_sys = jaundice | dark_urine
+    text: Jaundice and dark urine after the prodrome
+  - when: pain_location = ruq
+    text: RUQ discomfort
+  - when: viral_exposure = shellfish | household
+    text: Raw shellfish, undercooked pork / game (HEV), or household contact
+  - when: risk = travel | sti_risk
+    text: Travel or sexual exposure (HAV among MSM)
+  - when: lft_duration = lt1m | first_found
+    text: Acute
+  - when: age_group = under_40 | age_40_59
+    text: Adults in Taiwan are now largely non-immune to HAV
+
+pe:
+  - when: skin = icterus
+    text: Jaundice
+  - when: palpable = liver_tender | hepatomegaly
+    text: Tender hepatomegaly
+  - when: vitals = fever
+    text: Low-grade fever
+
+labs:
+  - Anti-HAV IgM, anti-HEV IgM (and HEV RNA if immunocompromised)
+  - "ALT often 1000–3000; INR to assess severity"
+  - HBsAg, anti-HBc IgM, anti-HCV to exclude other viruses
+
+imaging:
+  - Ultrasound to exclude biliary obstruction
+
+pitfalls:
+  - Hepatitis E in pregnancy can cause fulminant hepatitis.
+  - Older adults and those with chronic liver disease (including HBV carriers) do worse.
+  - HAV is notifiable; offer vaccination to household contacts.

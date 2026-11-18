@@ -24,6 +24,9 @@ symptoms:
     text: Diabetes, immunocompromise, biliary disease or intervention
   - when: risk = travel
     text: Travel to endemic areas (amebic abscess)
+  # abnormal liver tests complaint
+  - when: lft_duration = lt1m | first_found
+    text: Acute, days to weeks
 
 pe:
   - when: vitals = fever

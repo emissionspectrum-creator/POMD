@@ -31,9 +31,33 @@
     if (!complaint || (!complaint.history && !complaint.pe)) return null;
     var out = {};
     (complaint.history || []).concat(complaint.pe || []).forEach(function (sec) {
-      sec.items.forEach(function (id) { out[id] = true; });
+      sec.items.forEach(function (id) {
+        out[id] = true;
+        var det = itemDetails(complaint, id);
+        if (det) det.items.forEach(function (sub) { out[sub] = true; });
+      });
     });
     return out;
+  }
+
+  // Collapsible block of sub-items attached to an item (`item_details`): { label, note?, items }.
+  function itemDetails(complaint, itemId) {
+    return (complaint && complaint.item_details && complaint.item_details[itemId]) || null;
+  }
+
+  // One-line summary of what is selected inside a details block, e.g. "Kaoliang · 40–60 g/day".
+  function detailsSummary(det, state, items) {
+    var parts = [];
+    det.items.forEach(function (iid) {
+      var item = items[iid];
+      var sel = state[iid];
+      if (!item || !sel) return;
+      item.options.forEach(function (o) {
+        if (sel[o.id] === true || sel[o.id] === 'present') parts.push(o.label);
+        else if (sel[o.id] === 'absent') parts.push('no ' + o.label);
+      });
+    });
+    return parts.join(' · ');
   }
 
   // Options of an item as shown in a complaint: the complaint may restrict an item to a
@@ -483,6 +507,8 @@
     itemOptions: itemOptions,
     itemAsk: itemAsk,
     itemLabel: itemLabel,
+    itemDetails: itemDetails,
+    detailsSummary: detailsSummary,
     featureShown: featureShown,
     toggle: toggle,
     isEmpty: isEmpty,

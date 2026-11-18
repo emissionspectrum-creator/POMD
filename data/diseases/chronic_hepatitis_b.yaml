@@ -1,0 +1,39 @@
+id: chronic_hepatitis_b
+name: Chronic hepatitis B
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Persistently or intermittently raised ALT in an HBsAg-positive patient, often from mother-to-child transmission
+  and with a family history of HBV or liver cancer; common in Taiwan and the main cause of cirrhosis and HCC.
+
+symptoms:
+  - when: viral_history = hbv | hbv_tx
+    text: Known HBV carrier
+  - when: other_liver = fhx_liver
+    text: Family history of HBV, cirrhosis, or HCC
+  - when: lft_duration = gt6m | first_found
+    text: Chronic, or found on routine testing
+  - when: assoc_sys = no jaundice
+    text: Usually asymptomatic
+  - when: age_group = age_40_59 | age_60_plus
+    text: Middle-aged or older (HCC risk rises)
+
+pe:
+  - when: liver_pe = spider | palmar
+    text: Stigmata if cirrhotic
+  - when: palpable = splenomegaly | ascites
+    text: Splenomegaly or ascites (cirrhosis)
+
+labs:
+  - "HBsAg, HBeAg / anti-HBe, HBV DNA, ALT — phase of infection and treatment criteria"
+  - "Anti-HDV once; AFP; platelets, albumin, INR"
+
+imaging:
+  - Ultrasound every 6 months (HCC surveillance) with AFP
+  - Transient elastography for fibrosis
+
+pitfalls:
+  - Normal ALT does not exclude significant fibrosis — stage the liver.
+  - HCC can occur without cirrhosis in HBV.
+  - Taiwan NHI reimbursement criteria change over time — check the current rules before starting therapy.

@@ -16,7 +16,7 @@ from pathlib import Path
 
 import yaml
 
-APP_VERSION = "0.5.0"
+APP_VERSION = "0.6.0"
 
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "src"
@@ -304,57 +304,78 @@ def load_complaints(e, items, diseases):
         where = str(rel)
         if not check_keys(e, where, raw, COMPLAINT_KEYS):
             continue
-        # Section items are item ids, or {item: id, options: [...], ask: [...], label: ...} to show
-        # only some options and / or replace the English phrasing or label. Output keeps plain ids in
-        # the sections and collects the overrides in `item_options` / `item_ask` / `item_label`.
+        # Section items are item ids, or {item: id, options: [...], ask: [...], label: ..., details: {...}}
+        # to show only some options, replace the English phrasing or label, or attach a collapsible
+        # block of sub-items ({label, note, items}). Output keeps plain ids in the sections and collects
+        # the overrides in `item_options` / `item_ask` / `item_label` / `item_details`.
         shown = set()
         item_options = {}
         item_ask = {}
         item_label = {}
+        item_details = {}
+
+        def add_entry(entry, iwhere, allow_details):
+            iid = entry
+            keys = {"item", "options", "ask", "label"} | ({"details"} if allow_details else set())
+            if isinstance(entry, dict):
+                if not check_keys(e, iwhere, entry, keys):
+                    return None
+                iid = entry.get("item")
+            if iid not in items:
+                e.err(iwhere, f"unknown item {iid!r}")
+                return None
+            if iid in shown:
+                e.err(iwhere, f"item {iid!r} listed twice")
+                return None
+            shown.add(iid)
+            if not isinstance(entry, dict):
+                return iid
+            if "label" in entry:
+                if isinstance(entry["label"], str) and entry["label"].strip():
+                    item_label[iid] = entry["label"]
+                else:
+                    e.err(iwhere, f"{iid}: label must be a non-empty string")
+            if "ask" in entry:
+                asks = as_str_list(e, f"{iwhere}.{iid}.ask", entry["ask"])
+                if asks:
+                    item_ask[iid] = asks
+            if "options" in entry:
+                known = [o["id"] for o in items[iid]["options"]]
+                sub = entry.get("options")
+                if not isinstance(sub, list) or not sub:
+                    e.err(iwhere, f"{iid}: options must be a non-empty list")
+                    sub = []
+                for oid in sub:
+                    if oid not in known:
+                        e.err(iwhere, f"{iid}: unknown option {oid!r}")
+                if len(set(sub)) != len(sub):
+                    e.err(iwhere, f"{iid}: option listed twice")
+                # Keep the vocabulary's option order.
+                item_options[iid] = [o for o in known if o in sub]
+            if "details" in entry:
+                det = entry["details"]
+                dwhere = f"{iwhere}.{iid}.details"
+                if check_keys(e, dwhere, det, {"label", "note", "items"}):
+                    if not isinstance(det.get("label"), str) or not det["label"].strip():
+                        e.err(dwhere, "missing label")
+                    if "note" in det and not isinstance(det["note"], str):
+                        e.err(dwhere, "note must be a string")
+                    sub_ids = [x for x in (add_entry(d, dwhere, False) for d in det.get("items") or []) if x]
+                    if not sub_ids:
+                        e.err(dwhere, "details need at least one item")
+                    item_details[iid] = {"label": str(det.get("label", "")), "items": sub_ids}
+                    if det.get("note"):
+                        item_details[iid]["note"] = " ".join(det["note"].split())
+            return iid
+
         columns = {}
         for col in ("history", "pe"):
             columns[col] = []
             for sec in raw.get(col) or []:
                 if not check_keys(e, f"{where}.{col}", sec, {"section", "items"}):
                     continue
-                ids = []
-                for entry in sec.get("items") or []:
-                    iwhere = f"{where}.{col}.{sec.get('section', '?')}"
-                    iid = entry
-                    if isinstance(entry, dict):
-                        if not check_keys(e, iwhere, entry, {"item", "options", "ask", "label"}):
-                            continue
-                        iid = entry.get("item")
-                    if iid not in items:
-                        e.err(iwhere, f"unknown item {iid!r}")
-                        continue
-                    if iid in shown:
-                        e.err(iwhere, f"item {iid!r} listed twice")
-                        continue
-                    if isinstance(entry, dict) and "label" in entry:
-                        if isinstance(entry["label"], str) and entry["label"].strip():
-                            item_label[iid] = entry["label"]
-                        else:
-                            e.err(iwhere, f"{iid}: label must be a non-empty string")
-                    if isinstance(entry, dict) and "ask" in entry:
-                        asks = as_str_list(e, f"{iwhere}.{iid}.ask", entry["ask"])
-                        if asks:
-                            item_ask[iid] = asks
-                    if isinstance(entry, dict) and "options" in entry:
-                        known = [o["id"] for o in items[iid]["options"]]
-                        sub = entry.get("options")
-                        if not isinstance(sub, list) or not sub:
-                            e.err(iwhere, f"{iid}: options must be a non-empty list")
-                            sub = []
-                        for oid in sub:
-                            if oid not in known:
-                                e.err(iwhere, f"{iid}: unknown option {oid!r}")
-                        if len(set(sub)) != len(sub):
-                            e.err(iwhere, f"{iid}: option listed twice")
-                        # Keep the vocabulary's option order.
-                        item_options[iid] = [o for o in known if o in sub]
-                    shown.add(iid)
-                    ids.append(iid)
+                iwhere = f"{where}.{col}.{sec.get('section', '?')}"
+                ids = [x for x in (add_entry(entry, iwhere, True) for entry in sec.get("items") or []) if x]
                 columns[col].append({"section": sec.get("section"), "items": ids})
         history_ids = [iid for sec in columns["history"] for iid in sec["items"]]
         quick = raw.get("quick")
@@ -394,8 +415,9 @@ def load_complaints(e, items, diseases):
             if item["type"] == "single" and len(opts) > 1:
                 e.err(dwhere, "single item can have only one default")
             defaults[iid] = [str(o) for o in opts]
+        # group_item is optional (without it, groups keep the complaint's order).
         for k in ("group_item", "timecourse_item"):
-            if raw.get(k) not in shown:
+            if (k == "timecourse_item" or k in raw) and raw.get(k) not in shown:
                 e.err(where, f"{k} {raw.get(k)!r} must be an item shown in this complaint")
         group_iid = raw.get("group_item")
         group_opts = set(item_options.get(group_iid) or
@@ -405,8 +427,10 @@ def load_complaints(e, items, diseases):
             gwhere = f"{where}.ddx.{g.get('group', '?') if isinstance(g, dict) else '?'}"
             if not check_keys(e, gwhere, g, {"group", "options", "diseases"}):
                 continue
+            if g.get("options") and not group_iid:
+                e.err(gwhere, "group options need a group_item")
             for l in g.get("options") or []:
-                if l not in group_opts:
+                if group_iid and l not in group_opts:
                     e.err(gwhere, f"option {l!r} is not offered for group_item {group_iid!r}")
             seen = set()
             for did in g.get("diseases") or []:
@@ -431,6 +455,7 @@ def load_complaints(e, items, diseases):
             "item_options": item_options,
             "item_ask": item_ask,
             "item_label": item_label,
+            "item_details": item_details,
             "labs": suggestion_list(e, f"{where}.labs", raw.get("labs")),
             "imaging": suggestion_list(e, f"{where}.imaging", raw.get("imaging")),
             "ddx": raw.get("ddx") or [],
@@ -499,7 +524,8 @@ def main():
     quick_data = {
         "version": APP_VERSION,
         "items": items,
-        "complaints": [{k: c[k] for k in ("id", "name", "history", "item_options", "item_ask", "item_label", "hpi", "quick", "defaults")}
+        "complaints": [{k: c[k] for k in ("id", "name", "history", "item_options", "item_ask", "item_label",
+                                          "item_details", "hpi", "quick", "defaults")}
                        for c in complaints],
     }
     pages = [

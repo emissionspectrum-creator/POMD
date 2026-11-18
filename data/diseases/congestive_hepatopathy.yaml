@@ -1,0 +1,45 @@
+id: congestive_hepatopathy
+name: Congestive hepatopathy
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Mild cholestatic or mixed liver test abnormalities with raised bilirubin and a tender, enlarged liver in a patient
+  with right-sided heart failure, tricuspid regurgitation, or constrictive pericarditis.
+
+symptoms:
+  - when: congestion_sx = heart_failure
+    text: Known heart failure or valve disease
+  - when: congestion_sx = orthopnea | leg_swelling
+    text: Orthopnea, leg swelling
+  - when: assoc_other = dyspnea
+    text: Exertional dyspnea
+  - when: liver_warning = distension
+    text: Abdominal swelling (ascites)
+  - when: pain_location = ruq
+    text: RUQ fullness or ache
+  - when: assoc_sys = jaundice
+    text: Mild jaundice
+
+pe:
+  - when: congestion_pe = jvp | hjr
+    text: Raised JVP, hepatojugular reflux
+  - when: congestion_pe = edema | crackles
+    text: Leg edema, crackles
+  - when: palpable = hepatomegaly | liver_tender
+    text: Tender hepatomegaly (pulsatile in TR)
+  - when: palpable = ascites
+    text: Ascites
+
+labs:
+  - "Mild rise in bilirubin, GGT, ALP; ALT modest"
+  - BNP / NT-proBNP
+  - "Ascitic fluid: high protein (> 2.5 g/dL) with SAAG ≥ 1.1"
+
+imaging:
+  - Echocardiography
+  - Ultrasound with Doppler — dilated hepatic veins and IVC
+
+pitfalls:
+  - Long-standing congestion can cause cardiac cirrhosis (e.g., after Fontan surgery).
+  - Treat the heart; liver tests follow.

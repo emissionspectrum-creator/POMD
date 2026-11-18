@@ -70,6 +70,17 @@
 
   // ---------- static layout (rebuilt when the complaint changes) ----------
 
+  // Collapsible sub-items of an item (closed by default; see updateChips for auto-open).
+  function detailsHtml(itemId, blockHtml) {
+    var det = Core.itemDetails(complaint, itemId);
+    if (!det) return '';
+    var h = '<details class="details" data-details="' + esc(itemId) + '"><summary><span class="details-label">' +
+      esc(det.label) + '</span><span class="details-summary"></span></summary>';
+    if (det.note) h += '<p class="details-note">' + esc(det.note) + '</p>';
+    det.items.forEach(function (id) { h += blockHtml(id); });
+    return h + '</details>';
+  }
+
   function itemBlockHtml(itemId) {
     var item = items[itemId];
     var kind = item.type === 'multi' ? 'multi' : (item.type === 'presence' ? '+ / −' : '');
@@ -88,7 +99,7 @@
       h += '<button type="button" class="chip' + (o.red_flag ? ' rf' : '') + '" data-item="' + esc(item.id) +
         '" data-opt="' + esc(o.id) + '"' + (o.red_flag ? ' title="Red flag"' : '') + '>' + esc(o.label) + '</button>';
     });
-    h += '</div></div>';
+    h += '</div>' + detailsHtml(itemId, itemBlockHtml) + '</div>';
     return h;
   }
 
@@ -139,6 +150,15 @@
     var blocks = document.querySelectorAll('[data-item-block]');
     for (var j = 0; j < blocks.length; j++) {
       blocks[j].classList.toggle('answered', !!state[blocks[j].getAttribute('data-item-block')]);
+    }
+    var dets = document.querySelectorAll('[data-details]');
+    for (var k = 0; k < dets.length; k++) {
+      var det = Core.itemDetails(complaint, dets[k].getAttribute('data-details'));
+      var sum = det ? Core.detailsSummary(det, state, items) : '';
+      dets[k].querySelector('.details-summary').textContent = sum;
+      // Open when something inside gets selected (on load, or synced from the other page).
+      if (sum && !dets[k].getAttribute('data-had')) dets[k].open = true;
+      dets[k].setAttribute('data-had', sum ? '1' : '');
     }
   }
 

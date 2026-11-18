@@ -1,0 +1,39 @@
+id: chronic_hepatitis_c
+name: Chronic hepatitis C
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Mild, fluctuating ALT elevation in an anti-HCV-positive patient with past transfusion, injection drug use,
+  dialysis, or unsafe injections; curable with direct-acting antivirals in almost all patients.
+
+symptoms:
+  - when: viral_history = hcv
+    text: Known HCV
+  - when: viral_exposure = transfusion | idu | tattoo
+    text: Transfusion, dialysis, injection drug use, tattoos
+  - when: lft_duration = gt6m | first_found
+    text: Chronic, or found on routine testing
+  - when: assoc_sys = no jaundice
+    text: Usually asymptomatic
+  - when: risk = sti_risk
+    text: Sexual risk (especially MSM with HIV)
+
+pe:
+  - when: liver_pe = spider | palmar
+    text: Stigmata if cirrhotic
+  - when: palpable = splenomegaly
+    text: Splenomegaly (cirrhosis)
+
+labs:
+  - Anti-HCV, then HCV RNA to confirm active infection
+  - "HBsAg, HIV; platelets, albumin, INR"
+
+imaging:
+  - Transient elastography or FIB-4 to stage fibrosis
+  - HCC surveillance continues after cure if cirrhotic
+
+pitfalls:
+  - Anti-HCV stays positive after cure — use HCV RNA.
+  - Check HBsAg before DAA therapy (HBV reactivation risk).
+  - Southern Taiwan has historically higher prevalence; Taiwan aims to eliminate HCV.

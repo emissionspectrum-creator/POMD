@@ -1,0 +1,193 @@
+id: abnormal_lft
+name: Abnormal liver tests
+timecourse_item: lft_duration
+# No group_item: the differential keeps the etiology order below (matching the left-column sections).
+
+# Left column: common questions first, then one section per etiology.
+# Design notes: data/complaints/abnormal_lft.md. `{item, options}` shows only some options of a shared item;
+# `{item, ask}` / `{item, label}` replace its phrasing / label; `{item, details}` adds a collapsible block.
+history:
+  - section: Patient
+    items: [sex, age_group]
+  - section: Course & symptoms
+    items:
+      - lft_duration
+      - item: assoc_sys
+        label: Hepatobiliary / systemic
+        options: [fever, chills, jaundice, dark_urine, pale_stool, pruritus, weight_loss, malaise]
+      - item: assoc_gi
+        options: [nausea, vomiting, anorexia, hematemesis, melena]
+        ask:
+          - "Have you felt sick, thrown up, or lost your appetite?"
+          - "Have you vomited blood, or had black, tarry stools?"
+      - item: assoc_other
+        label: Other symptoms
+        options: [confusion, dyspnea]
+        ask:
+          - "Has anyone noticed you being confused, drowsy, or sleeping in the day and awake at night?"
+          - "Do you get short of breath?"
+      - liver_warning
+  - section: Alcohol
+    items:
+      - item: alcohol_use
+        details:
+          label: Amount & duration
+          note: >
+            Grams of alcohol = mL × % × 0.8. Beer 5%: 330 mL can ≈ 13 g, 600 mL bottle ≈ 24 g ·
+            Kaoliang 58%: 100 mL ≈ 46 g, 600 mL bottle ≈ 280 g (38%: 100 mL ≈ 30 g) ·
+            Rice wine 19.5%: 600 mL bottle ≈ 94 g · Tonic wine ~10%: 600 mL ≈ 48 g ·
+            Wine 12%: 150 mL glass ≈ 15 g, 750 mL bottle ≈ 72 g · Whiskey 40%: 30 mL shot ≈ 10 g, 700 mL ≈ 224 g
+          items: [alcohol_type, alcohol_amount, alcohol_years, alcohol_last, alcohol_pattern]
+  - section: Drugs & herbs
+    items: [liver_drugs, herbs, drug_timing]
+  - section: Viral
+    items: [viral_history, viral_exposure]
+  - section: Metabolic
+    items: [metabolic]
+  - section: Biliary
+    items:
+      - item: pain_location
+        label: Pain location
+        options: [ruq, epigastric]
+        ask:
+          - "Do you have any pain in the upper tummy? Where exactly?"
+      - item: pain_pattern
+        label: Pain pattern
+        ask:
+          - "Is the pain there all the time, or does it come in attacks?"
+      - item: meal_relation
+        label: Pain and meals
+        options: [worse_eating, unrelated]
+        ask:
+          - "Does the pain come on after eating, especially fatty food?"
+  - section: Congestive / ischemic
+    items: [congestion_sx]
+  - section: Autoimmune & others
+    items:
+      - other_liver
+      - item: extraintestinal
+        label: Joints / thyroid
+        options: [arthralgia, thyrotoxic]
+        ask:
+          - "Any joint pains?"
+          - "Have you been feeling hot all the time, shaky, or had a racing heart?"
+      - item: risk
+        label: Other risk factors
+        options: [diabetes, hypertriglyceridemia, gallstones, biliary_procedure, immunocompromised, travel, sti_risk]
+        ask:
+          - "Do you have diabetes or high triglycerides? Have you been told you have gallstones, or had bile duct procedures?"
+          - "Have you travelled recently? Any new or multiple sexual partners?"
+
+quick:
+  show: [sex, age_group, lft_duration, assoc_sys, assoc_gi, assoc_other, liver_warning,
+         alcohol_use, liver_drugs, herbs, drug_timing, viral_history, viral_exposure, metabolic,
+         pain_location, pain_pattern, meal_relation, congestion_sx, other_liver, extraintestinal, risk]
+
+defaults:
+  guarding: [soft]
+  tenderness: [none]
+
+pe:
+  - section: General & vitals
+    items:
+      - item: general
+        options: [comfortable, ill, confused]
+      - item: vitals
+        options: [fever, tachycardia, hypotension]
+      - item: skin
+        options: [icterus, pallor]
+      - liver_pe
+      - congestion_pe
+  - section: Abdomen
+    items:
+      - abd_contour
+      - guarding
+      - tenderness
+      - item: abd_signs
+        options: [murphy]
+      - item: palpable
+        options: [hepatomegaly, liver_tender, splenomegaly, gallbladder, mass, ascites]
+
+labs:
+  - {name: "AST, ALT, ALP, GGT, total / direct bilirubin", note: "hepatocellular vs cholestatic (R ratio); AST/ALT > 2 suggests alcohol"}
+  - {name: "PT/INR, albumin, platelets", note: "synthetic function; INR ≥ 1.5 with encephalopathy = acute liver failure"}
+  - {name: CBC, note: "MCV (alcohol), thrombocytopenia (portal hypertension)"}
+  - {name: "HBsAg, anti-HCV", note: "everyone; HBV DNA, HBeAg if HBsAg positive"}
+  - {name: "Anti-HAV IgM, anti-HEV IgM, anti-HBc IgM", note: "acute hepatitis"}
+  - {name: "Glucose, HbA1c, lipids", note: "MASLD"}
+  - {name: "ANA, anti-smooth muscle antibody, IgG", note: "autoimmune hepatitis"}
+  - {name: Anti-mitochondrial antibody, note: "cholestatic pattern — PBC"}
+  - {name: "CK, TSH", note: "isolated AST rise (muscle), thyroid"}
+  - {name: "Ferritin, transferrin saturation; ceruloplasmin if < 40", note: "iron overload; Wilson disease"}
+  - {name: Acetaminophen level, note: "any suspected overdose or unexplained very high ALT"}
+  - {name: "AFP", note: "chronic HBV / cirrhosis or a liver mass"}
+  - {name: "Ammonia, lactate", note: "encephalopathy; ischemic hepatitis"}
+
+imaging:
+  - {name: Abdominal ultrasound with Doppler, note: "first-line — steatosis, bile duct dilatation, liver lesion, cirrhosis, hepatic vein flow"}
+  - {name: Transient elastography (FibroScan), note: "fibrosis staging in MASLD, HBV, HCV, alcohol"}
+  - {name: CT / MRI liver, note: "liver mass, malignant obstruction, abscess"}
+  - {name: MRCP / EUS, note: "cholestatic pattern with dilated or uncertain bile ducts"}
+  - {name: ERCP, note: "therapeutic — stones, cholangitis, malignant stricture"}
+  - {name: Echocardiography, note: "suspected congestive hepatopathy"}
+  - {name: Liver biopsy, note: "unclear cause, autoimmune hepatitis, or staging when non-invasive tests disagree"}
+  - {name: EGD, note: "varices screening in cirrhosis"}
+
+ddx:
+  - group: Alcohol
+    diseases: [alcoholic_hepatitis, alcohol_related_liver_disease]
+  - group: Drugs & herbs
+    diseases: [dili, acetaminophen_toxicity]
+  - group: Viral
+    diseases: [acute_hepatitis_a_e, hbv_flare, chronic_hepatitis_b, chronic_hepatitis_c]
+  - group: Metabolic
+    diseases: [masld]
+  - group: Biliary / obstructive
+    diseases: [choledocholithiasis, acute_cholangitis, malignant_biliary_obstruction, liver_abscess]
+  - group: Congestive / ischemic
+    diseases: [congestive_hepatopathy, ischemic_hepatitis]
+  - group: Autoimmune
+    diseases: [autoimmune_hepatitis, primary_biliary_cholangitis]
+  - group: Others / non-hepatic
+    diseases: [liver_malignancy, muscle_injury, hyperthyroidism]
+
+hpi:
+  joiner: " "
+  sentences:
+    - always: true
+      parts: ["({@date_roc}) abnormal liver tests[ {lft_duration}]"]
+    - lead: "Associated with "
+      parts: ["{assoc_sys+,assoc_gi+,assoc_other+,liver_warning+}"]
+    - lead: "Denied "
+      parts: ["{assoc_sys-,assoc_gi-,assoc_other-,liver_warning-}"]
+    - parts: ["{alcohol_use}", "{alcohol_type}", "{alcohol_amount}", "{alcohol_years}", "{alcohol_last}"]
+    - lead: "Drinking pattern includes "
+      parts: ["{alcohol_pattern+}"]
+    - lead: "Takes "
+      parts: ["{liver_drugs+,herbs+}", "{drug_timing}"]
+    - lead: "No use of "
+      parts: ["{liver_drugs-,herbs-}"]
+    - parts: ["{pain_location}", "{pain_pattern}", "{meal_relation}"]
+    - lead: "Relevant history includes "
+      parts: ["{viral_history+,viral_exposure+,metabolic+,congestion_sx+,other_liver+,extraintestinal+,risk+}"]
+    - lead: "No history of "
+      parts: ["{viral_history-,viral_exposure-,metabolic-,congestion_sx-,other_liver-,extraintestinal-,risk-}"]
+
+pe_text:
+  joiner: "\n"
+  sentences:
+    - lead: "General: "
+      parts: ["{general}"]
+    - lead: "Vital signs: "
+      parts: ["{vitals*}"]
+    - lead: "Skin & eyes: "
+      parts: ["{skin*}", "{liver_pe*}"]
+    - lead: "Cardiovascular: "
+      parts: ["{congestion_pe*}"]
+    - lead: "Abdomen: "
+      parts:
+        - "{abd_contour}"
+        - "{guarding}"
+        - "{tenderness}"
+        - "{abd_signs*}"
+        - "{palpable*}"

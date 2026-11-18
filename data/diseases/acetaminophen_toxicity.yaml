@@ -1,0 +1,45 @@
+id: acetaminophen_toxicity
+name: Acetaminophen (paracetamol) toxicity
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Very high ALT/AST (often > 1000) 1–3 days after a single overdose or repeated supratherapeutic doses, with nausea
+  and RUQ pain; risk is higher with alcohol use, fasting, or malnutrition. N-acetylcysteine is the antidote.
+
+symptoms:
+  - when: liver_drugs = apap
+    text: Acetaminophen — overdose or > 4 g/day (lower threshold with alcohol or fasting)
+  - when: alcohol_use = heavy | regular
+    text: Chronic alcohol use (lowers the toxic threshold)
+  - when: assoc_gi = nausea | vomiting | anorexia
+    text: Nausea, vomiting, anorexia
+  - when: pain_location = ruq
+    text: RUQ pain (day 2–3)
+  - when: lft_duration = lt1m | first_found
+    text: Acute
+  - when: assoc_other = confusion
+    text: Confusion — acute liver failure
+  - when: liver_warning = bruising
+    text: Bleeding — coagulopathy
+
+pe:
+  - when: palpable = liver_tender
+    text: Liver tenderness
+  - when: skin = icterus
+    text: Jaundice (later)
+  - when: liver_pe = asterixis
+    text: Asterixis — encephalopathy
+
+labs:
+  - Acetaminophen level (timed; Rumack–Matthew nomogram for a single acute ingestion)
+  - "ALT/AST, INR, creatinine, lactate, glucose, phosphate, blood gas"
+  - "King's College criteria: arterial pH < 7.3, or INR > 6.5 + creatinine > 3.4 mg/dL + grade III–IV encephalopathy"
+
+imaging:
+  - Usually not needed for diagnosis
+
+pitfalls:
+  - Start N-acetylcysteine without waiting for the level if ingestion > 8 h ago or timing is unclear.
+  - Repeated supratherapeutic ingestion (e.g., several cold remedies) is easy to miss — ask about all combination products.
+  - Any intentional overdose needs a psychiatric assessment.

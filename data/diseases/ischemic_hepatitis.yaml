@@ -1,0 +1,41 @@
+id: ischemic_hepatitis
+name: Ischemic hepatitis (shock liver)
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Massive, rapid rise in AST/ALT (often > 1000, with very high LDH) within 1–3 days of hypotension, shock, sepsis,
+  or cardiac arrest, usually on a background of heart failure; falls quickly once perfusion is restored.
+
+symptoms:
+  - when: congestion_sx = shock
+    text: Recent hypotension, shock, sepsis, or arrhythmia
+  - when: congestion_sx = heart_failure
+    text: Underlying heart failure (most cases)
+  - when: lft_duration = lt1m | first_found
+    text: Acute, within days of the insult
+  - when: assoc_other = confusion
+    text: Confusion (hypoperfusion or encephalopathy)
+  - when: assoc_sys = no jaundice
+    text: Little or no jaundice early
+
+pe:
+  - when: vitals = hypotension | tachycardia
+    text: Hypotension, tachycardia
+  - when: congestion_pe = jvp | edema
+    text: Signs of heart failure
+  - when: general = ill | confused
+    text: Unwell, confused
+
+labs:
+  - "AST/ALT > 1000 with LDH very high (ALT/LDH < 1.5 favors ischemia over viral)"
+  - "Creatinine (concurrent AKI), lactate, INR, troponin"
+  - Rapid fall of transaminases (about 50% in 3 days) supports the diagnosis
+
+imaging:
+  - Echocardiography
+  - Doppler ultrasound — hepatic artery and portal vein patency
+
+pitfalls:
+  - The hypotensive episode may have been brief or unrecorded — ask specifically.
+  - Consider acetaminophen and viral hepatitis in any ALT > 1000.

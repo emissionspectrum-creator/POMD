@@ -1,0 +1,44 @@
+id: primary_biliary_cholangitis
+name: Primary biliary cholangitis (PBC)
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Persistently raised ALP and GGT, often with fatigue and itching, in a middle-aged woman with positive
+  anti-mitochondrial antibody; treated with ursodeoxycholic acid.
+
+symptoms:
+  - when: sex = female
+    text: Women (about 9:1), usually middle-aged
+  - when: assoc_sys = pruritus
+    text: Itching
+  - when: assoc_sys = malaise
+    text: Fatigue
+  - when: other_liver = autoimmune
+    text: Sjögren, thyroid disease, other autoimmunity
+  - when: lft_duration = gt6m | first_found
+    text: Chronic, often found on routine testing
+  - when: age_group = age_40_59 | age_60_plus
+    text: Middle-aged or older
+  - when: assoc_sys = no jaundice
+    text: Jaundice only in advanced disease
+
+pe:
+  - when: liver_pe = excoriations
+    text: Scratch marks
+  - when: palpable = hepatomegaly
+    text: Hepatomegaly
+  - when: skin = icterus
+    text: Jaundice (late, poor prognosis)
+
+labs:
+  - "ALP > 1.5 × ULN with GGT raised; anti-mitochondrial antibody (AMA-M2)"
+  - "IgM raised; lipids raised; check vitamin D and bone density"
+
+imaging:
+  - Ultrasound to exclude extrahepatic obstruction
+  - Elastography; bone densitometry
+
+pitfalls:
+  - AMA-negative PBC exists (check PBC-specific ANA — sp100, gp210).
+  - Rising bilirubin is the strongest predictor of poor outcome.

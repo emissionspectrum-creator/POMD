@@ -1,0 +1,62 @@
+id: alcoholic_hepatitis
+name: Alcohol-associated hepatitis
+must_not_miss: true
+timecourse: [acute, subacute]
+status: draft
+one_liner: >
+  Rapid onset of jaundice, often with fever, tender hepatomegaly and malaise, in a heavy drinker (usually
+  > 60 g/day for years) whose last drink was within the past 8 weeks; severe cases carry high short-term mortality.
+
+symptoms:
+  - when: alcohol_use = heavy | regular
+    text: Heavy drinking
+  - when: alcohol_amount = g60_100 | gt100
+    text: Usually > 60 g/day
+  - when: alcohol_years = y5_10 | y10_20 | gt20
+    text: Years of heavy use
+  - when: alcohol_last = still | lt1m | m1_6
+    text: Last drink within the past 8 weeks
+  - when: alcohol_pattern = binge | daily
+    text: Recent binge or daily drinking
+  - when: assoc_sys = jaundice
+    text: New jaundice (the hallmark)
+  - when: assoc_sys = fever
+    text: Low-grade fever (also look for infection)
+  - when: assoc_sys = malaise | weight_loss
+    text: Malaise, anorexia, weight loss
+  - when: pain_location = ruq
+    text: RUQ discomfort
+  - when: liver_warning = distension
+    text: Abdominal swelling (ascites)
+  - when: lft_duration = lt1m | m1_6
+    text: Weeks
+  - when: assoc_other = confusion
+    text: Confusion — encephalopathy or withdrawal
+
+pe:
+  - when: skin = icterus
+    text: Jaundice
+  - when: palpable = hepatomegaly | liver_tender
+    text: Tender hepatomegaly
+  - when: vitals = fever | tachycardia
+    text: Fever, tachycardia
+  - when: liver_pe = spider | palmar | asterixis
+    text: Stigmata of chronic liver disease; asterixis in severe disease
+  - when: palpable = ascites
+    text: Ascites
+
+labs:
+  - "AST 2–6 × ULN (rarely > 400), AST/ALT > 1.5–2; bilirubin > 3 mg/dL"
+  - Raised neutrophils, INR, MCV, GGT
+  - Severity — MELD, Maddrey discriminant function; Lille score at day 7 of steroids
+  - Exclude infection (blood / urine culture, ascitic tap, chest X-ray), HBV, HCV, DILI
+
+imaging:
+  - Ultrasound with Doppler — exclude biliary obstruction, HCC, portal vein thrombosis
+  - Liver biopsy only if the diagnosis is uncertain
+
+pitfalls:
+  - AST > 400 or ALT > 300 points to another cause (ischemia, acetaminophen, viral).
+  - Combined acetaminophen use in heavy drinkers causes severe injury at modest doses.
+  - Severe disease (MELD > 20) needs admission and consideration of steroids after excluding infection.
+  - Thiamine and alcohol withdrawal management are part of the first day.

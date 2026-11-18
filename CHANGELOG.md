@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## 2026-11-18 — 新增第三個主訴 Abnormal liver tests（v0.6.0，使用者要求）
+
+依 `data/complaints/abnormal_lft.md`（已與使用者對齊）實作。
+
+**程式**
+- 可收合細項：主訴的項目可以寫 `{item, details: {label, note, items}}`，細項預設收合、有點選時自動展開，收合時標題列顯示摘要；可附說明文字（用於酒精克數換算表）。完整版與精簡版都支援，精簡版中細項跟著主項目移動、沒有自己的排序按鈕。`core.js` 新增 `itemDetails`、`detailsSummary`。
+- `group_item` 改為選填：依病因分組、與左欄分段對應的主訴不需要排序項目。
+- 修正 CSS：已作答的主項目不再讓細項的標籤變色、clear 一直顯示。
+- 新增測試：細項、無 group_item 的分組順序、肝功能異常端對端（27 個測試）。
+
+**內容（全部 `draft`）**
+- 病史依病因分段：Course & symptoms → Alcohol → Drugs & herbs → Viral → Metabolic → Biliary → Congestive / ischemic → Autoimmune & others；抽血型態不做成選項（使用者自行判讀）。
+- 酒精：alcohol_use（保留主項目）＋收合細項（種類、每日克數 < 20／20–40／40–60／60–100／> 100 g、年數、最後一次喝、型態），說明文字附台灣常見酒類換算。
+- 新詞彙：lft_duration（< 1 mo acute、1–6 mo subacute、> 6 mo chronic）、liver_warning、alcohol_*、liver_drugs、herbs、drug_timing、viral_history、viral_exposure、metabolic、congestion_sx、other_liver；PE 新增 liver_pe、congestion_pe。
+- 新疾病 16 個（★：alcoholic hepatitis、acetaminophen toxicity、HBV flare、ischemic hepatitis）；choledocholithiasis、acute cholangitis、liver abscess、hyperthyroidism 共用。腹痛的 RUQ 群組照舊使用 `acute_hepatitis`。
+
 ## 2026-11-18 — 不再提醒審核疾病（使用者要求）
 
 - 使用者已初步看過疾病內容，但不打算逐一細審；`CLAUDE.md` 註明之後不要再提醒或要求審核。`status` 維持 `draft`，只有使用者主動表示審核過才改 `reviewed`。

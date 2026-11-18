@@ -24,6 +24,11 @@ symptoms:
     text: No fever (fever + jaundice = think cholangitis)
   - when: risk = gallstones | biliary_procedure
     text: Known gallstones or prior cholecystectomy / biliary procedure
+  # abnormal liver tests complaint
+  - when: lft_duration = lt1m | first_found
+    text: Recent cholestatic rise
+  - when: meal_relation = worse_eating
+    text: Pain after (fatty) meals
 
 pe:
   - when: skin = icterus

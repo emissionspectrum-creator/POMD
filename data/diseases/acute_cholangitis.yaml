@@ -22,6 +22,9 @@ symptoms:
     text: Acute presentation over hours to days
   - when: risk = gallstones | biliary_procedure
     text: Gallstones, biliary stent, prior ERCP or biliary surgery
+  # abnormal liver tests complaint
+  - when: lft_duration = lt1m | first_found
+    text: Acute
 
 pe:
   - when: vitals = fever

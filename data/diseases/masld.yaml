@@ -1,0 +1,42 @@
+id: masld
+name: MASLD / MASH (metabolic dysfunction-associated steatotic liver disease)
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Mild ALT > AST elevation with fatty liver on ultrasound in a patient with obesity, diabetes, dyslipidemia, or
+  hypertension and little alcohol; most are asymptomatic, and fibrosis stage decides prognosis.
+
+symptoms:
+  - when: metabolic = obesity | weight_gain
+    text: Overweight, central obesity, weight gain
+  - when: metabolic = dyslipidemia | hypertension
+    text: Dyslipidemia, hypertension
+  - when: risk = diabetes | hypertriglyceridemia
+    text: Diabetes, hypertriglyceridemia
+  - when: alcohol_use = never | social
+    text: Little or no alcohol
+  - when: lft_duration = gt6m | first_found
+    text: Chronic or found on routine testing
+  - when: assoc_sys = no jaundice
+    text: No jaundice
+
+pe:
+  - when: palpable = hepatomegaly
+    text: Hepatomegaly
+  - when: tenderness = none
+    text: Non-tender
+
+labs:
+  - "ALT > AST (AST > ALT suggests advanced fibrosis or alcohol); GGT may be mildly raised"
+  - "HbA1c, lipids; FIB-4 for fibrosis risk"
+  - Exclude HBV, HCV, alcohol, drugs, iron overload
+
+imaging:
+  - Ultrasound — bright liver
+  - Transient elastography if FIB-4 ≥ 1.3
+
+pitfalls:
+  - Normal ALT does not exclude MASH or fibrosis.
+  - "Can coexist with HBV or alcohol use (MetALD: moderate alcohol + metabolic risk)."
+  - Weight loss of 7–10% improves steatosis and inflammation.

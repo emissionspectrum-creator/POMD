@@ -1,0 +1,47 @@
+id: alcohol_related_liver_disease
+name: Alcohol-related liver disease (steatosis → cirrhosis)
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Mildly raised AST > ALT with high GGT and MCV in a long-term heavy drinker, from steatosis that can progress
+  silently to fibrosis and cirrhosis; abstinence is the key treatment.
+
+symptoms:
+  - when: alcohol_use = heavy | regular | former
+    text: Long-term regular or heavy drinking
+  - when: alcohol_amount = g40_60 | g60_100 | gt100
+    text: Usually > 40 g/day (women lower)
+  - when: alcohol_years = y5_10 | y10_20 | gt20
+    text: For years
+  - when: alcohol_type = kaoliang | rice_wine | tonic | whiskey
+    text: Spirits, rice wine, or tonic wine (high grams per drink)
+  - when: lft_duration = gt6m | first_found
+    text: Chronic or found on routine testing
+  - when: assoc_sys = no jaundice
+    text: Usually no jaundice (unless decompensated)
+  - when: metabolic = obesity
+    text: Obesity accelerates fibrosis
+
+pe:
+  - when: palpable = hepatomegaly
+    text: Hepatomegaly (steatosis)
+  - when: liver_pe = spider | palmar | gynecomastia
+    text: Stigmata of chronic liver disease
+  - when: palpable = splenomegaly | ascites
+    text: Splenomegaly, ascites (cirrhosis)
+
+labs:
+  - "AST/ALT > 2, GGT raised, MCV raised; AST usually < 300"
+  - Platelets, albumin, INR, bilirubin — cirrhosis
+  - "Phosphatidylethanol (PEth) or CDT to support history where available"
+
+imaging:
+  - Ultrasound — fatty or coarse liver, splenomegaly, ascites
+  - Transient elastography (interpret after a period of abstinence)
+  - EGD for varices if cirrhotic; HCC surveillance every 6 months in cirrhosis
+
+pitfalls:
+  - Patients under-report intake — ask about type, bottle size, and days per week, and ask family.
+  - Coexisting HBV, HCV, or MASLD multiplies risk; test for them.
+  - Normal liver tests do not exclude cirrhosis.

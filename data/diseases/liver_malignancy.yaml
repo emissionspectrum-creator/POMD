@@ -1,0 +1,46 @@
+id: liver_malignancy
+name: Hepatocellular carcinoma / liver metastases
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  New or worsening liver test abnormalities, weight loss, RUQ discomfort or decompensation in a patient with
+  chronic HBV, HCV, or cirrhosis (HCC), or with a known primary cancer (metastases).
+
+symptoms:
+  - when: viral_history = hbv | hcv
+    text: Chronic HBV or HCV
+  - when: alcohol_use = heavy | former
+    text: Alcohol-related cirrhosis
+  - when: assoc_sys = weight_loss | malaise
+    text: Weight loss, fatigue
+  - when: assoc_gi = anorexia
+    text: Anorexia
+  - when: pain_location = ruq
+    text: RUQ pain or fullness
+  - when: liver_warning = distension
+    text: Abdominal swelling
+  - when: other_liver = fhx_liver
+    text: Family history of HCC
+  - when: age_group = age_40_59 | age_60_plus
+    text: Middle-aged or older
+
+pe:
+  - when: palpable = hepatomegaly | mass
+    text: Hard, irregular liver or mass
+  - when: palpable = ascites
+    text: Ascites
+  - when: skin = icterus
+    text: Jaundice (advanced or biliary invasion)
+
+labs:
+  - AFP (normal in up to a third of HCC)
+  - "CEA, CA 19-9 for metastases; liver panel, INR, albumin"
+
+imaging:
+  - Multiphase contrast CT or MRI (arterial enhancement with washout = HCC)
+  - Biopsy for metastases or atypical lesions
+
+pitfalls:
+  - HBV-related HCC can develop without cirrhosis.
+  - Missed surveillance is common — check when the last ultrasound was.
