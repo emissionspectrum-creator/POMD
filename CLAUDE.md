@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # POMD — 專案說明（給 Claude Code）
 
-門診用「主訴追問與鑑別診斷輔助工具」，個人使用版。設計規格見 `DESIGN.md`（各主訴通用的原則，修改前先問使用者）；各主訴的設計說明見 `data/complaints/<id>.md`（新增主訴先寫這份並與使用者對齊）；修改紀錄見 `CHANGELOG.md`。
+門診用「主訴追問與鑑別診斷輔助工具」，個人使用版。設計規格見 `DESIGN.md`（各主訴通用的原則，修改前先問使用者）；各主訴的設計說明見 `data/complaints/<id>.md`（新增主訴先寫這份並與使用者對齊）；**新增主訴前先讀 `HANDOFF.md`**（操作手冊：流程、判斷準則、踩過的坑）；修改紀錄見 `CHANGELOG.md`。
 
 ## 關鍵規則
 
@@ -23,6 +23,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```
 DESIGN.md                 設計文件（通用原則）
+HANDOFF.md                新增主訴的操作手冊（每完成一個主訴就補充）
 CLAUDE.md / CHANGELOG.md
 build.py                  驗證 data/ 並組出 dist/ 兩個 html（需 PyYAML）
 src/

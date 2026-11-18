@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2026-11-18 — 新增 HANDOFF.md（使用者要求）
+
+- 新增根目錄 `HANDOFF.md`：新增主訴的操作手冊，內容包括開工前要讀的與範本對照、十步流程、`<id>.md` 範本、設計判斷準則、踩過的坑、驗證工具（node 產生 HPI、playwright 實測）、使用者的工作偏好。只寫流程，不記錄現況（現況看本檔）。
+- `CLAUDE.md` 加上「新增主訴前先讀 `HANDOFF.md`」，目錄結構加一行。
+- 之後每完成一個主訴，就把新的坑與判斷準則補進 HANDOFF。
+
 ## 2026-11-18 — 新增第三個主訴 Abnormal liver tests（v0.6.0，使用者要求）
 
 依 `data/complaints/abnormal_lft.md`（已與使用者對齊）實作。
