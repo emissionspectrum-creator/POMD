@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## 2026-11-18 — 新增第二個主訴 Diarrhea（v0.5.0，使用者要求）
+
+依 `data/complaints/diarrhea.md`（已與使用者對齊）實作。
+
+**程式（通用功能，DESIGN 4.6）**
+- 主訴引用共用項目時可寫 `{item, options, ask, label}`：只顯示部分選項、覆寫英文問法與標籤（使用者選 Q1 方案 (a)，讓 travel、fever 這類概念維持只有一種寫法）。`core.js` 新增 `shownItems`、`itemOptions`、`itemAsk`、`itemLabel`、`featureShown`；兩頁的畫面改用這些函式。
+- 疾病特徵只在有顯示該項目（及選項）的主訴參與比對、計數與說明卡；`diseaseFeatures`／`matchCount` 多一個選填的 complaint 參數。
+- 排序項目通用化：`location_item`／`locations` 改名為 `group_item`／`options`（腹痛 yaml 同步修改），presence 項目只看 present；右欄按鈕「By location」改為「By group」。
+- `build.py`：驗證上述覆寫；原本「疾病特徵用到主訴沒顯示的項目」的 warning，改為「在引用它的所有主訴中都沒有顯示」才警告；精簡版資料加入覆寫欄位。
+- 新增測試：選項子集／問法／標籤覆寫、特徵可見性、presence 排序項目、腹瀉端對端（24 個測試）。
+
+**內容（全部 `draft`）**
+- 詞彙：新增 diarrhea_duration（< 2 週 acute、2–4 週 subacute、> 4 週 chronic）、diarrhea_pattern、stool_character、stool_frequency、stool_volume、nocturnal_stool、fasting_effect、continence、dehydration_sx、extraintestinal、exposure、food_trigger、diarrhea_drugs、diarrhea_history；PE 新增 hydration、systemic_pe。
+- 新疾病 13 個：C. difficile infection★、STEC★、invasive bacterial enterocolitis、bacterial food poisoning、amoebic colitis、intestinal tuberculosis、microscopic colitis、bile acid diarrhea、lactose intolerance、SIBO、drug-induced diarrhea、hyperthyroidism、overflow diarrhea。
+- 與腹痛共用的 8 個疾病加上腹瀉特徵：acute gastroenteritis、infectious ileocecitis、UC、Crohn's、CRC、ischemic colitis、IBS、chronic pancreatitis。
+- 鑑別診斷依機轉分 7 群，排序項目為 stool_character。
+
 ## 2026-11-18 — DESIGN 4.1 不再規定非疼痛類主訴的追問順序（使用者要求）
 
 - 刪除「非疼痛類主訴：大致依 起始與病程 → 性狀 → … → 危險因子與用藥」。每個主訴的追問邏輯不同（例如 leg edema 依心、腎、肝逐一追問，伴隨症狀反而是主體），寫死一種順序會讓之後的主訴被硬套。

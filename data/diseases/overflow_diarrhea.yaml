@@ -1,0 +1,43 @@
+id: overflow_diarrhea
+name: Overflow diarrhea (fecal impaction)
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Frequent small-volume liquid stools or soiling leaking around impacted stool, in an elderly, bedbound, or
+  cognitively impaired patient, often on opioids or anticholinergics.
+
+symptoms:
+  - when: age_group = age_60_plus
+    text: Elderly
+  - when: exposure = institution
+    text: Care home resident or bedbound
+  - when: stool_volume = small
+    text: Small-volume, frequent liquid stools
+  - when: continence = incontinence
+    text: Soiling or fecal incontinence
+  - when: diarrhea_pattern = alternating
+    text: Preceded by constipation
+  - when: assoc_gi = bloating
+    text: Bloating, abdominal discomfort
+  - when: assoc_sys = no fever
+    text: No fever
+
+pe:
+  - when: rectal = hard_stool
+    text: Hard stool in the rectum on digital exam
+  - when: abd_contour = mild | marked
+    text: Abdominal distension
+  - when: palpable = mass
+    text: Palpable fecal mass
+
+labs:
+  - Electrolytes, calcium, TSH (causes of constipation)
+
+imaging:
+  - Plain abdominal X-ray — fecal loading, excludes obstruction if no rectal impaction
+
+pitfalls:
+  - Treating with antidiarrheals makes it worse — always do a rectal exam in the elderly with "diarrhea".
+  - Impaction can be higher in the colon with an empty rectum.
+  - Review opioids, anticholinergics, calcium channel blockers, and iron.

@@ -1,0 +1,44 @@
+id: amoebic_colitis
+name: Amoebic colitis
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Gradual-onset bloody, mucoid diarrhea with crampy abdominal pain over 1–3 weeks, often without high fever,
+  in a patient with HIV, men who have sex with men, institution residents, or travelers to endemic areas.
+
+symptoms:
+  - when: stool_character = bloody | mucus
+    text: Bloody, mucoid stools
+  - when: diarrhea_duration = w1_2 | w2_4 | m1_3
+    text: Gradual onset over 1–3 weeks (longer than bacterial dysentery)
+  - when: pain_location = rlq | diffuse | llq
+    text: Crampy abdominal pain, often right-sided (cecum)
+  - when: assoc_sys = no fever
+    text: Fever often absent or low-grade
+  - when: assoc_sys = weight_loss
+    text: Weight loss
+  - when: risk = immunocompromised | travel
+    text: HIV, MSM, travel, or institutional living
+  - when: exposure = institution
+    text: Institution resident
+
+pe:
+  - when: tenderness = rlq | diffuse
+    text: Right-sided or diffuse tenderness
+  - when: palpable = hepatomegaly
+    text: Tender hepatomegaly (concurrent liver abscess)
+
+labs:
+  - Stool Entamoeba histolytica antigen or PCR (microscopy cannot distinguish E. dispar)
+  - Serum amoebic serology; HIV and syphilis testing
+  - CBC, CRP, liver panel
+
+imaging:
+  - Colonoscopy — discrete flask-shaped ulcers, cecum and ascending colon; biopsy the ulcer edge
+  - Liver ultrasound if RUQ pain or abnormal liver tests
+
+pitfalls:
+  - Easily mistaken for IBD — steroids can precipitate fulminant amoebic colitis; exclude amoeba first.
+  - In Taiwan, amoebiasis is now mostly sexually transmitted (MSM, HIV) rather than travel-related.
+  - Treat with a tissue agent (metronidazole) followed by a luminal agent (paromomycin).

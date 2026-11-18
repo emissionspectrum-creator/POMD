@@ -1,0 +1,42 @@
+id: drug_induced_diarrhea
+name: Drug-induced diarrhea
+must_not_miss: false
+timecourse: [acute, subacute, chronic]
+status: draft
+one_liner: >
+  Diarrhea that started after a new drug or dose change — metformin, magnesium antacids or laxatives, colchicine,
+  PPIs, SSRIs, antibiotics, or chemotherapy — and improves when it is stopped; immune checkpoint inhibitors can
+  cause a serious colitis.
+
+symptoms:
+  - when: diarrhea_drugs = metformin | magnesium | ppi | ssri | colchicine | chemo_ici | antibiotics
+    text: A drug known to cause diarrhea
+  - when: risk = new_meds
+    text: New medication or herbal supplement, or recent dose increase
+  - when: risk = nsaid
+    text: NSAIDs (can cause enteropathy or microscopic colitis)
+  - when: stool_character = watery | loose
+    text: Watery or loose stools
+  - when: fasting_effect = stops
+    text: Osmotic drugs (magnesium, sugar alcohols) stop with fasting
+  - when: assoc_sys = no fever
+    text: No fever
+
+pe:
+  - when: tenderness = none | diffuse
+    text: Usually unremarkable abdomen
+  - when: vitals = no fever
+    text: Afebrile
+
+labs:
+  - Electrolytes, creatinine (colchicine toxicity with renal impairment)
+  - C. difficile testing if antibiotics were involved
+  - For immune checkpoint inhibitor colitis — CRP, stool infection screen, early oncology input
+
+imaging:
+  - Colonoscopy if symptoms persist after stopping the drug, or for immunotherapy colitis
+
+pitfalls:
+  - Ask about over-the-counter antacids, laxatives, supplements, and Chinese herbal medicines.
+  - Metformin diarrhea can begin years after starting, especially after dose increases.
+  - Diarrhea in a patient on immune checkpoint inhibitors needs same-day assessment.

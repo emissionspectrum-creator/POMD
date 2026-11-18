@@ -23,6 +23,50 @@
     return data;
   }
 
+  // ---------- complaint view ----------
+
+  // { itemId: true } for the items shown in a complaint's history and PE columns,
+  // or null when the complaint lists no columns (then every item counts as shown).
+  function shownItems(complaint) {
+    if (!complaint || (!complaint.history && !complaint.pe)) return null;
+    var out = {};
+    (complaint.history || []).concat(complaint.pe || []).forEach(function (sec) {
+      sec.items.forEach(function (id) { out[id] = true; });
+    });
+    return out;
+  }
+
+  // Options of an item as shown in a complaint: the complaint may restrict an item to a
+  // subset (`item_options`), so one shared vocabulary item can serve several complaints.
+  function itemOptions(complaint, item) {
+    var sub = complaint && complaint.item_options && complaint.item_options[item.id];
+    if (!sub) return item.options;
+    return item.options.filter(function (o) { return sub.indexOf(o.id) >= 0; });
+  }
+
+  // English phrasing for an item; a complaint may replace it (`item_ask`) when the shared
+  // wording does not fit (e.g. "Have you had pain like this before?" for diarrhea).
+  function itemAsk(complaint, item) {
+    var own = complaint && complaint.item_ask && complaint.item_ask[item.id];
+    return own || item.ask || [];
+  }
+
+  // Item label; a complaint may replace it (`item_label`), e.g. "Systemic" instead of
+  // "Systemic / hepatobiliary" when only the systemic options are shown.
+  function itemLabel(complaint, item) {
+    return (complaint && complaint.item_label && complaint.item_label[item.id]) || item.label;
+  }
+
+  // A disease feature takes part in a complaint only if its item is shown there and at least
+  // one of its options is offered (DESIGN 4.6: diseases shared by several complaints).
+  function featureShown(feature, complaint) {
+    var shown = shownItems(complaint);
+    if (!shown) return true;
+    if (!shown[feature.item]) return false;
+    var sub = complaint.item_options && complaint.item_options[feature.item];
+    return !sub || feature.options.some(function (o) { return sub.indexOf(o) >= 0; });
+  }
+
   // ---------- selection ----------
 
   function toggle(state, item, optId) {
@@ -137,12 +181,14 @@
     return selectedOptions(item, state).map(function (o) { return o.label; }).join(', ');
   }
 
-  function diseaseFeatures(disease) {
-    return (disease.symptoms || []).concat(disease.pe || []);
+  // All comparable features; with a complaint, only those that take part in it.
+  function diseaseFeatures(disease, complaint) {
+    var all = (disease.symptoms || []).concat(disease.pe || []);
+    return complaint ? all.filter(function (f) { return featureShown(f, complaint); }) : all;
   }
 
-  function matchCount(disease, state, items) {
-    return diseaseFeatures(disease).filter(function (f) {
+  function matchCount(disease, state, items, complaint) {
+    return diseaseFeatures(disease, complaint).filter(function (f) {
       return featureStatus(f, state, items) === 'match';
     }).length;
   }
@@ -167,21 +213,22 @@
     return 'different';
   }
 
-  // Groups whose locations intersect the selected pain locations move to the top;
-  // otherwise the order defined in the complaint is kept.
+  // Groups whose `options` intersect the selection of the complaint's `group_item`
+  // (e.g. pain location, stool character) move to the top; otherwise the complaint's order is kept.
+  // A presence group item counts only options marked present.
   function orderGroups(complaint, state) {
-    var sel = state[complaint.location_item] || {};
+    var sel = state[complaint.group_item] || {};
     var promoted = [];
     var rest = [];
     complaint.ddx.forEach(function (g) {
-      var hit = (g.locations || []).some(function (l) { return !!sel[l]; });
+      var hit = (g.options || []).some(function (l) { return sel[l] === true || sel[l] === 'present'; });
       (hit ? promoted : rest).push({ group: g, promoted: hit });
     });
     return promoted.concat(rest);
   }
 
   // Flat, de-duplicated disease list sorted by match count (high → low).
-  // Ties keep the location order from orderGroups(), so promoted groups come first.
+  // Ties keep the group order from orderGroups(), so promoted groups come first.
   // Returns [{ id, n, groups: [group label...] }].
   function rankByMatches(complaint, diseases, state, items) {
     var byId = {};
@@ -189,7 +236,7 @@
     orderGroups(complaint, state).forEach(function (entry) {
       entry.group.diseases.forEach(function (id) {
         if (!byId[id]) {
-          byId[id] = { id: id, n: matchCount(diseases[id], state, items), groups: [], order: list.length };
+          byId[id] = { id: id, n: matchCount(diseases[id], state, items, complaint), groups: [], order: list.length };
           list.push(byId[id]);
         }
         byId[id].groups.push(entry.group.group);
@@ -432,6 +479,11 @@
     serializeState: serializeState,
     sanitizeOrder: sanitizeOrder,
     prepare: prepare,
+    shownItems: shownItems,
+    itemOptions: itemOptions,
+    itemAsk: itemAsk,
+    itemLabel: itemLabel,
+    featureShown: featureShown,
     toggle: toggle,
     isEmpty: isEmpty,
     defaultState: defaultState,

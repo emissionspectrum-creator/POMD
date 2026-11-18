@@ -16,7 +16,7 @@ from pathlib import Path
 
 import yaml
 
-APP_VERSION = "0.4.0"
+APP_VERSION = "0.5.0"
 
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "src"
@@ -29,7 +29,7 @@ ITEM_KEYS = {"id", "label", "type", "template", "join", "ask", "options"}
 OPTION_KEYS = {"id", "label", "frag", "frag_neg", "exclusive", "red_flag", "tc"}
 TC_VALUES = {"acute", "subacute", "chronic"}
 JOIN_VALUES = {"and", "or", ","}
-COMPLAINT_KEYS = {"id", "name", "location_item", "timecourse_item", "history", "pe",
+COMPLAINT_KEYS = {"id", "name", "group_item", "timecourse_item", "history", "pe",
                   "labs", "imaging", "ddx", "hpi", "pe_text", "quick", "defaults"}
 DISEASE_KEYS = {"id", "name", "must_not_miss", "timecourse", "status", "one_liner",
                 "symptoms", "pe", "labs", "imaging", "pitfalls"}
@@ -297,25 +297,66 @@ def suggestion_list(e, where, value):
 def load_complaints(e, items, diseases):
     complaints = []
     used_diseases = set()
+    views = {}  # disease id -> [(shown items, item_options) of each complaint listing it]
     for path in sorted((DATA / "complaints").glob("*.yaml")):
         rel = path.relative_to(ROOT)
         raw = load_yaml(path)
         where = str(rel)
         if not check_keys(e, where, raw, COMPLAINT_KEYS):
             continue
+        # Section items are item ids, or {item: id, options: [...], ask: [...], label: ...} to show
+        # only some options and / or replace the English phrasing or label. Output keeps plain ids in
+        # the sections and collects the overrides in `item_options` / `item_ask` / `item_label`.
         shown = set()
+        item_options = {}
+        item_ask = {}
+        item_label = {}
+        columns = {}
         for col in ("history", "pe"):
+            columns[col] = []
             for sec in raw.get(col) or []:
                 if not check_keys(e, f"{where}.{col}", sec, {"section", "items"}):
                     continue
-                for iid in sec.get("items") or []:
+                ids = []
+                for entry in sec.get("items") or []:
+                    iwhere = f"{where}.{col}.{sec.get('section', '?')}"
+                    iid = entry
+                    if isinstance(entry, dict):
+                        if not check_keys(e, iwhere, entry, {"item", "options", "ask", "label"}):
+                            continue
+                        iid = entry.get("item")
                     if iid not in items:
-                        e.err(f"{where}.{col}", f"unknown item {iid!r}")
-                    elif iid in shown:
-                        e.err(f"{where}.{col}", f"item {iid!r} listed twice")
+                        e.err(iwhere, f"unknown item {iid!r}")
+                        continue
+                    if iid in shown:
+                        e.err(iwhere, f"item {iid!r} listed twice")
+                        continue
+                    if isinstance(entry, dict) and "label" in entry:
+                        if isinstance(entry["label"], str) and entry["label"].strip():
+                            item_label[iid] = entry["label"]
+                        else:
+                            e.err(iwhere, f"{iid}: label must be a non-empty string")
+                    if isinstance(entry, dict) and "ask" in entry:
+                        asks = as_str_list(e, f"{iwhere}.{iid}.ask", entry["ask"])
+                        if asks:
+                            item_ask[iid] = asks
+                    if isinstance(entry, dict) and "options" in entry:
+                        known = [o["id"] for o in items[iid]["options"]]
+                        sub = entry.get("options")
+                        if not isinstance(sub, list) or not sub:
+                            e.err(iwhere, f"{iid}: options must be a non-empty list")
+                            sub = []
+                        for oid in sub:
+                            if oid not in known:
+                                e.err(iwhere, f"{iid}: unknown option {oid!r}")
+                        if len(set(sub)) != len(sub):
+                            e.err(iwhere, f"{iid}: option listed twice")
+                        # Keep the vocabulary's option order.
+                        item_options[iid] = [o for o in known if o in sub]
                     shown.add(iid)
-        history_ids = [iid for sec in raw.get("history") or [] if isinstance(sec, dict)
-                       for iid in sec.get("items") or [] if iid in items]
+                    ids.append(iid)
+                columns[col].append({"section": sec.get("section"), "items": ids})
+        history_ids = [iid for sec in columns["history"] for iid in sec["items"]]
         quick = raw.get("quick")
         if quick is None:
             quick_show = list(history_ids)
@@ -346,26 +387,27 @@ def load_complaints(e, items, diseases):
                 e.err(dwhere, "defaults are only supported for single / multi items")
                 continue
             opts = opts if isinstance(opts, list) else [opts]
-            known = {o["id"] for o in item["options"]}
+            known = set(item_options.get(iid) or [o["id"] for o in item["options"]])
             for oid in opts:
                 if oid not in known:
-                    e.err(dwhere, f"unknown option {oid!r}")
+                    e.err(dwhere, f"option {oid!r} is not offered in this complaint")
             if item["type"] == "single" and len(opts) > 1:
                 e.err(dwhere, "single item can have only one default")
             defaults[iid] = [str(o) for o in opts]
-        for k in ("location_item", "timecourse_item"):
+        for k in ("group_item", "timecourse_item"):
             if raw.get(k) not in shown:
                 e.err(where, f"{k} {raw.get(k)!r} must be an item shown in this complaint")
-        loc_item = items.get(raw.get("location_item"))
-        loc_opts = {o["id"] for o in loc_item["options"]} if loc_item else set()
+        group_iid = raw.get("group_item")
+        group_opts = set(item_options.get(group_iid) or
+                         [o["id"] for o in items[group_iid]["options"]] if group_iid in items else [])
         complaint_diseases = set()
         for g in raw.get("ddx") or []:
             gwhere = f"{where}.ddx.{g.get('group', '?') if isinstance(g, dict) else '?'}"
-            if not check_keys(e, gwhere, g, {"group", "locations", "diseases"}):
+            if not check_keys(e, gwhere, g, {"group", "options", "diseases"}):
                 continue
-            for l in g.get("locations") or []:
-                if l not in loc_opts:
-                    e.err(gwhere, f"location {l!r} is not an option of {raw.get('location_item')!r}")
+            for l in g.get("options") or []:
+                if l not in group_opts:
+                    e.err(gwhere, f"option {l!r} is not offered for group_item {group_iid!r}")
             seen = set()
             for did in g.get("diseases") or []:
                 if did not in diseases:
@@ -375,20 +417,20 @@ def load_complaints(e, items, diseases):
                 seen.add(did)
                 complaint_diseases.add(did)
         used_diseases |= complaint_diseases
-        for did in sorted(complaint_diseases & set(diseases)):
-            for f in diseases[did]["symptoms"] + diseases[did]["pe"]:
-                if f["item"] not in shown:
-                    e.warn(f"data/diseases/{did}.yaml",
-                           f"feature item {f['item']!r} is not shown in complaint {raw.get('id')!r}")
+        for did in complaint_diseases & set(diseases):
+            views.setdefault(did, []).append((shown, item_options))
         for k in ("hpi", "pe_text"):
             check_text_spec(e, f"{where}.{k}", raw.get(k) or {}, items, shown)
         complaints.append({
             "id": raw.get("id"),
             "name": raw.get("name"),
-            "location_item": raw.get("location_item"),
+            "group_item": group_iid,
             "timecourse_item": raw.get("timecourse_item"),
-            "history": raw.get("history") or [],
-            "pe": raw.get("pe") or [],
+            "history": columns["history"],
+            "pe": columns["pe"],
+            "item_options": item_options,
+            "item_ask": item_ask,
+            "item_label": item_label,
             "labs": suggestion_list(e, f"{where}.labs", raw.get("labs")),
             "imaging": suggestion_list(e, f"{where}.imaging", raw.get("imaging")),
             "ddx": raw.get("ddx") or [],
@@ -399,6 +441,14 @@ def load_complaints(e, items, diseases):
         })
     for did in sorted(set(diseases) - used_diseases):
         e.warn(f"data/diseases/{did}.yaml", "not referenced by any complaint")
+    # A shared disease may use items that only some of its complaints show (DESIGN 4.6),
+    # but every feature should take part in at least one of them.
+    for did, vs in sorted(views.items()):
+        for f in diseases[did]["symptoms"] + diseases[did]["pe"]:
+            if not any(f["item"] in shown and (f["item"] not in subs or set(f["options"]) & set(subs[f["item"]]))
+                       for shown, subs in vs):
+                e.warn(f"data/diseases/{did}.yaml",
+                       f"feature {f['item']} = {'|'.join(f['options'])} is not offered by any complaint listing it")
     return complaints
 
 
@@ -449,7 +499,7 @@ def main():
     quick_data = {
         "version": APP_VERSION,
         "items": items,
-        "complaints": [{k: c[k] for k in ("id", "name", "history", "hpi", "quick", "defaults")}
+        "complaints": [{k: c[k] for k in ("id", "name", "history", "item_options", "item_ask", "item_label", "hpi", "quick", "defaults")}
                        for c in complaints],
     }
     pages = [

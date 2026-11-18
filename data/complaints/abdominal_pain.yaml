@@ -1,6 +1,6 @@
 id: abdominal_pain
 name: Abdominal pain
-location_item: pain_location   # selecting a location promotes ddx groups listing it in `locations`
+group_item: pain_location      # selecting a location promotes ddx groups listing it in `options`
 timecourse_item: duration      # options' `tc` tags drive the acute / chronic badges
 
 # Left column, roughly LQQOPERA order. Items are defined in data/vocab/history.yaml.
@@ -83,33 +83,33 @@ imaging:
 # Right column. Groups reference disease ids (data/diseases/<id>.yaml); a disease may appear in several groups.
 ddx:
   - group: RUQ
-    locations: [ruq]
+    options: [ruq]
     diseases: [biliary_colic, acute_cholecystitis, choledocholithiasis, acute_cholangitis, acute_hepatitis,
                liver_abscess, rll_pneumonia]
   - group: Epigastric
-    locations: [epigastric]
+    options: [epigastric]
     diseases: [peptic_ulcer_disease, perforated_peptic_ulcer, functional_dyspepsia, gerd, gastritis,
                acute_pancreatitis, chronic_pancreatitis, gastric_cancer, acute_coronary_syndrome, biliary_colic]
   - group: LUQ
-    locations: [luq]
+    options: [luq]
     diseases: [splenic_infarction, splenic_rupture, acute_pancreatitis]
   - group: Periumbilical / Diffuse
-    locations: [periumbilical, diffuse]
+    options: [periumbilical, diffuse]
     diseases: [acute_appendicitis, small_bowel_obstruction, acute_mesenteric_ischemia, acute_gastroenteritis,
                ibs, constipation, perforation_peritonitis, ruptured_aaa, dka]
   - group: RLQ
-    locations: [rlq]
+    options: [rlq]
     diseases: [acute_appendicitis, crohns_disease, infectious_ileocecitis, ectopic_pregnancy, ovarian_torsion,
                diverticulitis]
   - group: LLQ
-    locations: [llq]
+    options: [llq]
     diseases: [diverticulitis, ischemic_colitis, ulcerative_colitis, colorectal_cancer, sigmoid_volvulus,
                ectopic_pregnancy, ovarian_torsion]
   - group: Suprapubic
-    locations: [suprapubic]
+    options: [suprapubic]
     diseases: [cystitis, acute_urinary_retention, pid]
   - group: Flank
-    locations: [flank_r, flank_l]
+    options: [flank_r, flank_l]
     diseases: [renal_colic, acute_pyelonephritis, ruptured_aaa]
 
 # Generated text. Template syntax: see CLAUDE.md → "Text templates".

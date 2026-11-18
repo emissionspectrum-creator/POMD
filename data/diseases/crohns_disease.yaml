@@ -28,6 +28,15 @@ symptoms:
     text: Known IBD; smoking increases risk
   - when: episodes = recurrent
     text: Relapsing course
+  # diarrhea complaint
+  - when: stool_character = loose | watery | bloody
+    text: Non-bloody diarrhea more often than in UC; blood with colonic disease
+  - when: diarrhea_duration = w2_4 | m1_3 | gt3m
+    text: Weeks to months
+  - when: nocturnal_stool = wakes
+    text: Nocturnal diarrhea
+  - when: extraintestinal = arthralgia | oral_ulcers | red_eye | skin_nodules
+    text: Mouth ulcers, joint, eye, or skin manifestations
 
 pe:
   - when: tenderness = rlq
@@ -40,6 +49,9 @@ pe:
     text: Pallor
   - when: vitals = fever
     text: Low-grade fever
+  # diarrhea complaint
+  - when: systemic_pe = erythema_nodosum | oral_ulcers
+    text: Erythema nodosum, oral aphthous ulcers
 
 labs:
   - CBC (anemia, thrombocytosis), CRP, albumin, ferritin, B12

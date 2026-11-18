@@ -22,6 +22,11 @@ symptoms:
     text: Usually over 60
   - when: risk = atherosclerosis | diabetes | chronic_constipation
     text: Vascular disease, diabetes, constipation, recent hypotension
+  # diarrhea complaint
+  - when: stool_character = bloody
+    text: Bloody diarrhea within 24 hours of the pain
+  - when: diarrhea_duration = lt3d | d3_7
+    text: Acute
 
 pe:
   - when: tenderness = llq

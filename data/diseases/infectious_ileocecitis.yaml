@@ -20,6 +20,13 @@ symptoms:
     text: Days
   - when: risk = sick_contacts | travel
     text: Suspicious food (undercooked pork, poultry), travel, sick contacts
+  # diarrhea complaint
+  - when: stool_character = watery | loose | bloody
+    text: Diarrhea, sometimes bloody
+  - when: diarrhea_duration = lt3d | d3_7 | w1_2
+    text: Acute, days
+  - when: exposure = undercooked
+    text: Undercooked pork or poultry (Yersinia, Campylobacter)
 
 pe:
   - when: tenderness = rlq

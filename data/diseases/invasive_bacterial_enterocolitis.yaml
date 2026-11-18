@@ -1,0 +1,50 @@
+id: invasive_bacterial_enterocolitis
+name: Invasive bacterial enterocolitis (Campylobacter, Salmonella, Shigella)
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Acute diarrhea with fever and crampy abdominal pain, often bloody or with mucus and tenesmus, beginning
+  1–3 days after undercooked poultry, eggs, or a shared meal; usually self-limiting within a week.
+
+symptoms:
+  - when: stool_character = bloody | mucus
+    text: Bloody or mucoid stools (dysentery)
+  - when: assoc_sys = fever
+    text: Fever
+  - when: assoc_gi = tenesmus
+    text: Tenesmus
+  - when: pain_quality = cramping
+    text: Crampy abdominal pain
+  - when: stool_volume = small
+    text: Small-volume, frequent stools (colitis)
+  - when: exposure = undercooked | banquet | untreated_water
+    text: Undercooked poultry or eggs, shared meal, or untreated water
+  - when: risk = travel | sick_contacts
+    text: Travel or others ill with the same illness
+  - when: diarrhea_duration = lt3d | d3_7
+    text: Acute, under a week
+
+pe:
+  - when: vitals = fever
+    text: Fever
+  - when: tenderness = llq | diffuse | rlq
+    text: Lower or diffuse abdominal tenderness without peritonism
+  - when: rebound = absent
+    text: No rebound tenderness
+  - when: general = dehydrated
+    text: Dry mucous membranes
+
+labs:
+  - Stool culture (or multiplex PCR) — bloody stool, fever, severe illness, immunocompromise
+  - Blood cultures if febrile and systemically unwell (Salmonella bacteremia in the elderly)
+  - CBC, CRP, electrolytes, creatinine
+
+imaging:
+  - Usually none; CT only if peritonism or a complication is suspected
+
+pitfalls:
+  - Exclude STEC before giving antibiotics for bloody diarrhea with little fever.
+  - Salmonella in patients > 50 years with vascular disease or grafts can seed endovascular infection — consider treatment.
+  - Campylobacter can be followed 1–3 weeks later by Guillain–Barré syndrome or reactive arthritis.
+  - Fluoroquinolone resistance in Campylobacter is high in Asia; azithromycin is preferred when treatment is needed.

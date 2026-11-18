@@ -1,0 +1,53 @@
+id: c_difficile_infection
+name: Clostridioides difficile infection
+must_not_miss: true
+timecourse: [acute, subacute]
+status: draft
+one_liner: >
+  Watery diarrhea (≥ 3 loose stools a day) with crampy lower abdominal pain, starting during or within weeks
+  of antibiotics or a hospital stay, often in an older or frail patient; severe cases cause fulminant colitis.
+
+symptoms:
+  - when: diarrhea_drugs = antibiotics
+    text: Antibiotics in the past 3 months (the key clue)
+  - when: diarrhea_history = recent_hospital
+    text: Recent hospitalization
+  - when: exposure = institution
+    text: Care home resident
+  - when: stool_character = watery | loose
+    text: Watery, foul-smelling diarrhea; frank blood is uncommon
+  - when: stool_frequency = f3_5 | f6_10 | gt10
+    text: Three or more stools a day
+  - when: pain_location = llq | suprapubic | diffuse
+    text: Crampy lower abdominal pain
+  - when: assoc_sys = fever
+    text: Fever (more common in severe disease)
+  - when: diarrhea_drugs = ppi
+    text: PPI use (risk factor)
+  - when: age_group = age_60_plus
+    text: Age ≥ 65 (risk of severe disease)
+
+pe:
+  - when: tenderness = llq | suprapubic | diffuse
+    text: Lower or diffuse abdominal tenderness
+  - when: vitals = fever | tachycardia
+    text: Fever, tachycardia
+  - when: abd_contour = mild | marked
+    text: Distension — consider ileus or toxic megacolon
+  - when: vitals = hypotension
+    text: Hypotension (fulminant colitis)
+
+labs:
+  - C. difficile testing (GDH + toxin, or PCR with toxin confirmation) on unformed stool only
+  - "Severity markers: WBC ≥ 15 × 10⁹/L or creatinine > 1.5 mg/dL = severe"
+  - Lactate in suspected fulminant disease
+
+imaging:
+  - Plain X-ray or CT if distension, ileus, or peritonism — colonic wall thickening, toxic megacolon
+  - Avoid colonoscopy in severe colitis; flexible sigmoidoscopy only if the diagnosis is unclear
+
+pitfalls:
+  - Ileus can cause little or no diarrhea despite severe colitis.
+  - Do not test formed stool or test for cure; colonization is common.
+  - Stop the inciting antibiotic and PPI where possible; avoid antimotility drugs.
+  - Recurrence is common (about 20%) within 8 weeks.

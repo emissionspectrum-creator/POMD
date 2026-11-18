@@ -26,6 +26,11 @@ symptoms:
     text: Short history — hours to a few days
   - when: risk = sick_contacts | travel
     text: Sick contacts, suspicious food, travel
+  # diarrhea complaint
+  - when: stool_character = watery | loose
+    text: Watery, non-bloody diarrhea
+  - when: diarrhea_duration = lt3d | d3_7
+    text: Acute, settling within a few days
 
 pe:
   - when: guarding = soft

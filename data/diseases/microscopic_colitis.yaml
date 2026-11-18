@@ -1,0 +1,50 @@
+id: microscopic_colitis
+name: Microscopic colitis
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Chronic or relapsing watery, non-bloody diarrhea, often nocturnal and urgent, in a middle-aged or older woman,
+  frequently linked to NSAIDs, PPIs, or SSRIs; the colon looks normal and the diagnosis needs biopsies.
+
+symptoms:
+  - when: stool_character = watery
+    text: Watery, non-bloody diarrhea
+  - when: diarrhea_duration = w2_4 | m1_3 | gt3m
+    text: Weeks to months, often relapsing
+  - when: nocturnal_stool = wakes
+    text: Nocturnal diarrhea
+  - when: assoc_gi = tenesmus
+    text: Urgency
+  - when: continence = incontinence
+    text: Fecal incontinence
+  - when: fasting_effect = persists
+    text: Persists with fasting (secretory)
+  - when: sex = female
+    text: Women more often affected
+  - when: age_group = age_60_plus | age_40_59
+    text: Usually over 50
+  - when: diarrhea_drugs = ppi | ssri
+    text: PPI or SSRI use
+  - when: risk = nsaid
+    text: NSAID use
+  - when: assoc_sys = weight_loss
+    text: Mild weight loss can occur
+
+pe:
+  - when: tenderness = none | diffuse
+    text: Unremarkable abdomen, or mild diffuse tenderness
+  - when: rectal = normal
+    text: Normal rectal exam
+
+labs:
+  - Fecal calprotectin may be mildly raised; stool infection screen and TSH, celiac serology if indicated
+  - CBC, CRP, albumin usually normal
+
+imaging:
+  - Colonoscopy with random biopsies from right and left colon even if the mucosa looks normal
+
+pitfalls:
+  - A normal-looking colonoscopy does not exclude it — biopsies are essential.
+  - Nocturnal diarrhea argues against IBS; think microscopic colitis in an older patient.
+  - Stop culprit drugs; budesonide is first-line treatment.

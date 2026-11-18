@@ -60,7 +60,7 @@ node --test --test-name-pattern="sanitizeState" tests/*.test.js   # 只跑名稱
 - 端對端測試從 `dist/POMD.html` 用 regex 抓出 `window.POMD_DATA = ...;` 再解析，所以改了 `data/` 沒重新 build，測試跑的是舊資料。
 
 - 改完 `data/` 或 `src/` 一定要重新 build，並把 `dist/` 兩個 html 一起 commit。
-- `build.py` 有 error 會中止；warning（例如疾病特徵用到主訴沒顯示的項目、疾病沒被任何主訴引用）要看過並處理或說明。
+- `build.py` 有 error 會中止；warning（例如疾病特徵在引用它的所有主訴中都沒有顯示、疾病沒被任何主訴引用）要看過並處理或說明。
 - 版本號在 `build.py` 的 `APP_VERSION`，會顯示在畫面右上角。
 - 注意 `node --test tests/`（目錄）在 Node 22 會失敗，要用 `tests/*.test.js`。
 - 瀏覽器實測：可在 session scratchpad 安裝 `playwright-core`，搭配 `~/.cache/ms-playwright/chromium-*/chrome-linux64/chrome` 以 `file://` 開啟 dist 測試；不要把 playwright 裝進專案。
@@ -110,11 +110,13 @@ node --test --test-name-pattern="sanitizeState" tests/*.test.js   # 只跑名稱
 
 ### 主訴（`data/complaints/<id>.yaml`）
 
-- `location_item`：哪個項目代表疼痛位置；點選後，`ddx` 中 `locations` 有交集的群組排到最前面。
+- `group_item`：右欄的排序項目（腹痛 = `pain_location`，腹瀉 = `stool_character`）；點選後，`ddx` 中 `options` 有交集的群組排到最前面（presence 項目只看 present）。
 - `timecourse_item`：哪個項目代表時程；其選項的 `tc` 決定右欄 A／S／C 徽章的標亮。
 - `history`／`pe`：`[{section, items: [item id...]}]`，決定左欄、中欄的分段與順序。
+  - `items` 的元素也可以寫成 `{item: id, options: [...], ask: [...], label: ...}`：只顯示該共用項目的部分選項（依詞彙原順序）、覆寫英文問法或標籤，只影響這個主訴（build 輸出到 `item_options`／`item_ask`／`item_label`；畫面用 `Core.itemOptions`／`itemAsk`／`itemLabel`）。概念已存在就用這個方式共用，不要為新主訴另立重複的選項。
+  - 疾病特徵只在「項目有顯示且至少一個選項有提供」的主訴參與比對與說明卡（`Core.featureShown`），所以共用疾病可以同時寫兩個主訴的特徵；建議用 `# <complaint> complaint` 註解分段。
 - `labs`／`imaging`：`[{name, note}]`，純建議清單，不可點、不參與比對。
-- `ddx`：`[{group, locations: [location option id...], diseases: [disease id...]}]`；同一疾病可出現在多個群組。
+- `ddx`：`[{group, options: [group_item 的 option id...], diseases: [disease id...]}]`；`options` 可省略（不參與排序）；同一疾病可出現在多個群組。
 - `hpi`／`pe_text`：文字組裝規格（見下）。
 - `defaults: {item id: [option id...]}`：新病人自動點選的項目（只限 single／multi，且須是本主訴有顯示的項目）。開啟、New patient、切換主訴時套用；只有預設值時視為「未點選」（HPI 空白、New patient 不需確認、不寫入 localStorage）。
 - `quick: {show: [item id...]}`：精簡版預設顯示的問題與順序；必須是 `history` 裡的項目、不可重複。沒列的預設隱藏，可用「+ Add question」加回。省略 `quick` 時顯示全部 history 項目。使用者在瀏覽器調整過的版面會存在 localStorage 並優先使用（「Reset layout」回到這個預設）。HPI 句子順序仍由 `hpi` 模板決定，不受畫面順序影響。

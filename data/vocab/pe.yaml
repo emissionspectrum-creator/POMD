@@ -168,3 +168,24 @@
     - {id: adnexal_tender, label: Adnexal tenderness, frag: adnexal tenderness}
     - {id: adnexal_mass, label: Adnexal mass, frag: an adnexal mass}
     - {id: cervical_discharge, label: Mucopurulent discharge, frag: mucopurulent cervical discharge}
+
+# ---------- Diarrhea (data/complaints/diarrhea.yaml) ----------
+
+- id: hydration
+  label: Hydration
+  type: presence
+  join: ","
+  options:
+    - {id: poor_turgor, label: Reduced skin turgor, frag: reduced skin turgor, frag_neg: normal skin turgor}
+    - {id: orthostatic, label: Orthostatic drop, frag: orthostatic hypotension, frag_neg: no orthostatic change, red_flag: true}
+    - {id: slow_refill, label: Capillary refill > 2 s, frag: delayed capillary refill, frag_neg: capillary refill < 2 s}
+
+- id: systemic_pe
+  label: Other findings
+  type: presence
+  join: ","
+  options:
+    - {id: erythema_nodosum, label: Erythema nodosum, frag: erythema nodosum on the shins}
+    - {id: oral_ulcers, label: Oral ulcers, frag: oral aphthous ulcers}
+    - {id: goiter, label: Goiter, frag: a goiter, frag_neg: no goiter}
+    - {id: tremor, label: Fine tremor, frag: a fine tremor, frag_neg: no tremor}

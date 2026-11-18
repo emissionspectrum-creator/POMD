@@ -1,0 +1,42 @@
+id: sibo
+name: Small intestinal bacterial overgrowth (SIBO)
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Chronic bloating, flatulence and loose or fatty stools, sometimes with weight loss and B12 deficiency, in a
+  patient with altered anatomy or motility — gastrectomy, bowel resection, diabetes, scleroderma, or long-term PPI.
+
+symptoms:
+  - when: assoc_gi = bloating
+    text: Marked bloating and flatulence
+  - when: stool_character = loose | watery | greasy
+    text: Loose stools; steatorrhea in severe cases
+  - when: diarrhea_history = gastric_surgery | bowel_resection
+    text: Previous gastrectomy, bariatric surgery, or bowel resection
+  - when: risk = diabetes
+    text: Diabetes with autonomic neuropathy
+  - when: diarrhea_drugs = ppi
+    text: Long-term PPI use
+  - when: assoc_sys = weight_loss
+    text: Weight loss (malabsorption)
+  - when: diarrhea_duration = m1_3 | gt3m
+    text: Chronic
+
+pe:
+  - when: abd_contour = mild | marked
+    text: Abdominal distension
+  - when: skin = pallor
+    text: Pallor (B12 deficiency)
+
+labs:
+  - "B12 low with folate high (bacteria make folate); albumin, vitamin D"
+  - Glucose or lactulose hydrogen breath test (limited availability)
+  - Jejunal aspirate culture — the reference test, rarely done
+
+imaging:
+  - Consider small-bowel imaging for strictures, diverticula, or blind loops
+
+pitfalls:
+  - Treat the underlying cause; recurrence is common after antibiotics alone.
+  - Breath tests have false positives (rapid transit) and false negatives.

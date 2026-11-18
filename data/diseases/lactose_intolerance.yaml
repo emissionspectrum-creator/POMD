@@ -1,0 +1,44 @@
+id: lactose_intolerance
+name: Lactose intolerance
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Bloating, crampy abdominal pain, flatulence and loose stools within hours of milk or dairy, settling when dairy
+  is avoided — very common in Taiwanese adults (primary lactase deficiency).
+
+symptoms:
+  - when: food_trigger = dairy
+    text: Clearly worse after milk or dairy
+  - when: assoc_gi = bloating
+    text: Bloating and flatulence
+  - when: stool_character = watery | loose
+    text: Loose or watery stools
+  - when: fasting_effect = stops
+    text: Stops with fasting (osmotic)
+  - when: pain_quality = cramping
+    text: Crampy abdominal pain
+  - when: diarrhea_pattern = intermittent
+    text: Intermittent, diet-related
+  - when: nocturnal_stool = daytime
+    text: No nocturnal diarrhea
+  - when: assoc_sys = no weight_loss
+    text: No weight loss
+
+pe:
+  - when: tenderness = none | diffuse
+    text: Normal or mildly tender abdomen
+  - when: bowel_sounds = hyper | normal
+    text: Normal or hyperactive bowel sounds
+
+labs:
+  - Usually a clinical diagnosis — 2-week dairy exclusion trial
+  - Lactose hydrogen breath test where available
+
+imaging:
+  - None needed unless alarm features
+
+pitfalls:
+  - Secondary lactase deficiency follows gastroenteritis or accompanies celiac or Crohn's disease.
+  - Lactose intolerance is common and can coexist with another disease — alarm features still need workup.
+  - Yogurt and hard cheeses are often tolerated.

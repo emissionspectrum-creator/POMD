@@ -28,6 +28,13 @@ symptoms:
     text: Mostly over 50 (rising incidence in younger adults)
   - when: risk = gi_cancer_fhx | ibd
     text: Family history, long-standing IBD
+  # diarrhea complaint
+  - when: stool_character = bloody | loose
+    text: Loose stools, sometimes with blood
+  - when: diarrhea_pattern = alternating
+    text: Alternating diarrhea and constipation
+  - when: diarrhea_duration = w2_4 | m1_3 | gt3m
+    text: Weeks to months; new onset after 50 is an alarm feature
 
 pe:
   - when: skin = pallor

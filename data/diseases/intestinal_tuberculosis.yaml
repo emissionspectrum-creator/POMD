@@ -1,0 +1,46 @@
+id: intestinal_tuberculosis
+name: Intestinal tuberculosis
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Months of RLQ pain, change in bowel habit or diarrhea, weight loss, fever and night sweats from ileocecal
+  tuberculosis — the main mimic of Crohn's disease in Taiwan.
+
+symptoms:
+  - when: diarrhea_duration = m1_3 | gt3m
+    text: Chronic, over months
+  - when: pain_location = rlq | periumbilical
+    text: RLQ or periumbilical pain (ileocecal disease)
+  - when: assoc_sys = fever | night_sweats
+    text: Fever and night sweats
+  - when: assoc_sys = weight_loss
+    text: Weight loss
+  - when: diarrhea_pattern = alternating | intermittent
+    text: Diarrhea alternating with constipation or obstructive symptoms
+  - when: stool_character = loose | bloody
+    text: Loose stools; frank bleeding less common than in Crohn's
+  - when: risk = immunocompromised | diabetes
+    text: HIV, diabetes, immunosuppression, or prior TB / TB contact
+
+pe:
+  - when: palpable = mass
+    text: RLQ mass
+  - when: tenderness = rlq
+    text: RLQ tenderness
+  - when: vitals = fever
+    text: Fever
+
+labs:
+  - Chest X-ray (active or old TB in up to half), IGRA
+  - Colonoscopy biopsies for histology (caseating granulomas), AFB stain, TB culture and PCR
+  - CBC, CRP, albumin, HIV
+
+imaging:
+  - Colonoscopy — transverse ulcers, patulous ileocecal valve, involvement of the ileocecal area
+  - CT enterography — short-segment ileocecal thickening, necrotic lymph nodes
+
+pitfalls:
+  - Always exclude intestinal TB before starting steroids or biologics for presumed Crohn's disease.
+  - Biopsy yield is limited; an empirical anti-TB trial with endoscopic reassessment is sometimes needed.
+  - Long skip lesions, perianal disease, and longitudinal ulcers favor Crohn's.

@@ -28,6 +28,17 @@ symptoms:
     text: Known IBD
   - when: episodes = recurrent
     text: Relapsing–remitting course
+  # diarrhea complaint
+  - when: stool_character = bloody | mucus
+    text: Bloody, mucoid stools
+  - when: stool_volume = small
+    text: Small-volume, frequent stools
+  - when: nocturnal_stool = wakes
+    text: Nocturnal diarrhea
+  - when: diarrhea_duration = w2_4 | m1_3 | gt3m
+    text: Weeks or longer
+  - when: extraintestinal = arthralgia | red_eye | skin_nodules
+    text: Joint, eye, or skin manifestations
 
 pe:
   - when: tenderness = llq | diffuse
@@ -40,6 +51,9 @@ pe:
     text: Distension — consider toxic megacolon
   - when: skin = pallor
     text: Pallor
+  # diarrhea complaint
+  - when: systemic_pe = erythema_nodosum
+    text: Erythema nodosum
 
 labs:
   - CBC, CRP, albumin, electrolytes

@@ -1,0 +1,39 @@
+id: hyperthyroidism
+name: Hyperthyroidism
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Frequent loose stools with weight loss despite a good appetite, heat intolerance, palpitations, tremor and
+  anxiety, typically from Graves' disease or toxic nodular goiter.
+
+symptoms:
+  - when: extraintestinal = thyrotoxic
+    text: Heat intolerance, palpitations
+  - when: assoc_sys = weight_loss
+    text: Weight loss despite good appetite
+  - when: stool_character = loose
+    text: Frequent loose stools (rapid transit)
+  - when: diarrhea_history = hyperthyroid
+    text: Known thyroid disease
+  - when: diarrhea_duration = w2_4 | m1_3 | gt3m
+    text: Weeks to months
+
+pe:
+  - when: systemic_pe = goiter | tremor
+    text: Goiter, fine tremor
+  - when: vitals = tachycardia
+    text: Tachycardia
+  - when: tenderness = none
+    text: Non-tender abdomen
+
+labs:
+  - TSH, free T4 (free T3 if TSH low with normal free T4)
+  - TSH receptor antibodies
+
+imaging:
+  - Thyroid ultrasound or uptake scan when the cause is unclear
+
+pitfalls:
+  - Older patients may have apathetic hyperthyroidism with few classic signs.
+  - Check TSH in any chronic diarrhea with weight loss.

@@ -30,6 +30,17 @@ symptoms:
     text: No GI bleeding
   - when: age_group = under_40 | age_40_59
     text: Onset usually before 50
+  # diarrhea complaint
+  - when: stool_character = loose | watery | mucus
+    text: Loose stools, sometimes with mucus
+  - when: diarrhea_pattern = intermittent | alternating
+    text: Intermittent, or alternating with constipation
+  - when: nocturnal_stool = daytime
+    text: No nocturnal diarrhea
+  - when: assoc_gi = tenesmus
+    text: Urgency, often in the morning or after meals
+  - when: diarrhea_duration = m1_3 | gt3m
+    text: Chronic (symptoms for at least 3 months)
 
 pe:
   - when: tenderness = none | llq | diffuse

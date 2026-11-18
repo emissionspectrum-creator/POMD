@@ -1,0 +1,204 @@
+id: diarrhea
+name: Diarrhea
+group_item: stool_character     # bloody / mucus → inflammatory groups first; watery → watery; greasy → fatty
+timecourse_item: diarrhea_duration
+
+# Left column: time course → stool character → severity → abdominal pain → associated → exposures → drugs → history.
+# Design notes: data/complaints/diarrhea.md. `{item, options}` shows only some options of a shared item;
+# `{item, ask}` / `{item, label}` replace its English phrasing / label for this complaint.
+history:
+  - section: Patient
+    items: [sex, age_group]
+  - section: Time course
+    items:
+      - diarrhea_duration
+      - diarrhea_pattern
+      - item: episodes
+        ask:
+          - "Have you had bouts of diarrhea like this before?"
+          - "Is this the first time, or does it keep coming back?"
+  - section: Stool
+    items: [stool_character, stool_frequency, stool_volume, nocturnal_stool, fasting_effect]
+  - section: Abdominal pain
+    items:
+      - item: pain_location
+        label: Pain location
+        ask:
+          - "Do you have any tummy pain or cramps? Where?"
+      - item: pain_quality
+        label: Pain quality
+        options: [cramping, colicky, dull, burning]
+        ask:
+          - "What does the pain feel like — cramping, or more of a constant ache?"
+      - item: relieving
+        label: Pain better with
+        options: [defecation, nothing]
+        ask:
+          - "Does going to the toilet ease the pain?"
+  - section: Associated symptoms
+    items:
+      - item: assoc_gi
+        options: [nausea, vomiting, anorexia, bloating, tenesmus, melena]
+        ask:
+          - "Have you felt sick or thrown up?"
+          - "Do you have to rush to the toilet? Do you keep feeling you need to go even when nothing comes out?"
+          - "Have your stools ever been black, like tar?"
+      - continence
+      - item: assoc_sys
+        label: Systemic
+        options: [fever, chills, weight_loss, night_sweats, malaise]
+        ask:
+          - "Have you had any fever, chills, or shaking?"
+          - "Have you lost weight without trying? About how much, and over how long?"
+          - "Any night sweats?"
+      - dehydration_sx
+      - extraintestinal
+  - section: Exposures & triggers
+    items: [exposure, food_trigger]
+  - section: Medications
+    items: [diarrhea_drugs]
+  - section: Relevant history
+    items:
+      - item: risk
+        options: [travel, sick_contacts, immunocompromised, ibd, gi_cancer_fhx, diabetes, alcohol, nsaid, new_meds]
+        ask:
+          - "Have you travelled anywhere recently? Is anyone at home or at work sick with the same thing?"
+          - "Do you have any ongoing medical problems, like diabetes, HIV, or bowel inflammation? Any cancer in the family?"
+          - "How much alcohol do you drink in a typical week? Do you take painkillers like ibuprofen or aspirin?"
+      - diarrhea_history
+
+# Quick history page: default order of the visible questions (others start hidden).
+quick:
+  show: [sex, age_group, diarrhea_duration, stool_character, stool_frequency, diarrhea_pattern, episodes,
+         stool_volume, nocturnal_stool, fasting_effect, pain_location, pain_quality, relieving,
+         assoc_gi, continence, assoc_sys, dehydration_sx, extraintestinal,
+         exposure, food_trigger, diarrhea_drugs, risk, diarrhea_history]
+
+defaults:
+  guarding: [soft]
+  tenderness: [none]
+
+pe:
+  - section: General & vitals
+    items:
+      - item: general
+        options: [comfortable, ill, dehydrated, confused]
+      - item: vitals
+        options: [fever, tachycardia, hypotension]
+      - hydration
+      - item: skin
+        options: [pallor, icterus]
+      - systemic_pe
+  - section: Abdomen
+    items:
+      - abd_contour
+      - bowel_sounds
+      - guarding
+      - tenderness
+      - rebound
+      - item: palpable
+        options: [mass, hepatomegaly]
+  - section: Rectal
+    items: [rectal]
+
+labs:
+  - {name: "BUN, creatinine, Na, K, HCO₃", note: "dehydration, hypokalemia, metabolic acidosis; AKI in STEC / HUS"}
+  - {name: CBC with differential, note: "leukocytosis, anemia; thrombocytopenia + anemia suggests HUS"}
+  - {name: CRP, note: "inflammatory vs non-inflammatory diarrhea"}
+  - {name: Stool culture, note: "bloody stool, fever, severe illness, immunocompromise, or > 7 days — not for routine acute watery diarrhea"}
+  - {name: C. difficile toxin / PCR, note: "antibiotics in past 3 months, recent hospitalization, or care home"}
+  - {name: Stool O&P / amoeba antigen, note: "persistent diarrhea, travel, HIV, MSM, institution"}
+  - {name: Blood cultures, note: "fever with systemic toxicity; elderly or immunocompromised"}
+  - {name: Fecal calprotectin, note: "chronic diarrhea — distinguishes IBD from IBS"}
+  - {name: FIT / stool occult blood, note: "chronic diarrhea with anemia or age ≥ 50"}
+  - {name: "TSH, HbA1c, albumin", note: "chronic diarrhea — thyroid, diabetes, malabsorption"}
+  - {name: Fecal elastase, note: "greasy stools — pancreatic exocrine insufficiency"}
+  - {name: HIV test, note: "chronic or unusual infection, or risk factors"}
+
+imaging:
+  - {name: No imaging, note: "most acute diarrhea without red flags"}
+  - {name: Plain abdominal X-ray, note: "suspected toxic megacolon (colon > 6 cm) or fecal impaction"}
+  - {name: CT abdomen / pelvis with IV contrast, note: "severe colitis, suspected complication, ischemia, or abscess"}
+  - {name: Colonoscopy with biopsies, note: "chronic diarrhea or alarm features; random biopsies for microscopic colitis even if mucosa looks normal"}
+  - {name: Flexible sigmoidoscopy, note: "severe acute colitis — safer than full colonoscopy"}
+  - {name: EGD with duodenal biopsies, note: "suspected malabsorption"}
+  - {name: Chest X-ray, note: "suspected intestinal tuberculosis"}
+  - {name: Hydrogen breath test, note: "lactose intolerance or SIBO; limited availability in Taiwan"}
+
+ddx:
+  - group: Acute infectious — inflammatory
+    options: [bloody, mucus]
+    diseases: [invasive_bacterial_enterocolitis, stec_infection, c_difficile_infection, amoebic_colitis,
+               infectious_ileocecitis]
+  - group: Acute infectious — watery
+    options: [watery]
+    diseases: [acute_gastroenteritis, bacterial_food_poisoning, c_difficile_infection]
+  - group: Drug-induced / iatrogenic
+    diseases: [drug_induced_diarrhea, c_difficile_infection]
+  - group: Chronic inflammatory / structural
+    options: [bloody, mucus]
+    diseases: [ulcerative_colitis, crohns_disease, intestinal_tuberculosis, colorectal_cancer, ischemic_colitis]
+  - group: Chronic watery
+    options: [watery, loose]
+    diseases: [ibs, microscopic_colitis, bile_acid_diarrhea, lactose_intolerance]
+  - group: Fatty / malabsorptive
+    options: [greasy]
+    diseases: [chronic_pancreatitis, sibo]
+  - group: Systemic & mimics
+    diseases: [hyperthyroidism, overflow_diarrhea]
+
+hpi:
+  joiner: " "
+  sentences:
+    - always: true
+      parts:
+        - "({@date_roc}) {stool_character|diarrhea}[ {diarrhea_duration}]"
+        - "{diarrhea_pattern}"
+        - "{stool_frequency}"
+        - "{stool_volume}"
+        - "{nocturnal_stool}"
+        - "{fasting_effect}"
+    - parts: ["{episodes}"]
+    - parts: ["{pain_location}", "{pain_quality}", "{relieving}"]
+    - lead: "Associated with "
+      parts: ["{assoc_gi+,continence+,assoc_sys+,dehydration_sx+,extraintestinal+}"]
+    - lead: "Denied "
+      parts: ["{assoc_gi-,continence-,assoc_sys-,dehydration_sx-,extraintestinal-}"]
+    - lead: "Recent exposure to "
+      parts: ["{exposure+}"]
+    - lead: "No exposure to "
+      parts: ["{exposure-}"]
+    - lead: "Worse after "
+      parts: ["{food_trigger+}"]
+    - lead: "Medications include "
+      parts: ["{diarrhea_drugs+}"]
+    - lead: "No "
+      parts: ["{diarrhea_drugs-}"]
+    - lead: "Relevant history includes "
+      parts: ["{risk+,diarrhea_history+}"]
+    - lead: "No history of "
+      parts: ["{risk-,diarrhea_history-}"]
+
+pe_text:
+  joiner: "\n"
+  sentences:
+    - lead: "General: "
+      parts: ["{general}"]
+    - lead: "Vital signs: "
+      parts: ["{vitals*}"]
+    - lead: "Hydration: "
+      parts: ["{hydration*}"]
+    - lead: "Skin & eyes: "
+      parts: ["{skin*}"]
+    - lead: "Other: "
+      parts: ["{systemic_pe*}"]
+    - lead: "Abdomen: "
+      parts:
+        - "{abd_contour}"
+        - "{bowel_sounds}"
+        - "{guarding}"
+        - "{tenderness}"
+        - "{rebound}"
+        - "{palpable*}"
+    - lead: "Rectal exam: "
+      parts: ["{rectal}"]

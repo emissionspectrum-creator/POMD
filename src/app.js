@@ -15,7 +15,7 @@
   var complaint = DATA.complaints[0];
   var state = {};
   var openDiseaseId = null;
-  var ddxSort = 'location'; // 'location' | 'matches' — a view preference, kept across New patient
+  var ddxSort = 'group'; // 'group' | 'matches' — a view preference, kept across New patient
   var clearArmTimer = null;
 
   var TC_SHORT = { acute: 'A', subacute: 'S', chronic: 'C' };
@@ -74,16 +74,17 @@
     var item = items[itemId];
     var kind = item.type === 'multi' ? 'multi' : (item.type === 'presence' ? '+ / −' : '');
     var h = '<div class="item" data-item-block="' + esc(item.id) + '">';
-    h += '<div class="item-head"><span class="item-label">' + esc(item.label) + '</span>';
+    h += '<div class="item-head"><span class="item-label">' + esc(Core.itemLabel(complaint, item)) + '</span>';
     if (kind) h += '<span class="item-kind">' + kind + '</span>';
     h += '<button type="button" class="item-clear" data-clear="' + esc(item.id) + '" title="Clear this item">clear</button></div>';
-    if (item.ask && item.ask.length) {
+    var ask = Core.itemAsk(complaint, item);
+    if (ask.length) {
       h += '<ul class="ask">';
-      item.ask.forEach(function (q) { h += '<li>' + esc(q) + '</li>'; });
+      ask.forEach(function (q) { h += '<li>' + esc(q) + '</li>'; });
       h += '</ul>';
     }
     h += '<div class="chips ' + item.type + '">';
-    item.options.forEach(function (o) {
+    Core.itemOptions(complaint, item).forEach(function (o) {
       h += '<button type="button" class="chip' + (o.red_flag ? ' rf' : '') + '" data-item="' + esc(item.id) +
         '" data-opt="' + esc(o.id) + '"' + (o.red_flag ? ' title="Red flag"' : '') + '>' + esc(o.label) + '</button>';
     });
@@ -170,7 +171,7 @@
         var g = entry.group;
         h += '<div class="group' + (entry.promoted ? ' promoted' : '') + '"><h3>' + esc(g.group) + '</h3><ul>';
         g.diseases.forEach(function (id) {
-          h += dxHtml(id, Core.matchCount(diseases[id], state, items), tcSel, null);
+          h += dxHtml(id, Core.matchCount(diseases[id], state, items, complaint), tcSel, null);
         });
         h += '</ul></div>';
       });
@@ -184,7 +185,8 @@
     }
   }
 
-  function featureListHtml(features) {
+  function featureListHtml(all) {
+    var features = all.filter(function (f) { return Core.featureShown(f, complaint); });
     if (!features.length) return '<p class="muted">—</p>';
     var h = '<ul class="feats">';
     features.forEach(function (f) {

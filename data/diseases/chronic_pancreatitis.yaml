@@ -28,6 +28,13 @@ symptoms:
     text: Avoids eating because of pain
   - when: risk = alcohol | smoking | diabetes
     text: Heavy alcohol use, smoking; diabetes develops later
+  # diarrhea complaint
+  - when: stool_character = greasy
+    text: Greasy, foul-smelling stools that are hard to flush
+  - when: food_trigger = fatty_food
+    text: Worse after fatty meals
+  - when: diarrhea_history = chronic_pancreatitis
+    text: Known chronic pancreatitis
 
 pe:
   - when: tenderness = epigastric

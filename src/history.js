@@ -107,7 +107,7 @@
     var h = '<div class="item" data-item-block="' + esc(item.id) + '">';
     h += '<div class="item-head">';
     h += '<span class="drag-handle" draggable="true" data-drag="' + esc(item.id) + '" title="Drag to move">⠿</span>';
-    h += '<span class="item-label">' + esc(item.label) + '</span>';
+    h += '<span class="item-label">' + esc(Core.itemLabel(complaint, item)) + '</span>';
     if (kind) h += '<span class="item-kind">' + kind + '</span>';
     h += '<button type="button" class="item-clear" data-clear="' + esc(item.id) + '" title="Clear this item">clear</button>';
     h += '<span class="item-edit">' +
@@ -117,13 +117,14 @@
       (idx === order.length - 1 ? ' disabled' : '') + '>↓</button>' +
       '<button type="button" class="btn small" data-hide="' + esc(item.id) + '" title="Hide this question">Hide</button>' +
       '</span></div>';
-    if (item.ask && item.ask.length) {
+    var ask = Core.itemAsk(complaint, item);
+    if (ask.length) {
       h += '<ul class="ask">';
-      item.ask.forEach(function (q) { h += '<li>' + esc(q) + '</li>'; });
+      ask.forEach(function (q) { h += '<li>' + esc(q) + '</li>'; });
       h += '</ul>';
     }
     h += '<div class="chips ' + item.type + '">';
-    item.options.forEach(function (o) {
+    Core.itemOptions(complaint, item).forEach(function (o) {
       h += '<button type="button" class="chip' + (o.red_flag ? ' rf' : '') + '" data-item="' + esc(item.id) +
         '" data-opt="' + esc(o.id) + '"' + (o.red_flag ? ' title="Red flag"' : '') + '>' + esc(o.label) + '</button>';
     });
@@ -141,7 +142,7 @@
       any = true;
       h += '<optgroup label="' + esc(sec.section) + '">';
       hidden.forEach(function (id) {
-        h += '<option value="' + esc(id) + '">' + esc(items[id].label) + '</option>';
+        h += '<option value="' + esc(id) + '">' + esc(Core.itemLabel(complaint, items[id])) + '</option>';
       });
       h += '</optgroup>';
     });

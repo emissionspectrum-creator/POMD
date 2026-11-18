@@ -1,4 +1,4 @@
-// Run with: node --test tests/
+// Run with: node --test tests/*.test.js
 // Unit tests for src/core.js plus an end-to-end check against the built dist/POMD.html data.
 'use strict';
 
@@ -137,8 +137,8 @@ test('match count, time course, group order', () => {
     pe: [{ item: 'tender', options: ['ruq'] }]
   };
   const complaint = {
-    location_item: 'loc', timecourse_item: 'dur',
-    ddx: [{ group: 'RUQ', locations: ['ruq'] }, { group: 'LLQ', locations: ['llq'] }]
+    group_item: 'loc', timecourse_item: 'dur',
+    ddx: [{ group: 'RUQ', options: ['ruq'] }, { group: 'LLQ', options: ['llq'] }]
   };
   const s = {};
   assert.equal(Core.matchCount(disease, s, items), 0);
@@ -162,8 +162,8 @@ test('rankByMatches: de-duplicated, sorted by count, ties keep location order', 
     c: { symptoms: [{ item: 'sev', options: ['s7'] }], pe: [] }
   };
   const complaint = {
-    location_item: 'loc',
-    ddx: [{ group: 'RUQ', locations: ['ruq'], diseases: ['a', 'c'] }, { group: 'LLQ', locations: ['llq'], diseases: ['b', 'c'] }]
+    group_item: 'loc',
+    ddx: [{ group: 'RUQ', options: ['ruq'], diseases: ['a', 'c'] }, { group: 'LLQ', options: ['llq'], diseases: ['b', 'c'] }]
   };
   const s = {};
   assert.deepEqual(Core.rankByMatches(complaint, diseases, s, items).map((x) => x.id), ['a', 'c', 'b']);
@@ -274,7 +274,7 @@ test('built data: sample biliary case produces the expected HPI and highlights',
       'Associated with nausea and vomiting. Denied melena, fever, or jaundice.'
   );
   assert.ok(Core.matchCount(data.diseases.biliary_colic, s, it) >= 5);
-  assert.equal(Core.orderGroups(c, s)[0].group.locations.some((l) => l === 'ruq' || l === 'epigastric'), true);
+  assert.equal(Core.orderGroups(c, s)[0].group.options.some((l) => l === 'ruq' || l === 'epigastric'), true);
 
   Core.toggle(s, it.tenderness, 'ruq');
   Core.toggle(s, it.abd_signs, 'murphy');
@@ -393,4 +393,73 @@ test('built data: abdominal pain PE defaults (soft, non-tender)', () => {
   assert.deepEqual(s, { guarding: { soft: true }, tenderness: { none: true } });
   assert.equal(Core.composeText(c.pe_text, s, data.items), 'Abdomen: soft, non-tender.');
   assert.deepEqual(loadQuickData().complaints[0].defaults, c.defaults);
+});
+
+test('complaint view: option subsets, ask override, feature visibility', () => {
+  const { items } = fixture();
+  const complaint = {
+    history: [{ section: 'A', items: ['loc', 'sx'] }],
+    pe: [{ section: 'B', items: ['tender'] }],
+    item_options: { sx: ['fever', 'jaundice'] },
+    item_ask: { loc: ['Any tummy pain?'] },
+    item_label: { sx: 'Systemic' }
+  };
+  assert.equal(Core.itemLabel(complaint, items.sx), 'Systemic');
+  assert.equal(Core.itemLabel(complaint, items.loc), items.loc.label);
+  assert.deepEqual(Core.itemOptions(complaint, items.sx).map((o) => o.id), ['fever', 'jaundice']);
+  assert.equal(Core.itemOptions(complaint, items.loc).length, 3);
+  assert.deepEqual(Core.itemAsk(complaint, items.loc), ['Any tummy pain?']);
+  assert.deepEqual(Core.itemAsk(complaint, items.sev), []);
+  const disease = {
+    symptoms: [
+      { item: 'loc', options: ['ruq'] },
+      { item: 'sx', options: ['nausea'], state: 'present' },   // option not offered → hidden
+      { item: 'sx', options: ['nausea', 'fever'], state: 'present' },
+      { item: 'sev', options: ['s7'] }                         // item not shown → hidden
+    ],
+    pe: [{ item: 'tender', options: ['ruq'] }]
+  };
+  assert.equal(Core.diseaseFeatures(disease).length, 5);
+  assert.equal(Core.diseaseFeatures(disease, complaint).length, 3);
+  const s = {};
+  Core.toggle(s, items.sev, 's7');
+  Core.toggle(s, items.loc, 'ruq');
+  assert.equal(Core.matchCount(disease, s, items), 2);
+  assert.equal(Core.matchCount(disease, s, items, complaint), 1);
+  // A complaint without columns (bare test fixtures) shows everything.
+  assert.equal(Core.diseaseFeatures(disease, { ddx: [] }).length, 5);
+});
+
+test('orderGroups: presence group item promotes only present options', () => {
+  const complaint = { group_item: 'sx', ddx: [{ group: 'A', options: ['fever'] }, { group: 'B', options: ['nausea'] }] };
+  assert.deepEqual(Core.orderGroups(complaint, { sx: { nausea: 'absent' } }).map((e) => e.group.group), ['A', 'B']);
+  assert.deepEqual(Core.orderGroups(complaint, { sx: { nausea: 'present' } }).map((e) => e.group.group), ['B', 'A']);
+});
+
+test('built data: diarrhea complaint — subsets, groups, shared diseases, HPI', () => {
+  const data = loadBuiltData();
+  const it = data.items;
+  const c = data.complaints.find((x) => x.id === 'diarrhea');
+  const ab = data.complaints.find((x) => x.id === 'abdominal_pain');
+  assert.ok(c && ab);
+  // risk shows only the diarrhea-relevant options
+  assert.ok(Core.itemOptions(c, it.risk).length < it.risk.options.length);
+  assert.ok(Core.itemOptions(c, it.risk).some((o) => o.id === 'travel'));
+  // shared disease: diarrhea features hidden in abdominal pain and vice versa
+  const uc = data.diseases.ulcerative_colitis;
+  assert.ok(Core.diseaseFeatures(uc, c).some((f) => f.item === 'stool_character'));
+  assert.ok(!Core.diseaseFeatures(uc, ab).some((f) => f.item === 'stool_character'));
+  assert.ok(!Core.diseaseFeatures(uc, c).some((f) => f.item === 'duration'));
+  const s = Core.defaultState(c, it);
+  Core.toggle(s, it.stool_character, 'bloody');
+  Core.toggle(s, it.diarrhea_duration, 'lt3d');
+  Core.toggle(s, it.diarrhea_drugs, 'antibiotics');
+  assert.ok(Core.orderGroups(c, s)[0].promoted);
+  assert.ok(Core.orderGroups(c, s)[0].group.options.includes('bloody'));
+  assert.deepEqual(Core.selectedTimecourses(c, s, it), ['acute']);
+  assert.ok(Core.matchCount(data.diseases.c_difficile_infection, s, it, c) >= 1);
+  const hpi = Core.composeText(c.hpi, s, it, { date_roc: '115/01/05' });
+  assert.match(hpi, /^\(115\/01\/05\) bloody diarrhea for less than 3 days\./);
+  assert.match(hpi, /Medications include antibiotics in the past 3 months\./);
+  assert.equal(Core.composeText(c.pe_text, s, it), 'Abdomen: soft, non-tender.');
 });

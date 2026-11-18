@@ -1,0 +1,38 @@
+id: bile_acid_diarrhea
+name: Bile acid diarrhea
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Chronic watery diarrhea with urgency, often after meals, following cholecystectomy or terminal ileal resection
+  or disease — or idiopathic and misdiagnosed as diarrhea-predominant IBS.
+
+symptoms:
+  - when: diarrhea_history = cholecystectomy | bowel_resection
+    text: Previous cholecystectomy or ileal resection
+  - when: risk = ibd
+    text: Ileal Crohn's disease
+  - when: stool_character = watery | loose
+    text: Watery or loose stools
+  - when: assoc_gi = tenesmus
+    text: Urgency, often soon after eating
+  - when: diarrhea_duration = m1_3 | gt3m
+    text: Chronic
+  - when: food_trigger = fatty_food
+    text: Worse after fatty meals
+
+pe:
+  - when: tenderness = none | diffuse
+    text: Usually unremarkable abdomen
+
+labs:
+  - SeHCAT or serum C4 where available (usually not in Taiwan)
+  - Exclude infection, celiac, thyroid disease
+
+imaging:
+  - Colonoscopy normal; done to exclude other causes
+
+pitfalls:
+  - In practice, a therapeutic trial of a bile acid sequestrant (cholestyramine) is the test.
+  - Up to a quarter of patients labelled IBS-D may have bile acid diarrhea.
+  - Bile acid sequestrants bind other drugs — space doses.

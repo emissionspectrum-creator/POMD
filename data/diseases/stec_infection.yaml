@@ -1,0 +1,44 @@
+id: stec_infection
+name: Shiga toxin–producing E. coli (STEC / EHEC)
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Watery diarrhea turning bloody within 1–3 days, with severe crampy abdominal pain but little or no fever,
+  after undercooked beef, unpasteurized products, or contaminated produce; may progress to hemolytic uremic syndrome.
+
+symptoms:
+  - when: stool_character = bloody
+    text: Bloody diarrhea, often after a watery start
+  - when: assoc_sys = no fever
+    text: Little or no fever (unlike Shigella or Campylobacter)
+  - when: pain_quality = cramping
+    text: Severe abdominal cramps
+  - when: pain_location = diffuse | rlq | llq
+    text: Diffuse or lower abdominal pain, sometimes marked
+  - when: exposure = undercooked | banquet
+    text: Undercooked beef, unpasteurized milk, or contaminated produce
+  - when: diarrhea_duration = lt3d | d3_7
+    text: Acute, days
+  - when: dehydration_sx = oliguria
+    text: Falling urine output — think HUS
+
+pe:
+  - when: tenderness = diffuse | rlq | llq
+    text: Abdominal tenderness, sometimes out of proportion to fever
+  - when: vitals = no fever
+    text: Afebrile or low-grade fever
+  - when: skin = pallor
+    text: Pallor (hemolysis in HUS)
+
+labs:
+  - Stool culture with Shiga toxin testing (EIA or PCR) for any bloody diarrhea
+  - CBC with smear (schistocytes), platelets, creatinine, LDH — repeat daily for HUS
+
+imaging:
+  - Usually not needed; CT may show right-sided colonic wall thickening
+
+pitfalls:
+  - Avoid antibiotics and antimotility drugs — they may increase the risk of HUS.
+  - HUS typically appears 5–10 days after diarrhea begins, often as the diarrhea is settling.
+  - Absence of fever with bloody diarrhea can falsely suggest ischemic colitis or IBD.

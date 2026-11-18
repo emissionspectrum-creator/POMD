@@ -1,0 +1,47 @@
+id: bacterial_food_poisoning
+name: Bacterial food poisoning (S. aureus, B. cereus, V. parahaemolyticus)
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Abrupt vomiting and/or watery diarrhea within hours of a shared meal, with several people affected; preformed
+  toxins (S. aureus, B. cereus) act in 1–6 hours, while V. parahaemolyticus from raw seafood causes watery
+  diarrhea and cramps within a day, especially in summer in Taiwan.
+
+symptoms:
+  - when: risk = sick_contacts
+    text: Others who ate the same food are ill
+  - when: exposure = banquet | raw_seafood
+    text: Banquet, buffet, takeaway, or raw seafood (sashimi, shellfish)
+  - when: assoc_gi = vomiting | nausea
+    text: Prominent nausea and vomiting (toxin-mediated)
+  - when: stool_character = watery
+    text: Watery, non-bloody diarrhea
+  - when: pain_quality = cramping
+    text: Crampy abdominal pain
+  - when: assoc_sys = no fever
+    text: Little or no fever
+  - when: diarrhea_duration = lt3d
+    text: Starts within hours, resolves within 1–2 days
+
+pe:
+  - when: general = dehydrated
+    text: Dry mucous membranes
+  - when: tenderness = none | periumbilical | diffuse
+    text: Mild diffuse tenderness or none
+  - when: bowel_sounds = hyper
+    text: Hyperactive bowel sounds
+  - when: rebound = absent
+    text: No peritonism
+
+labs:
+  - Usually none; electrolytes and creatinine if dehydrated
+  - Stool culture only if severe, bloody, or prolonged, or for an outbreak investigation
+
+imaging:
+  - None needed
+
+pitfalls:
+  - Report suspected outbreaks (several people after one meal) to public health.
+  - Vibrio vulnificus after raw seafood or seawater exposure in liver disease causes sepsis with bullous skin lesions — a different, lethal illness.
+  - Vomiting-predominant illness in an elderly patient may be something else (MI, DKA, bowel obstruction).
