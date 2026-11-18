@@ -499,6 +499,11 @@ test('built data: abnormal liver tests — alcohol details, groups, HPI', () => 
   assert.ok(det && det.items.includes('alcohol_amount') && det.note);
   // details items are not separate quick-page questions
   assert.ok(!c.quick.show.includes('alcohol_amount'));
+  // pain, drugs and viral blocks are collapsible too
+  assert.deepEqual(Core.itemDetails(c, 'pain_location').items, ['pain_pattern', 'meal_relation', 'radiation']);
+  assert.deepEqual(Core.itemDetails(c, 'drug_timing').items, ['liver_drugs', 'herbs']);
+  assert.deepEqual(Core.itemDetails(c, 'viral_history').items, ['viral_exposure', 'viral_sx']);
+  assert.ok(c.history.some((sec) => sec.section === 'Viral hepatitis'));
   const s = Core.defaultState(c, it);
   Core.toggle(s, it.lft_duration, 'm1_6');
   Core.toggle(s, it.alcohol_use, 'heavy');
@@ -514,4 +519,13 @@ test('built data: abnormal liver tests — alcohol details, groups, HPI', () => 
   const hpi = Core.composeText(c.hpi, s, it, { date_roc: '115/01/05' });
   assert.equal(hpi, '(115/01/05) abnormal liver tests for 1–6 months. Associated with jaundice. ' +
     'Drinks heavily, mainly kaoliang, about 60–100 g of alcohol a day, for 10–20 years, still drinking.');
+  const v = Core.defaultState(c, it);
+  Core.toggle(v, it.viral_sx, 'sore_throat');
+  Core.toggle(v, it.viral_sx, 'lymph_nodes');
+  Core.toggle(v, it.assoc_sys, 'fever');
+  Core.toggle(v, it.age_group, 'under_40');
+  assert.equal(Core.rankByMatches(c, data.diseases, v, it)[0].id, 'ebv_infection');
+  const d = Core.defaultState(c, it);
+  Core.toggle(d, it.drug_timing, 'none');
+  assert.match(Core.composeText(c.hpi, d, it, { date_roc: '115/01/05' }), /Takes no regular medications or herbal products\./);
 });

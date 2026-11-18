@@ -665,12 +665,15 @@
     - {id: supplements, label: Dietary supplements, frag: dietary supplements}
     - {id: slimming, label: Weight-loss / bodybuilding products, frag: weight-loss or bodybuilding products}
 
+# Main question of the drugs block: whether and when; the drug / herb lists are collapsible details.
 - id: drug_timing
-  label: Started
+  label: Medications / herbs
   type: single
   ask:
+    - "Have you started any new medicines, herbal remedies, or supplements in the last few months?"
     - "When did you start it? Was the dose changed recently?"
   options:
+    - {id: none, label: None, frag: no regular medications or herbal products}
     - {id: lt3m, label: "<3 mo ago", frag: started within the past 3 months}
     - {id: m3_6, label: "3–6 mo ago", frag: started 3–6 months ago}
     - {id: long_term, label: "Long-term, unchanged", frag: taken long-term without recent change}
@@ -688,6 +691,19 @@
     - {id: hcv, label: Known HCV, frag: hepatitis C}
     - {id: hcv_cured, label: HCV treated / cured, frag: treated hepatitis C}
     - {id: immunosupp, label: Chemo / immunosuppression, frag: chemotherapy or immunosuppressive therapy}
+
+- id: viral_sx
+  label: Infection symptoms
+  type: presence
+  ask:
+    - "Have you had a sore throat, swollen glands in your neck, or a rash?"
+    - "Any muscle aches, cough, or runny nose recently?"
+  options:
+    - {id: sore_throat, label: Sore throat, frag: sore throat}
+    - {id: lymph_nodes, label: Swollen glands, frag: swollen glands}
+    - {id: rash, label: Rash, frag: rash}
+    - {id: myalgia, label: Muscle aches, frag: myalgia}
+    - {id: uri, label: Cough / runny nose, frag: cough or runny nose}
 
 - id: viral_exposure
   label: Exposure

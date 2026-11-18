@@ -1,0 +1,43 @@
+id: systemic_viral_infection
+name: Systemic viral infection (influenza, COVID-19, other respiratory viruses)
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Mild, transient ALT/AST rise (usually < 3–5 × ULN) during or just after a febrile respiratory illness — influenza,
+  COVID-19, adenovirus, or a severe common cold — that normalizes within weeks; acetaminophen use often contributes.
+
+symptoms:
+  - when: viral_sx = uri | sore_throat
+    text: Cough, runny nose, sore throat
+  - when: viral_sx = myalgia
+    text: Myalgia
+  - when: assoc_sys = fever | malaise
+    text: Fever, malaise
+  - when: lft_duration = lt1m | first_found
+    text: Recent and acute
+  - when: liver_drugs = apap | nsaid
+    text: Acetaminophen or NSAIDs taken for the illness
+  - when: assoc_sys = no jaundice
+    text: No jaundice
+
+pe:
+  - when: vitals = fever
+    text: Fever
+  - when: tenderness = none
+    text: Non-tender abdomen
+  - when: skin = no icterus
+    text: No jaundice
+
+labs:
+  - "Influenza or COVID-19 rapid test / PCR during the illness"
+  - Repeat liver tests 2–4 weeks after recovery — they should normalize
+  - CK if AST > ALT (viral myositis)
+
+imaging:
+  - None needed if liver tests normalize
+
+pitfalls:
+  - Persistent abnormality after recovery needs the usual work-up — the infection may have unmasked chronic liver disease.
+  - High ALT (> 10 × ULN) or jaundice is not explained by a simple respiratory virus.
+  - Ask how much acetaminophen was taken, including combination cold remedies.

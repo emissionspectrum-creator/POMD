@@ -10,7 +10,9 @@
 肝功能異常的鑑別是**逐一排除病因**，所以病史依**病因**分段，每段問完，右欄對應的病因群組就有了標亮依據：
 
 1. 先問共通的：Patient、時程、肝膽症狀與警訊（黃疸、茶色尿、灰白便、癢、意識改變）。
-2. 再依病因：Alcohol → Drugs & herbs → Viral → Metabolic → Biliary → Congestive / ischemic → Autoimmune & others。
+2. 再依病因：Alcohol → Drugs & herbs → Viral hepatitis → Metabolic → Abdominal pain → Congestive / ischemic → Autoimmune & others。
+
+Alcohol、Drugs & herbs、Viral hepatitis、Abdominal pain 四段都是「一題主項目常駐，細項收合」（2026-11-18 使用者要求，見第 2 節）。
 
 順序的理由：
 - 酒精、藥物與草藥在台灣門診最常見，也最需要細問，所以放最前面。
@@ -55,14 +57,15 @@
 | | alcohol_years〔新，single〕 | < 5 yr、5–10、10–20、> 20 yr |
 | | alcohol_last〔新，single〕 | still drinking、stopped < 1 mo、1–6 mo、6–12 mo、> 1 yr |
 | | alcohol_pattern〔新，presence〕 | recent binge、drinks daily、morning drink／shakes |
-| **Drugs & herbs** | liver_drugs〔新，presence〕 | antibiotics（amoxicillin-clavulanate 等）、anti-TB drugs、azole antifungals、high-dose acetaminophen、NSAID、statin、amiodarone、antiepileptics、methotrexate、chemotherapy／immunotherapy |
+| **Drugs & herbs** | drug_timing〔新，single；主項目，標籤 Medications / herbs〕 | none、started < 3 mo ago、3–6 mo、long-term unchanged |
+| ▸ 細項「Which drugs / herbs」 | liver_drugs〔新，presence〕 | antibiotics（amoxicillin-clavulanate 等）、anti-TB drugs、azole antifungals、high-dose acetaminophen、NSAID、statin、amiodarone、antiepileptics、methotrexate、chemotherapy／immunotherapy |
 | | herbs〔新，presence〕 | Chinese herbal medicine、dietary supplements、weight-loss or bodybuilding products |
-| | drug_timing〔新，single〕 | started < 3 mo ago、3–6 mo、long-term stable |
-| **Viral** | viral_history〔新，presence〕 | known HBV carrier、on HBV antivirals、recently stopped HBV antivirals、known HCV、HCV treated／cured、chemotherapy／immunosuppression |
-| | viral_exposure〔新，presence〕 | raw shellfish／undercooked pork、household hepatitis contact、tattoo／piercing、injection drug use、transfusion／dialysis |
+| **Viral hepatitis** | viral_history〔新，presence；主項目〕 | known HBV carrier、on HBV antivirals、recently stopped HBV antivirals、known HCV、HCV treated／cured、chemotherapy／immunosuppression |
+| ▸ 細項「Exposure & other viruses」 | viral_exposure〔新，presence〕 | raw shellfish／undercooked pork、household hepatitis contact、tattoo／piercing、injection drug use、transfusion／dialysis |
+| | viral_sx〔新，presence〕 | sore throat、swollen glands、rash、muscle aches、cough／runny nose（EBV、CMV、acute HIV、一般呼吸道病毒） |
 | **Metabolic** | metabolic〔新，presence〕 | central obesity、dyslipidemia、hypertension、recent weight gain |
-| **Biliary** | pain_location〔共用〕 | ruq、epigastric |
-| | pain_pattern〔共用〕、meal_relation〔共用〕 | attacks／constant；worse_eating、unrelated |
+| **Abdominal pain** | pain_location〔共用；主項目〕 | ruq、epigastric |
+| ▸ 細項「Pain details」 | pain_pattern、meal_relation、radiation〔共用〕 | attacks／constant；worse_eating、unrelated；right shoulder、back |
 | **Congestive / ischemic** | congestion_sx〔新，presence〕 | orthopnea／PND、leg swelling、known heart failure／valve disease、recent hypotension／shock／sepsis（呼吸喘沿用 assoc_other） |
 | **Autoimmune & others** | other_liver〔新，presence〕 | other autoimmune disease、family history of liver disease、strenuous exercise／muscle injury |
 | | extraintestinal〔共用〕 | arthralgia、heat intolerance／palpitations（標籤改為 Joints / thyroid） |
@@ -77,6 +80,7 @@
 - General & vitals：general、vitals（fever、tachycardia、hypotension）〔共用〕
 - Skin & eyes：skin（icterus、pallor）〔共用〕；liver_pe〔新〕：asterixis、spider angiomata、palmar erythema、gynecomastia、excoriations
 - congestion_pe〔新〕：raised JVP、hepatojugular reflux、pitting edema、bibasal crackles
+- infection_pe〔新〕：cervical lymphadenopathy、tonsillar exudate、rash
 - Abdomen：tenderness（RUQ 等）、abd_signs（Murphy）、palpable（hepatomegaly、liver tender、splenomegaly、gallbladder、ascites）〔共用〕
 - 預設點選：沿用 soft、non-tender
 
@@ -90,14 +94,14 @@
 |---|---|
 | Alcohol | Alcohol-associated hepatitis★、Alcohol-related liver disease（steatosis → cirrhosis） |
 | Drugs & herbs | Drug- / herb-induced liver injury（DILI）、Acetaminophen toxicity★ |
-| Viral | Acute hepatitis A / E、HBV flare / reactivation★、Chronic hepatitis B、Chronic hepatitis C |
+| Viral | Acute hepatitis A / E、HBV flare / reactivation★、Chronic hepatitis B、Chronic hepatitis C、EBV infection、CMV hepatitis、Acute HIV infection★、Systemic viral infection（influenza、COVID-19、一般感冒等呼吸道病毒） |
 | Metabolic | MASLD / MASH |
 | Biliary / obstructive | Choledocholithiasis〔共〕、Acute cholangitis★〔共〕、Malignant biliary obstruction（pancreatic head、cholangiocarcinoma）、Liver abscess★〔共〕 |
 | Congestive / ischemic | Congestive hepatopathy、Ischemic hepatitis★ |
 | Autoimmune | Autoimmune hepatitis、Primary biliary cholangitis |
 | Others / non-hepatic | Hepatocellular carcinoma / liver metastases、Muscle injury（AST from muscle）、Hyperthyroidism〔共，與腹瀉〕 |
 
-疾病 id：alcoholic_hepatitis、alcohol_related_liver_disease、dili、acetaminophen_toxicity、acute_hepatitis_a_e、hbv_flare、chronic_hepatitis_b、chronic_hepatitis_c、masld、malignant_biliary_obstruction、congestive_hepatopathy、ischemic_hepatitis、autoimmune_hepatitis、primary_biliary_cholangitis、liver_malignancy、muscle_injury（新）；choledocholithiasis、acute_cholangitis、liver_abscess、hyperthyroidism（共用，前三個補上 `# abnormal liver tests complaint` 特徵）。
+疾病 id：alcoholic_hepatitis、alcohol_related_liver_disease、dili、acetaminophen_toxicity、acute_hepatitis_a_e、hbv_flare、chronic_hepatitis_b、chronic_hepatitis_c、masld、malignant_biliary_obstruction、congestive_hepatopathy、ischemic_hepatitis、autoimmune_hepatitis、primary_biliary_cholangitis、liver_malignancy、muscle_injury、ebv_infection、cmv_hepatitis、acute_hiv、systemic_viral_infection（新）；choledocholithiasis、acute_cholangitis、liver_abscess、hyperthyroidism（共用，前三個補上 `# abnormal liver tests complaint` 特徵）。
 
 - **`acute_hepatitis`**（Q4）：腹痛的 RUQ 群組照舊使用 `acute_hepatitis`；這個主訴不列它，改用上表細分的疾病。兩邊內容會有部分重疊，這是刻意的。
 - 台灣臨床脈絡：
@@ -107,6 +111,7 @@
   - Klebsiella 肝膿瘍。
   - HCC 篩檢族群。
 - 考慮過但先不放：
+  - Dengue：使用者決定不加（2026-11-18）。
   - Wilson disease：40 歲以下不明原因時考慮，寫在 pitfalls。
   - Hemochromatosis：台灣罕見。
   - Celiac。

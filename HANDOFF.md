@@ -78,7 +78,7 @@
 - 共用項目的英文問法或標籤寫的是別的主訴（例如 episodes 問 "pain like this before?"、assoc_sys 叫 "Systemic / hepatobiliary"），用 `ask`／`label` 覆寫。精簡版沒有段落標題，像「Location」這種標籤要改成「Pain location」。
 - 沿用前檢查既有選項的 `red_flag` 和 `frag` 是否適合新主訴。例如 onset 的「Sudden」標了 red flag，所以腹瀉不放 onset；腹痛的 nocturnal 片段寫的是被「痛」醒，所以另立 nocturnal_stool。
 - **一個項目在一個主訴只能出現一次**（包含細項）。`risk`、`assoc_other` 這類大雜燴項目只能整個放在某一段，必要時用 `label` 改名（例如「Other risk factors」）。
-- 需要細問、但會佔版面的內容，用 `details` 掛在主項目下（預設收合）。
+- 需要細問、但會佔版面的內容，用 `details` 掛在主項目下（預設收合）。主項目選「有沒有、什麼時候、哪裡」這種一眼能答的問題（alcohol_use、drug_timing 加上 None、pain_location、viral_history），清單類放細項。使用者偏好把同一主題的題目這樣「集中」起來。
 
 **時程**
 - 每個主訴依自己的臨床定義另立 duration 項目，選項標 `tc`。腹瀉：< 2 週、2–4 週、> 4 週；肝：< 1 月、1–6 月、> 6 月。不要改共用的 `duration`，那會動到腹痛的疾病特徵。

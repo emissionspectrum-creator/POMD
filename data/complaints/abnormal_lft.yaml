@@ -39,27 +39,42 @@ history:
             Wine 12%: 150 mL glass ≈ 15 g, 750 mL bottle ≈ 72 g · Whiskey 40%: 30 mL shot ≈ 10 g, 700 mL ≈ 224 g
           items: [alcohol_type, alcohol_amount, alcohol_years, alcohol_last, alcohol_pattern]
   - section: Drugs & herbs
-    items: [liver_drugs, herbs, drug_timing]
-  - section: Viral
-    items: [viral_history, viral_exposure]
+    items:
+      - item: drug_timing
+        details:
+          label: Which drugs / herbs
+          items: [liver_drugs, herbs]
+  - section: Viral hepatitis
+    items:
+      - item: viral_history
+        details:
+          label: Exposure & other viruses
+          items: [viral_exposure, viral_sx]
   - section: Metabolic
     items: [metabolic]
-  - section: Biliary
+  - section: Abdominal pain
     items:
       - item: pain_location
         label: Pain location
         options: [ruq, epigastric]
         ask:
           - "Do you have any pain in the upper tummy? Where exactly?"
-      - item: pain_pattern
-        label: Pain pattern
-        ask:
-          - "Is the pain there all the time, or does it come in attacks?"
-      - item: meal_relation
-        label: Pain and meals
-        options: [worse_eating, unrelated]
-        ask:
-          - "Does the pain come on after eating, especially fatty food?"
+        details:
+          label: Pain details
+          items:
+            - item: pain_pattern
+              label: Pain pattern
+              ask:
+                - "Is the pain there all the time, or does it come in attacks?"
+            - item: meal_relation
+              label: Pain and meals
+              options: [worse_eating, unrelated]
+              ask:
+                - "Does the pain come on after eating, especially fatty food?"
+            - item: radiation
+              options: [r_shoulder, back]
+              ask:
+                - "Does the pain go anywhere else — your right shoulder or through to your back?"
   - section: Congestive / ischemic
     items: [congestion_sx]
   - section: Autoimmune & others
@@ -80,8 +95,8 @@ history:
 
 quick:
   show: [sex, age_group, lft_duration, assoc_sys, assoc_gi, assoc_other, liver_warning,
-         alcohol_use, liver_drugs, herbs, drug_timing, viral_history, viral_exposure, metabolic,
-         pain_location, pain_pattern, meal_relation, congestion_sx, other_liver, extraintestinal, risk]
+         alcohol_use, drug_timing, viral_history, metabolic,
+         pain_location, congestion_sx, other_liver, extraintestinal, risk]
 
 defaults:
   guarding: [soft]
@@ -98,6 +113,7 @@ pe:
         options: [icterus, pallor]
       - liver_pe
       - congestion_pe
+      - infection_pe
   - section: Abdomen
     items:
       - abd_contour
@@ -139,7 +155,8 @@ ddx:
   - group: Drugs & herbs
     diseases: [dili, acetaminophen_toxicity]
   - group: Viral
-    diseases: [acute_hepatitis_a_e, hbv_flare, chronic_hepatitis_b, chronic_hepatitis_c]
+    diseases: [acute_hepatitis_a_e, hbv_flare, chronic_hepatitis_b, chronic_hepatitis_c,
+               ebv_infection, cmv_hepatitis, acute_hiv, systemic_viral_infection]
   - group: Metabolic
     diseases: [masld]
   - group: Biliary / obstructive
@@ -157,9 +174,9 @@ hpi:
     - always: true
       parts: ["({@date_roc}) abnormal liver tests[ {lft_duration}]"]
     - lead: "Associated with "
-      parts: ["{assoc_sys+,assoc_gi+,assoc_other+,liver_warning+}"]
+      parts: ["{assoc_sys+,assoc_gi+,assoc_other+,liver_warning+,viral_sx+}"]
     - lead: "Denied "
-      parts: ["{assoc_sys-,assoc_gi-,assoc_other-,liver_warning-}"]
+      parts: ["{assoc_sys-,assoc_gi-,assoc_other-,liver_warning-,viral_sx-}"]
     - parts: ["{alcohol_use}", "{alcohol_type}", "{alcohol_amount}", "{alcohol_years}", "{alcohol_last}"]
     - lead: "Drinking pattern includes "
       parts: ["{alcohol_pattern+}"]
@@ -167,7 +184,7 @@ hpi:
       parts: ["{liver_drugs+,herbs+}", "{drug_timing}"]
     - lead: "No use of "
       parts: ["{liver_drugs-,herbs-}"]
-    - parts: ["{pain_location}", "{pain_pattern}", "{meal_relation}"]
+    - parts: ["{pain_location}", "{pain_pattern}", "{meal_relation}", "{radiation}"]
     - lead: "Relevant history includes "
       parts: ["{viral_history+,viral_exposure+,metabolic+,congestion_sx+,other_liver+,extraintestinal+,risk+}"]
     - lead: "No history of "
@@ -184,6 +201,8 @@ pe_text:
       parts: ["{skin*}", "{liver_pe*}"]
     - lead: "Cardiovascular: "
       parts: ["{congestion_pe*}"]
+    - lead: "Throat, nodes & skin: "
+      parts: ["{infection_pe*}"]
     - lead: "Abdomen: "
       parts:
         - "{abd_contour}"

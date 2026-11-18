@@ -1,0 +1,49 @@
+id: ebv_infection
+name: EBV infection (infectious mononucleosis)
+must_not_miss: false
+timecourse: [acute, subacute]
+status: draft
+one_liner: >
+  Fever, sore throat, and tender cervical lymphadenopathy with fatigue in an adolescent or young adult, often with
+  splenomegaly and a mild-to-moderate ALT rise (usually < 5–10 × ULN); jaundice is uncommon.
+
+symptoms:
+  - when: viral_sx = sore_throat
+    text: Sore throat
+  - when: viral_sx = lymph_nodes
+    text: Swollen, tender neck glands
+  - when: assoc_sys = fever | malaise
+    text: Fever and marked fatigue
+  - when: age_group = under_40
+    text: Adolescent or young adult
+  - when: viral_sx = rash
+    text: Rash — especially after amoxicillin or ampicillin
+  - when: lft_duration = lt1m | first_found
+    text: Acute
+  - when: pain_location = ruq
+    text: Mild RUQ or LUQ discomfort
+  - when: assoc_sys = no jaundice
+    text: Jaundice uncommon (more often in older adults)
+
+pe:
+  - when: infection_pe = lymphadenopathy | tonsillar_exudate
+    text: Posterior cervical lymphadenopathy, tonsillar exudate
+  - when: palpable = splenomegaly
+    text: Splenomegaly
+  - when: vitals = fever
+    text: Fever
+  - when: palpable = hepatomegaly
+    text: Mild hepatomegaly
+
+labs:
+  - "CBC — lymphocytosis with atypical lymphocytes (> 10%)"
+  - "Heterophile (monospot) test; EBV VCA IgM / IgG and EBNA if negative or in young children"
+  - "ALT typically 2–5 × ULN, peaking in week 2"
+
+imaging:
+  - Ultrasound if splenomegaly is uncertain
+
+pitfalls:
+  - Avoid contact sports for at least 3–4 weeks — risk of splenic rupture.
+  - Amoxicillin often causes a widespread rash in EBV infection; it is not necessarily drug allergy.
+  - A mononucleosis-like illness with a negative monospot may be CMV, acute HIV, or toxoplasmosis.

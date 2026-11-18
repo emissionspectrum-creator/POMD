@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 2026-11-18 — Abnormal liver tests：題目收合整理、補病毒性疾病（v0.6.1，使用者要求）
+
+- 比照 Alcohol，把三段改成「主項目＋收合細項」：
+  - Abdominal pain（原 Biliary）：主項目 pain_location；細項 pain pattern、與進食關係、radiation（新增右肩、背部）。
+  - Drugs & herbs：主項目 drug_timing 改名「Medications / herbs」並加上 None；細項為藥物清單、草藥／保健食品。
+  - Viral hepatitis（原 Viral）：主項目 viral_history；細項 exposure 與新增的 viral_sx（喉嚨痛、淋巴腫、皮疹、肌肉痛、咳嗽／流鼻水）。
+- PE 新增 infection_pe（頸部淋巴結腫大、扁桃腺滲出物、皮疹）。
+- 新疾病（draft）：EBV infection、CMV hepatitis、acute HIV infection★、systemic viral infection（influenza、COVID-19、一般感冒等）。dengue 依使用者決定不加。
+- choledocholithiasis、malignant biliary obstruction 加上 radiation 特徵。
+- HANDOFF 補充主項目＋細項的選題原則。
+
 ## 2026-11-18 — 新增 HANDOFF.md（使用者要求）
 
 - 新增根目錄 `HANDOFF.md`：新增主訴的操作手冊，內容包括開工前要讀的與範本對照、十步流程、`<id>.md` 範本、設計判斷準則、踩過的坑、驗證工具（node 產生 HPI、playwright 實測）、使用者的工作偏好。只寫流程，不記錄現況（現況看本檔）。

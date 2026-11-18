@@ -29,6 +29,8 @@ symptoms:
     text: Recent cholestatic rise
   - when: meal_relation = worse_eating
     text: Pain after (fatty) meals
+  - when: radiation = r_shoulder | back
+    text: Radiating to the right shoulder or back
 
 pe:
   - when: skin = icterus

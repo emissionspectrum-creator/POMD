@@ -26,6 +26,8 @@ symptoms:
     text: Weeks
   - when: risk = diabetes
     text: New-onset diabetes (pancreatic cancer)
+  - when: radiation = back
+    text: Back pain (pancreatic cancer)
 
 pe:
   - when: skin = icterus

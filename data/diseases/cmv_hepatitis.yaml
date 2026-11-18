@@ -1,0 +1,44 @@
+id: cmv_hepatitis
+name: CMV hepatitis
+must_not_miss: false
+timecourse: [acute, subacute]
+status: draft
+one_liner: >
+  Prolonged fever, fatigue and mild hepatitis with atypical lymphocytes but little sore throat in an immunocompetent
+  adult (heterophile-negative mononucleosis), or more severe hepatitis in transplant recipients and immunosuppressed patients.
+
+symptoms:
+  - when: assoc_sys = fever | malaise
+    text: Prolonged fever and fatigue
+  - when: viral_history = immunosupp
+    text: Transplant, chemotherapy, or immunosuppression (severe disease)
+  - when: risk = immunocompromised
+    text: Immunocompromised (HIV, transplant)
+  - when: viral_sx = no sore_throat
+    text: Sore throat usually mild or absent (unlike EBV)
+  - when: viral_sx = myalgia
+    text: Myalgia
+  - when: lft_duration = lt1m | m1_6
+    text: Weeks
+  - when: age_group = under_40 | age_40_59
+    text: Usually adults
+
+pe:
+  - when: vitals = fever
+    text: Fever
+  - when: palpable = hepatomegaly | splenomegaly
+    text: Mild hepatosplenomegaly
+  - when: infection_pe = no tonsillar_exudate
+    text: No tonsillar exudate
+
+labs:
+  - "CBC — atypical lymphocytosis; heterophile negative"
+  - "CMV IgM (and IgG avidity) in the immunocompetent; CMV PCR (blood) in the immunocompromised"
+  - "ALT usually < 5 × ULN"
+
+imaging:
+  - Usually not needed; ultrasound for hepatosplenomegaly
+
+pitfalls:
+  - In transplant or immunosuppressed patients, check blood CMV PCR early and look for end-organ disease (colitis, retinitis, pneumonitis).
+  - In pregnancy, primary CMV matters for the fetus.

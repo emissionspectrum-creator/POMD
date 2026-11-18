@@ -212,3 +212,12 @@
     - {id: hjr, label: Hepatojugular reflux, frag: positive hepatojugular reflux}
     - {id: edema, label: Pitting leg edema, frag: pitting leg edema, frag_neg: no leg edema}
     - {id: crackles, label: Bibasal crackles, frag: bibasal crackles}
+
+- id: infection_pe
+  label: Throat, nodes & skin
+  type: presence
+  join: ","
+  options:
+    - {id: lymphadenopathy, label: Cervical lymphadenopathy, frag: cervical lymphadenopathy, frag_neg: no cervical lymphadenopathy}
+    - {id: tonsillar_exudate, label: Tonsillar exudate, frag: tonsillar exudate}
+    - {id: rash, label: Rash, frag: a rash}
