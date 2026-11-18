@@ -15,7 +15,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - 右欄**不**標示 must-not-miss（不用紅色、不加 ★、不加粗；使用者要求）。`must_not_miss` 資料保留，只在說明卡以中性的 "Must-not-miss" 徽章顯示。
 - **內容與程式分開**：臨床內容只放 `data/`；`src/` 不得寫死任何疾病、症狀或選項。
 - **疾病是獨立單位**：右欄標亮與說明卡比對都由疾病資料的 `symptoms`／`pe` 推導，**不要另外維護「選項 → 疾病」對照表**。
-- 內容自行撰寫，不抄教科書；英文問法要自然道地。新增或修改的疾病 `status` 一律 `draft`，只有使用者（佑達）審核後才改 `reviewed`。
+- 內容自行撰寫，不抄教科書；英文問法要自然道地。新增或修改的疾病 `status` 一律 `draft`，只有使用者（佑達）審核後才改 `reviewed`。使用者不打算逐一細審疾病內容（2026-11-18）：完成後**不要再提醒或要求審核**，`status` 維持 `draft`，除非使用者主動說某個疾病已審核。
 - 純 HTML + CSS + 原生 JavaScript（ES5 風格、IIFE），不引入框架或 npm 依賴。
 - 每次修改都要在 `CHANGELOG.md` 記錄日期、改了什麼、為什麼。
 
