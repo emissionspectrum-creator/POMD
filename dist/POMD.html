@@ -299,7 +299,8 @@ body.quick { --footer-h: 52px; }
 .quick #cols { grid-template-columns: minmax(0, 1fr); }
 .quick .col { border-right: 0; }
 .quick-wrap { max-width: 900px; margin: 0 auto; }
-.quick #output { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+/* hint | Submit (centered) | empty */
+.quick #output { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; }
 .quick #btn-submit { padding: 6px 18px; }
 .quick-add { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
 .quick-add select { font: inherit; padding: 2px 4px; }
