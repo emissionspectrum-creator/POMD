@@ -5,7 +5,6 @@
 ## 關鍵規則
 
 - **產出單一檔案 `dist/POMD.html`**（完整版）與 **`dist/POMD-history.html`**（只有 History + HPI 的精簡版，使用者 2026-11-18 要求），各自都要能在 Windows 11 Edge／Chrome／Firefox 以 `file://` 直接開啟、**完全離線**：不得引用任何外部 URL、CDN、字型、圖片。
-- **不儲存任何病人資料**：不用 localStorage／sessionStorage／IndexedDB／cookie，不寫檔。狀態只存在記憶體。
 - 介面與輸出文字**全英文**；文件（本檔、CHANGELOG）用繁體中文。
 - **不做機率、權重或「最可能診斷」**。標亮只表示「有至少一項典型特徵被點選」，數字只是符合數量。
 - 例外（使用者 2026-10-31 要求）：右欄可切換「By matches」，依符合數量高低排序（單純計數，不加權；同分維持位置順序）。
