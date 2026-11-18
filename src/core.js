@@ -1,6 +1,6 @@
 /*
  * POMD core logic — pure functions, no DOM access.
- * Loaded by the browser app (dist/POMD.html) and by the Node tests (tests/core.test.js).
+ * Loaded by both browser pages (dist/POMD.html, dist/POMD-history.html) and by the Node tests.
  *
  * Selection state shape:
  *   { [itemId]: { [optionId]: true | 'present' | 'absent' } }
@@ -321,7 +321,65 @@
     return out.join(spec.joiner === undefined ? ' ' : spec.joiner);
   }
 
+  // ---------- shared state (localStorage, both pages) ----------
+
+  // localStorage keys. The patient state is shared by dist/POMD.html and dist/POMD-history.html
+  // (same file:// origin in Edge / Chrome) and kept until "New patient".
+  var STATE_KEY = 'pomd.patient.v1';
+  var LAYOUT_KEY = 'pomd.quickLayout.v1';
+
+  // Keeps only known items / options with values valid for the item type.
+  function sanitizeState(raw, items) {
+    var out = {};
+    if (!raw || typeof raw !== 'object') return out;
+    Object.keys(raw).forEach(function (iid) {
+      var item = items[iid];
+      var sel = raw[iid];
+      if (!item || !sel || typeof sel !== 'object') return;
+      var clean = {};
+      Object.keys(sel).forEach(function (oid) {
+        if (!item.optById[oid]) return;
+        var v = sel[oid];
+        if (item.type === 'presence' ? (v === 'present' || v === 'absent') : v === true) clean[oid] = v;
+      });
+      if (item.type === 'single' && Object.keys(clean).length > 1) return;
+      if (Object.keys(clean).length) out[iid] = clean;
+    });
+    return out;
+  }
+
+  // Parses the stored patient JSON -> { complaint, state } or null.
+  function parseStoredState(json, items) {
+    if (!json) return null;
+    var raw;
+    try { raw = JSON.parse(json); } catch (e) { return null; }
+    if (!raw || typeof raw !== 'object' || typeof raw.complaint !== 'string') return null;
+    return { complaint: raw.complaint, state: sanitizeState(raw.state, items) };
+  }
+
+  function serializeState(complaintId, state) {
+    return JSON.stringify({ complaint: complaintId, state: state });
+  }
+
+  // Saved question order for one complaint, restricted to that complaint's history items.
+  function sanitizeOrder(order, complaint) {
+    if (!Array.isArray(order)) return null;
+    var allowed = [];
+    complaint.history.forEach(function (sec) { allowed = allowed.concat(sec.items); });
+    var out = [];
+    order.forEach(function (id) {
+      if (allowed.indexOf(id) >= 0 && out.indexOf(id) < 0) out.push(id);
+    });
+    return out;
+  }
+
   var api = {
+    STATE_KEY: STATE_KEY,
+    LAYOUT_KEY: LAYOUT_KEY,
+    sanitizeState: sanitizeState,
+    parseStoredState: parseStoredState,
+    serializeState: serializeState,
+    sanitizeOrder: sanitizeOrder,
     prepare: prepare,
     toggle: toggle,
     isEmpty: isEmpty,

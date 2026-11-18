@@ -4,7 +4,7 @@
 
 ## 關鍵規則
 
-- **產出單一檔案 `dist/POMD.html`**（完整版）與 **`dist/POMD-history.html`**（只有 History + HPI 的精簡版，使用者 2026-11-18 要求），各自都要能在 Windows 11 Edge／Chrome／Firefox 以 `file://` 直接開啟、**完全離線**：不得引用任何外部 URL、CDN、字型、圖片。
+- **產出單一檔案 `dist/POMD.html`**（完整版）與 **`dist/POMD-history.html`**（只有 History 的精簡版，使用者 2026-11-18 要求），各自都要能在 Windows 11 Edge／Chrome／Firefox 以 `file://` 直接開啟、**完全離線**：不得引用任何外部 URL、CDN、字型、圖片。
 - 介面與輸出文字**全英文**；文件（本檔、CHANGELOG）用繁體中文。
 - **不做機率、權重或「最可能診斷」**。標亮只表示「有至少一項典型特徵被點選」，數字只是符合數量。
 - 例外（使用者 2026-10-31 要求）：右欄可切換「By matches」，依符合數量高低排序（單純計數，不加權；同分維持位置順序）。
@@ -27,7 +27,7 @@ src/
   core.js                 純邏輯（無 DOM）：選取、比對、標亮、時程、文字組裝；瀏覽器與 Node 共用
   app.js                  DOM／事件／畫面
   history.html            精簡版外殼（同樣的佔位）
-  history.js              精簡版 DOM／事件：問題可 ↑↓ 移動、隱藏、+ Add question；只輸出 HPI
+  history.js              精簡版 DOM／事件：問題可拖曳／↑↓ 移動、隱藏、+ Add question；Submit 切到完整版
 data/
   vocab/history.yaml      共用病史項目（items + options）
   vocab/pe.yaml           共用 PE 項目
@@ -100,7 +100,7 @@ node --test tests/*.test.js     # 單元測試 + 對 dist 資料的端對端測�
 - `labs`／`imaging`：`[{name, note}]`，純建議清單，不可點、不參與比對。
 - `ddx`：`[{group, locations: [location option id...], diseases: [disease id...]}]`；同一疾病可出現在多個群組。
 - `hpi`／`pe_text`：文字組裝規格（見下）。
-- `quick: {show: [item id...]}`：精簡版預設顯示的問題與順序；必須是 `history` 裡的項目、不可重複。沒列的預設隱藏，可用「+ Add question」加回。省略 `quick` 時顯示全部 history 項目。精簡版的版面調整只存在記憶體，重新整理就回到這個預設（不用 localStorage）。HPI 句子順序仍由 `hpi` 模板決定，不受畫面順序影響。
+- `quick: {show: [item id...]}`：精簡版預設顯示的問題與順序；必須是 `history` 裡的項目、不可重複。沒列的預設隱藏，可用「+ Add question」加回。省略 `quick` 時顯示全部 history 項目。使用者在瀏覽器調整過的版面會存在 localStorage 並優先使用（「Reset layout」回到這個預設）。HPI 句子順序仍由 `hpi` 模板決定，不受畫面順序影響。
 
 ### 疾病（`data/diseases/<id>.yaml`）
 
@@ -168,6 +168,10 @@ hpi:
 - 除 DESIGN 第 6 節表格外，另把部分疾病放進第二個位置群組：acute pancreatitis → LUQ、diverticulitis → RLQ、ectopic pregnancy／ovarian torsion → LLQ、ruptured AAA → Flank。
 - 疾病內容加入台灣臨床脈絡（Klebsiella 肝膿瘍、B 肝 flare、腸結核、草藥 DILI、胃癌盛行率與 EGD 年齡門檻）。
 - 「New patient」按鈕：有點選時需在 3 秒內點兩次才清空（避免誤觸，又不跳對話框）。
+- 兩頁共用目前病人（使用者 2026-11-18 決定）：點選存在 localStorage `pomd.patient.v1`（`{complaint, state}`），兩頁用 `storage` 事件雙向即時同步；不自動過期，只有 New patient（任一頁）會清空。精簡版版面存在 `pomd.quickLayout.v1`（每個主訴一個順序陣列）。讀取時以 `Core.sanitizeState`／`sanitizeOrder` 過濾無效資料。
+- 精簡版 Submit：`window.open('', 'pomd-main')` 找到完整版分頁就切過去，否則開啟同資料夾的 `POMD.html`；完整版載入時把 `window.name` 設為 `pomd-main`。
+- 這些跨頁功能只在 Edge／Chrome 有效（`file://` 視為同一 origin）；Firefox 的 `file://` 各檔案隔離，兩頁仍可各自使用但不會同步。
+- 精簡版的 Hide 只是版面設定，不清除該題答案（完整版仍看得到）。
 - 除了 DESIGN 要求的「Copy HPI + PE」，另外提供 Copy HPI、Copy PE（病歷常分 S／O 兩欄）。
 - Copy 先用 Clipboard API，失敗時改用隱藏 textarea + `execCommand('copy')`。
 - 選項可標 `red_flag`，按鈕旁顯示紅色「!」。

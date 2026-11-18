@@ -1,7 +1,8 @@
 /*
  * POMD browser UI. All clinical content comes from window.POMD_DATA (built from data/);
  * all matching / text logic lives in core.js (window.POMDCore).
- * Nothing is persisted: state lives only in memory and is cleared by "New patient" or a reload.
+ * The current patient's selections are kept in localStorage (Core.STATE_KEY) and shared live with
+ * the quick history page (dist/POMD-history.html); "New patient" clears them on both pages.
  */
 (function () {
   'use strict';
@@ -29,6 +30,36 @@
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
+  }
+
+  // ---------- shared patient state (localStorage) ----------
+
+  // Storage may be unavailable (e.g. blocked, or Firefox isolating file:// pages); the page still works alone.
+  function storageGet(key) {
+    try { return window.localStorage.getItem(key); } catch (e) { return null; }
+  }
+
+  function storageSet(key, value) {
+    try {
+      if (value === null) window.localStorage.removeItem(key);
+      else window.localStorage.setItem(key, value);
+    } catch (e) { /* ignore */ }
+  }
+
+  function saveState() {
+    storageSet(Core.STATE_KEY, Core.isEmpty(state) ? null : Core.serializeState(complaint.id, state));
+  }
+
+  // Loads the stored patient (switching complaint if needed); unknown complaint -> empty state.
+  function loadState(json) {
+    var s = Core.parseStoredState(json, items);
+    var c = s && DATA.complaints.filter(function (x) { return x.id === s.complaint; })[0];
+    if (c && c !== complaint) {
+      complaint = c;
+      $('complaint-select').value = c.id;
+      buildLayout();
+    }
+    state = c ? s.state : {};
   }
 
   // ---------- static layout (rebuilt when the complaint changes) ----------
@@ -273,6 +304,7 @@
     disarmClear();
     state = {};
     openDiseaseId = null;
+    saveState();
     ['col-history', 'col-pe', 'col-ddx'].forEach(function (id) { $(id).scrollTop = 0; });
     refresh();
   }
@@ -281,6 +313,7 @@
     complaint = DATA.complaints.filter(function (c) { return c.id === id; })[0] || DATA.complaints[0];
     state = {};
     openDiseaseId = null;
+    saveState();
     buildLayout();
     refresh();
   }
@@ -290,9 +323,11 @@
     if (!t) return;
     if (t.hasAttribute('data-opt')) {
       Core.toggle(state, items[t.getAttribute('data-item')], t.getAttribute('data-opt'));
+      saveState();
       refresh();
     } else if (t.hasAttribute('data-clear')) {
       delete state[t.getAttribute('data-clear')];
+      saveState();
       refresh();
     } else if (t.hasAttribute('data-disease')) {
       var id = t.getAttribute('data-disease');
@@ -322,8 +357,17 @@
   function init() {
     syncTopHeight();
     window.addEventListener('resize', syncTopHeight);
+    // The quick history page's Submit targets this window by name.
+    window.name = 'pomd-main';
     buildComplaintSelect();
     buildLayout();
+    loadState(storageGet(Core.STATE_KEY));
+    window.addEventListener('storage', function (ev) {
+      if (ev.key !== Core.STATE_KEY && ev.key !== null) return;
+      loadState(ev.key === null ? null : ev.newValue);
+      disarmClear();
+      refresh();
+    });
     document.addEventListener('click', onClick);
     document.addEventListener('keydown', function (ev) {
       if (ev.key === 'Escape' && openDiseaseId) {

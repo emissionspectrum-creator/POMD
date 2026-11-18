@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## 2026-11-18 — v0.4.0 精簡版 Submit、拖曳排序、兩頁共用病人（使用者要求）
+
+**新增**
+- 精簡版底部改成 **Submit → full page**（拿掉 HPI 預覽與 Copy HPI）：開啟同資料夾的 `POMD.html`，若之前由精簡版開過就切到那個分頁。
+- 兩頁共用目前病人：點選存在 localStorage，雙向即時同步（任一頁點選，另一頁立刻更新）；任一頁按 New patient 兩頁一起清空；不自動過期（使用者選擇）。重新整理也不會遺失。
+- Edit layout 時可用滑鼠拖曳 ⠿ 排序（↑↓ 保留，手機用）；版面（順序、隱藏）存在 localStorage，下次開啟還在；Reset layout 回到 `quick.show` 預設。
+- `core.js` 新增 `sanitizeState`、`parseStoredState`、`serializeState`、`sanitizeOrder` 與測試。
+
+**修改**
+- `quick.show` 改為全部 22 題（原 LQQOPERA 順序，duration 移到 location 後面），由使用者自行隱藏。
+- 精簡版的 Hide 不再清除答案：精簡版已無 HPI，完整版看得到所有答案，隱藏只是版面設定。
+
+**限制**
+- 跨頁同步與 Submit 切換分頁依賴 Edge／Chrome 把 `file://` 視為同一 origin（已在 Chromium 實測）；Firefox 不會同步。
+- 換病人忘了按 New patient 時，上一位的點選會留在瀏覽器儲存中。
+
 ## 2026-11-18 — 取消「不儲存任何病人資料」規則（使用者要求）
 
 **修改**

@@ -314,3 +314,40 @@ test('quick page data: quick.show lists unique history items and HPI composes', 
   Core.toggle(s, it.duration, 'd1_3');
   assert.equal(Core.composeText(c.hpi, s, it), 'The patient presented with RUQ pain for 1–3 days.');
 });
+
+// ---------- shared state (localStorage) ----------
+
+test('sanitizeState keeps only known items / options with valid values', () => {
+  const items = fixture().items;
+  const raw = {
+    loc: { ruq: true, bogus: true },
+    sev: { s3: true, s7: true },           // single with two values -> dropped
+    sx: { nausea: 'present', fever: 'absent', jaundice: true },
+    dur: { h: 'present' },                  // wrong value type -> dropped
+    nope: { x: true }
+  };
+  assert.deepEqual(Core.sanitizeState(raw, items), {
+    loc: { ruq: true },
+    sx: { nausea: 'present', fever: 'absent' }
+  });
+  assert.deepEqual(Core.sanitizeState(null, items), {});
+});
+
+test('stored state round-trips; bad JSON -> null', () => {
+  const items = fixture().items;
+  const s = {};
+  Core.toggle(s, items.loc, 'epi');
+  Core.toggle(s, items.sx, 'fever');
+  const back = Core.parseStoredState(Core.serializeState('abdominal_pain', s), items);
+  assert.deepEqual(back, { complaint: 'abdominal_pain', state: s });
+  assert.equal(Core.parseStoredState('{not json', items), null);
+  assert.equal(Core.parseStoredState('{"state":{}}', items), null);
+  assert.equal(Core.parseStoredState(null, items), null);
+});
+
+test('sanitizeOrder keeps unique history items of the complaint', () => {
+  const c = { history: [{ section: 'A', items: ['loc', 'dur'] }, { section: 'B', items: ['sx'] }] };
+  assert.deepEqual(Core.sanitizeOrder(['dur', 'zzz', 'loc', 'dur'], c), ['dur', 'loc']);
+  assert.deepEqual(Core.sanitizeOrder([], c), []);
+  assert.equal(Core.sanitizeOrder('x', c), null);
+});

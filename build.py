@@ -16,7 +16,7 @@ from pathlib import Path
 
 import yaml
 
-APP_VERSION = "0.3.0"
+APP_VERSION = "0.4.0"
 
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "src"

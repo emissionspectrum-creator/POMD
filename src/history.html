@@ -26,7 +26,7 @@
     <div class="quick-wrap">
       <h2>History</h2>
       <p class="hint">Click to select · click again to clear · <span class="hint-presence">symptoms: 1× present, 2× absent, 3× clear</span></p>
-      <p class="hint edit-hint">Edit layout: ↑ ↓ move a question · Hide removes it (and clears its answer) · the HPI keeps its own sentence order.</p>
+      <p class="hint edit-hint">Edit layout: drag ⠿ or use ↑ ↓ to move a question · Hide removes it from this page (its answer is kept) · the layout is remembered.</p>
       <div id="history"></div>
       <div class="quick-add">
         <select id="add-question" aria-label="Add a hidden question"></select>
@@ -37,14 +37,8 @@
 </main>
 
 <footer id="output">
-  <div class="out-box">
-    <div class="out-head">HPI</div>
-    <div id="out-hpi" class="out-text"></div>
-  </div>
-  <div class="out-actions">
-    <button type="button" class="btn primary" data-copy="hpi">Copy HPI</button>
-    <span id="copy-status" role="status"></span>
-  </div>
+  <span class="hint">Selections are shared with the full page (POMD.html in the same folder).</span>
+  <button type="button" id="btn-submit" class="btn primary">Submit → full page</button>
 </footer>
 
 <script>
