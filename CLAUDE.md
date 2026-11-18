@@ -54,7 +54,10 @@ node --test tests/*.test.js     # 單元測試 + 對 dist 資料的端對端測�
 
 ## 同步（本機 ↔ 雲端 session）
 
-使用者有時在本機改、有時在另一台電腦用雲端 session（claude.ai/code）改。GitHub private repo `emissionspectrum-creator/POMD` 的 `main` 是唯一的共同版本。
+使用者有時在本機改、有時在另一台電腦用雲端 session（claude.ai/code）改。GitHub repo `emissionspectrum-creator/POMD`（2026-11-18 起為 **public**）的 `main` 是唯一的共同版本。
+
+- GitHub Pages 由 `main` 根目錄發布，push 後約 1 分鐘更新：`https://emissionspectrum-creator.github.io/POMD/dist/POMD-history.html`、`.../dist/POMD.html`。網路版的 localStorage 屬於 github.io 網域，與本機 `file://` 版各自獨立；不會跨電腦同步。
+- repo 公開：不要 commit 任何病人資料、密碼或 token。
 
 - **開始**：`.claude/hooks/session-start.sh` 會在每個 session 開始時 `git fetch` 並把目前分支 rebase 到 `origin/main`；雲端另外會安裝 PyYAML。hook 的 `[sync]` 訊息若是 WARNING（有未 commit 的變更或 rebase 衝突），先告訴使用者，處理好再動手改。
 - **結束**：每完成一項修改、build 與測試都通過後，**直接 commit 並 push 到 `origin main`，不用再問**（使用者 2026-11-04 明確要求，覆寫全域「commit／push 前先問」）。步驟：

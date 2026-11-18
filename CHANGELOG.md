@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2026-11-18 — 公開 repo 並開啟 GitHub Pages（使用者要求）
+
+- repo 改為 public（使用者確認文件中的姓名一併公開），以免費開啟 GitHub Pages。
+- 網路版：`https://emissionspectrum-creator.github.io/POMD/dist/POMD-history.html`（精簡版）、`.../dist/POMD.html`（完整版）。
+- 網路版在同一網域下，版面偏好、兩頁同步、Submit 都可用（含 Firefox）；偏好存在各瀏覽器，不跨電腦同步。
+
 ## 2026-11-18 — HPI 開頭改為民國日期（使用者要求）
 
 **修改**
