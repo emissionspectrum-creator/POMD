@@ -103,6 +103,7 @@ node --test tests/*.test.js     # 單元測試 + 對 dist 資料的端對端測�
 - `labs`／`imaging`：`[{name, note}]`，純建議清單，不可點、不參與比對。
 - `ddx`：`[{group, locations: [location option id...], diseases: [disease id...]}]`；同一疾病可出現在多個群組。
 - `hpi`／`pe_text`：文字組裝規格（見下）。
+- `defaults: {item id: [option id...]}`：新病人自動點選的項目（只限 single／multi，且須是本主訴有顯示的項目）。開啟、New patient、切換主訴時套用；只有預設值時視為「未點選」（HPI 空白、New patient 不需確認、不寫入 localStorage）。
 - `quick: {show: [item id...]}`：精簡版預設顯示的問題與順序；必須是 `history` 裡的項目、不可重複。沒列的預設隱藏，可用「+ Add question」加回。省略 `quick` 時顯示全部 history 項目。使用者在瀏覽器調整過的版面會存在 localStorage 並優先使用（「Reset layout」回到這個預設）。HPI 句子順序仍由 `hpi` 模板決定，不受畫面順序影響。
 
 ### 疾病（`data/diseases/<id>.yaml`）

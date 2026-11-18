@@ -30,7 +30,7 @@ OPTION_KEYS = {"id", "label", "frag", "frag_neg", "exclusive", "red_flag", "tc"}
 TC_VALUES = {"acute", "subacute", "chronic"}
 JOIN_VALUES = {"and", "or", ","}
 COMPLAINT_KEYS = {"id", "name", "location_item", "timecourse_item", "history", "pe",
-                  "labs", "imaging", "ddx", "hpi", "pe_text", "quick"}
+                  "labs", "imaging", "ddx", "hpi", "pe_text", "quick", "defaults"}
 DISEASE_KEYS = {"id", "name", "must_not_miss", "timecourse", "status", "one_liner",
                 "symptoms", "pe", "labs", "imaging", "pitfalls"}
 DISEASE_STATUS = {"draft", "reviewed"}
@@ -329,6 +329,30 @@ def load_complaints(e, items, diseases):
                         e.err(f"{where}.quick.show", f"item {iid!r} listed twice")
                     else:
                         quick_show.append(iid)
+        defaults = {}
+        raw_defaults = raw.get("defaults") or {}
+        if not isinstance(raw_defaults, dict):
+            e.err(f"{where}.defaults", "must be a mapping of item id -> [option ids]")
+            raw_defaults = {}
+        for iid, opts in raw_defaults.items():
+            dwhere = f"{where}.defaults.{iid}"
+            item = items.get(iid)
+            if not item:
+                e.err(dwhere, "unknown item")
+                continue
+            if iid not in shown:
+                e.err(dwhere, "item is not shown in this complaint")
+            if item["type"] == "presence":
+                e.err(dwhere, "defaults are only supported for single / multi items")
+                continue
+            opts = opts if isinstance(opts, list) else [opts]
+            known = {o["id"] for o in item["options"]}
+            for oid in opts:
+                if oid not in known:
+                    e.err(dwhere, f"unknown option {oid!r}")
+            if item["type"] == "single" and len(opts) > 1:
+                e.err(dwhere, "single item can have only one default")
+            defaults[iid] = [str(o) for o in opts]
         for k in ("location_item", "timecourse_item"):
             if raw.get(k) not in shown:
                 e.err(where, f"{k} {raw.get(k)!r} must be an item shown in this complaint")
@@ -371,6 +395,7 @@ def load_complaints(e, items, diseases):
             "hpi": raw.get("hpi") or {},
             "pe_text": raw.get("pe_text") or {},
             "quick": {"show": quick_show},
+            "defaults": defaults,
         })
     for did in sorted(set(diseases) - used_diseases):
         e.warn(f"data/diseases/{did}.yaml", "not referenced by any complaint")
@@ -424,7 +449,8 @@ def main():
     quick_data = {
         "version": APP_VERSION,
         "items": items,
-        "complaints": [{k: c[k] for k in ("id", "name", "history", "hpi", "quick")} for c in complaints],
+        "complaints": [{k: c[k] for k in ("id", "name", "history", "hpi", "quick", "defaults")}
+                       for c in complaints],
     }
     pages = [
         (DIST, build_html(data)),

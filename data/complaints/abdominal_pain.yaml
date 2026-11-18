@@ -35,6 +35,11 @@ quick:
          meal_relation, aggravating, relieving, radiation,
          assoc_gi, assoc_sys, assoc_gu, assoc_other, risk]
 
+# Selected automatically for a new patient (single / multi items only); the user can change them.
+defaults:
+  guarding: [soft]
+  tenderness: [none]
+
 # Middle column. Items are defined in data/vocab/pe.yaml.
 pe:
   - section: General & vitals

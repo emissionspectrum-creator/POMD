@@ -370,3 +370,27 @@ test('{@var} renders like fixed text and never counts as filled', () => {
   assert.equal(Core.composeText(spec, s, items, vars), '(115/11/18) RUQ pain.');
   assert.equal(Core.composeText(spec, s, items), '() RUQ pain.');
 });
+
+// ---------- complaint defaults ----------
+
+test('defaultState / isPristine', () => {
+  const items = fixture().items;
+  const c = { defaults: { tender: ['none'], sev: ['s3'], unknown: ['x'] } };
+  const d = Core.defaultState(c, items);
+  assert.deepEqual(d, { tender: { none: true }, sev: { s3: true } });
+  assert.equal(Core.isPristine(d, c, items), true);
+  Core.toggle(d, items.tender, 'ruq');          // exclusive "none" is replaced
+  assert.deepEqual(d.tender, { ruq: true });
+  assert.equal(Core.isPristine(d, c, items), false);
+  assert.equal(Core.isPristine({}, c, items), false);
+  assert.equal(Core.isPristine({}, {}, items), true);
+});
+
+test('built data: abdominal pain PE defaults (soft, non-tender)', () => {
+  const data = loadBuiltData();
+  const c = data.complaints.find((x) => x.id === 'abdominal_pain');
+  const s = Core.defaultState(c, data.items);
+  assert.deepEqual(s, { guarding: { soft: true }, tenderness: { none: true } });
+  assert.equal(Core.composeText(c.pe_text, s, data.items), 'Abdomen: soft, non-tender.');
+  assert.deepEqual(loadQuickData().complaints[0].defaults, c.defaults);
+});

@@ -56,6 +56,37 @@
     return Object.keys(state).length === 0;
   }
 
+  // Starting selections for a new patient, from the complaint's `defaults` ({ item: [option ids] }).
+  function defaultState(complaint, items) {
+    var s = {};
+    var d = (complaint && complaint.defaults) || {};
+    Object.keys(d).forEach(function (iid) {
+      var item = items[iid];
+      if (!item) return;
+      d[iid].forEach(function (oid) {
+        if (item.optById[oid] && !(s[iid] && s[iid][oid])) toggle(s, item, oid);
+      });
+    });
+    return s;
+  }
+
+  function sameState(a, b) {
+    var ka = Object.keys(a);
+    if (ka.length !== Object.keys(b).length) return false;
+    return ka.every(function (iid) {
+      var sa = a[iid];
+      var sb = b[iid];
+      if (!sb) return false;
+      var oa = Object.keys(sa);
+      return oa.length === Object.keys(sb).length && oa.every(function (oid) { return sa[oid] === sb[oid]; });
+    });
+  }
+
+  // True when nothing has been selected beyond the complaint's defaults.
+  function isPristine(state, complaint, items) {
+    return sameState(state, defaultState(complaint, items));
+  }
+
   // Selected options of an item, in the item's option order.
   function selectedOptions(item, state) {
     var sel = state[item.id];
@@ -403,6 +434,9 @@
     prepare: prepare,
     toggle: toggle,
     isEmpty: isEmpty,
+    defaultState: defaultState,
+    sameState: sameState,
+    isPristine: isPristine,
     selectedOptions: selectedOptions,
     featureStatus: featureStatus,
     describeSelection: describeSelection,

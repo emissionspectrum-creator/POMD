@@ -51,7 +51,12 @@
   }
 
   function saveState() {
-    storageSet(Core.STATE_KEY, Core.isEmpty(state) ? null : Core.serializeState(complaint.id, state));
+    // Nothing stored while only the defaults are selected (a missing entry means "new patient").
+    storageSet(Core.STATE_KEY, pristine() ? null : Core.serializeState(complaint.id, state));
+  }
+
+  function pristine() {
+    return Core.isPristine(state, complaint, items);
   }
 
   function savedLayouts() {
@@ -80,7 +85,8 @@
     relayout();
   }
 
-  // Loads the stored patient (switching complaint if needed); unknown complaint -> empty state.
+  // Loads the stored patient (switching complaint if needed); nothing stored or unknown complaint
+  // -> the current complaint's defaults (e.g. PE findings the full page starts with).
   function loadState(json) {
     var s = Core.parseStoredState(json, items);
     var c = s && findComplaint(s.complaint);
@@ -90,7 +96,7 @@
       order = loadOrder();
       buildLayout();
     }
-    state = c ? s.state : {};
+    state = c ? s.state : Core.defaultState(complaint, items);
   }
 
   // ---------- layout ----------
@@ -211,14 +217,14 @@
   // the patient on both pages. The question layout is kept.
   function onNewPatient() {
     var btn = $('btn-new');
-    if (!Core.isEmpty(state) && !clearArmTimer) {
+    if (!pristine() && !clearArmTimer) {
       btn.classList.add('armed');
       btn.textContent = 'Click again to clear';
       clearArmTimer = setTimeout(disarmClear, 3000);
       return;
     }
     disarmClear();
-    state = {};
+    state = Core.defaultState(complaint, items);
     saveState();
     $('col-history').scrollTop = 0;
     refresh();
@@ -257,7 +263,7 @@
 
   function setComplaint(id) {
     complaint = findComplaint(id) || DATA.complaints[0];
-    state = {};
+    state = Core.defaultState(complaint, items);
     saveState();
     order = loadOrder();
     relayout();

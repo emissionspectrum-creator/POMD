@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 2026-11-18 — PE 預設點選 soft、non-tender（使用者要求）
+
+**新增**
+- 主訴資料新增 `defaults`：新病人自動點選的項目。腹痛預設 Wall / guarding: Soft、Tenderness: Non-tender，PE 段落一開始就是 "Abdomen: soft, non-tender."。
+- 開啟頁面、New patient（任一頁）、切換主訴時都會回到預設；點其他壓痛位置會自動取消 Non-tender（原本的 exclusive 規則）。
+- 只有預設值時視為「尚未點選」：HPI 維持空白、New patient 不需點兩次、不寫入 localStorage。
+- `core.js` 新增 `defaultState`、`sameState`、`isPristine`；`build.py` 驗證 `defaults`；新增測試。
+- 注意：Non-tender 會參與鑑別診斷比對（典型有壓痛的疾病顯示 Different）。
+
 ## 2026-11-18 — 公開 repo 並開啟 GitHub Pages（使用者要求）
 
 - repo 改為 public（使用者確認文件中的姓名一併公開），以免費開啟 GitHub Pages。

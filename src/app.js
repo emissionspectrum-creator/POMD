@@ -47,10 +47,16 @@
   }
 
   function saveState() {
-    storageSet(Core.STATE_KEY, Core.isEmpty(state) ? null : Core.serializeState(complaint.id, state));
+    // Nothing stored while only the defaults are selected (a missing entry means "new patient").
+    storageSet(Core.STATE_KEY, pristine() ? null : Core.serializeState(complaint.id, state));
   }
 
-  // Loads the stored patient (switching complaint if needed); unknown complaint -> empty state.
+  function pristine() {
+    return Core.isPristine(state, complaint, items);
+  }
+
+  // Loads the stored patient (switching complaint if needed); nothing stored or unknown complaint
+  // -> the current complaint's defaults.
   function loadState(json) {
     var s = Core.parseStoredState(json, items);
     var c = s && DATA.complaints.filter(function (x) { return x.id === s.complaint; })[0];
@@ -59,7 +65,7 @@
       $('complaint-select').value = c.id;
       buildLayout();
     }
-    state = c ? s.state : {};
+    state = c ? s.state : Core.defaultState(complaint, items);
   }
 
   // ---------- static layout (rebuilt when the complaint changes) ----------
@@ -226,14 +232,14 @@
 
   function currentText() {
     return {
-      hpi: Core.composeText(complaint.hpi, state, items, Core.textVars(new Date())),
+      hpi: pristine() ? '' : Core.composeText(complaint.hpi, state, items, Core.textVars(new Date())),
       pe: Core.composeText(complaint.pe_text, state, items)
     };
   }
 
   function renderOutput() {
     var t = currentText();
-    var empty = Core.isEmpty(state);
+    var empty = pristine();
     $('out-hpi').textContent = empty ? '' : t.hpi;
     $('out-pe').textContent = t.pe;
     $('out-hpi').classList.toggle('placeholder', empty);
@@ -273,7 +279,7 @@
     var t = currentText();
     var text = which === 'hpi' ? t.hpi : which === 'pe' ? t.pe : [t.hpi, t.pe].filter(Boolean).join('\n\n');
     var status = $('copy-status');
-    if (Core.isEmpty(state) || !text) {
+    if (!text) {
       status.textContent = 'Nothing to copy';
       return;
     }
@@ -310,14 +316,14 @@
   // First click arms the button (only if something is selected); second click within 3 s clears.
   function onNewPatient() {
     var btn = $('btn-new');
-    if (!Core.isEmpty(state) && !clearArmTimer) {
+    if (!pristine() && !clearArmTimer) {
       btn.classList.add('armed');
       btn.textContent = 'Click again to clear';
       clearArmTimer = setTimeout(disarmClear, 3000);
       return;
     }
     disarmClear();
-    state = {};
+    state = Core.defaultState(complaint, items);
     openDiseaseId = null;
     saveState();
     ['col-history', 'col-pe', 'col-ddx'].forEach(function (id) { $(id).scrollTop = 0; });
@@ -326,7 +332,7 @@
 
   function setComplaint(id) {
     complaint = DATA.complaints.filter(function (c) { return c.id === id; })[0] || DATA.complaints[0];
-    state = {};
+    state = Core.defaultState(complaint, items);
     openDiseaseId = null;
     saveState();
     buildLayout();
