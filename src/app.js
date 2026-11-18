@@ -292,6 +292,21 @@
     clearArmTimer = null;
   }
 
+  // Opens the quick history page, or switches to it if it is already open in this window group.
+  // Both pages share the patient through localStorage, so nothing needs to be passed.
+  function openQuick() {
+    var w = null;
+    try { w = window.open('', 'pomd-quick'); } catch (e) { w = null; }
+    var blank = true;
+    try { blank = !w || w.location.href === 'about:blank'; } catch (e) { blank = true; }
+    if (!w) {
+      window.location.href = 'POMD-history.html';
+    } else if (blank) {
+      w.location.href = new URL('POMD-history.html', window.location.href).href;
+    }
+    if (w) w.focus();
+  }
+
   // First click arms the button (only if something is selected); second click within 3 s clears.
   function onNewPatient() {
     var btn = $('btn-new');
@@ -346,6 +361,8 @@
       onCopy(t.getAttribute('data-copy'));
     } else if (t.id === 'btn-new') {
       onNewPatient();
+    } else if (t.id === 'btn-quick') {
+      openQuick();
     }
   }
 

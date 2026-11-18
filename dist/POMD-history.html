@@ -1119,6 +1119,8 @@ window.POMD_DATA = {"version":"0.4.0","items":{"sex":{"id":"sex","label":"Sex","
   }
 
   function init() {
+    // The full page's "Quick history" button targets this window by name.
+    window.name = 'pomd-quick';
     buildComplaintSelect();
     order = loadOrder();
     buildLayout();

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2026-11-18 — 完整版新增「Quick history」按鈕（使用者要求）
+
+**新增**
+- 完整版頂端列（New patient 旁）新增 **Quick history** 按鈕：開啟同資料夾的 `POMD-history.html`，若已開著（同一組分頁）就切過去。兩頁共用病人，不需另外傳資料。
+- 精簡版載入時把 `window.name` 設為 `pomd-quick`，讓完整版能找到它。
+
 ## 2026-11-18 — 精簡版 Submit 按鈕置中（使用者要求）
 
 **修改**

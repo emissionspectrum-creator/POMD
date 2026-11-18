@@ -344,6 +344,8 @@
   }
 
   function init() {
+    // The full page's "Quick history" button targets this window by name.
+    window.name = 'pomd-quick';
     buildComplaintSelect();
     order = loadOrder();
     buildLayout();

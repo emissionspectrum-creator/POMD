@@ -339,6 +339,7 @@ body.quick { --footer-h: 52px; }
   </label>
   <label class="ctl toggle"><input type="checkbox" id="toggle-ask"> Show English phrasing</label>
   <button type="button" id="btn-new" class="btn">New patient</button>
+  <button type="button" id="btn-quick" class="btn" title="Open the quick history page (shares this patient)">Quick history</button>
   <span class="spacer"></span>
   <span class="version">v0.4.0 · built 2026-11-18</span>
 </header>
@@ -1091,6 +1092,21 @@ window.POMD_DATA = {"version":"0.4.0","items":{"sex":{"id":"sex","label":"Sex","
     clearArmTimer = null;
   }
 
+  // Opens the quick history page, or switches to it if it is already open in this window group.
+  // Both pages share the patient through localStorage, so nothing needs to be passed.
+  function openQuick() {
+    var w = null;
+    try { w = window.open('', 'pomd-quick'); } catch (e) { w = null; }
+    var blank = true;
+    try { blank = !w || w.location.href === 'about:blank'; } catch (e) { blank = true; }
+    if (!w) {
+      window.location.href = 'POMD-history.html';
+    } else if (blank) {
+      w.location.href = new URL('POMD-history.html', window.location.href).href;
+    }
+    if (w) w.focus();
+  }
+
   // First click arms the button (only if something is selected); second click within 3 s clears.
   function onNewPatient() {
     var btn = $('btn-new');
@@ -1145,6 +1161,8 @@ window.POMD_DATA = {"version":"0.4.0","items":{"sex":{"id":"sex","label":"Sex","
       onCopy(t.getAttribute('data-copy'));
     } else if (t.id === 'btn-new') {
       onNewPatient();
+    } else if (t.id === 'btn-quick') {
+      openQuick();
     }
   }
 
