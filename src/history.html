@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POMD — Quick history</title>
+<style>
+/*__CSS__*/
+</style>
+</head>
+<body class="quick">
+<header id="topbar">
+  <span class="brand">POMD <span class="brand-sub">History</span></span>
+  <label class="ctl">Chief complaint
+    <select id="complaint-select"></select>
+  </label>
+  <label class="ctl toggle"><input type="checkbox" id="toggle-ask"> Show English phrasing</label>
+  <label class="ctl toggle"><input type="checkbox" id="toggle-edit"> Edit layout</label>
+  <button type="button" id="btn-new" class="btn">New patient</button>
+  <span class="spacer"></span>
+  <span class="version">__VERSION__</span>
+</header>
+
+<main id="cols">
+  <section class="col" id="col-history">
+    <div class="quick-wrap">
+      <h2>History</h2>
+      <p class="hint">Click to select · click again to clear · <span class="hint-presence">symptoms: 1× present, 2× absent, 3× clear</span></p>
+      <p class="hint edit-hint">Edit layout: ↑ ↓ move a question · Hide removes it (and clears its answer) · the HPI keeps its own sentence order.</p>
+      <div id="history"></div>
+      <div class="quick-add">
+        <select id="add-question" aria-label="Add a hidden question"></select>
+        <button type="button" id="btn-reset-layout" class="btn small edit-only">Reset layout</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="output">
+  <div class="out-box">
+    <div class="out-head">HPI</div>
+    <div id="out-hpi" class="out-text"></div>
+  </div>
+  <div class="out-actions">
+    <button type="button" class="btn primary" data-copy="hpi">Copy HPI</button>
+    <span id="copy-status" role="status"></span>
+  </div>
+</footer>
+
+<script>
+/*__DATA__*/
+</script>
+<script>
+/*__CORE__*/
+</script>
+<script>
+/*__APP__*/
+</script>
+</body>
+</html>

@@ -285,3 +285,32 @@ test('built data: sample biliary case produces the expected HPI and highlights',
     "Abdomen: soft, tenderness over the RUQ, no rebound tenderness, positive Murphy's sign."
   );
 });
+
+// ---------- quick history page ----------
+
+function loadQuickData() {
+  const html = fs.readFileSync(path.join(__dirname, '..', 'dist', 'POMD-history.html'), 'utf8');
+  const m = html.match(/window\.POMD_DATA = (\{.*\});\n/);
+  assert.ok(m, 'POMD_DATA not found in dist/POMD-history.html — run python3 build.py first');
+  return Core.prepare(JSON.parse(m[1]));
+}
+
+test('quick page data: quick.show lists unique history items and HPI composes', () => {
+  const data = loadQuickData();
+  assert.equal(data.diseases, undefined);
+  data.complaints.forEach((c) => {
+    const history = c.history.flatMap((sec) => sec.items);
+    assert.ok(c.quick.show.length > 0, c.id);
+    assert.equal(new Set(c.quick.show).size, c.quick.show.length, `${c.id}: duplicate in quick.show`);
+    c.quick.show.forEach((id) => {
+      assert.ok(history.includes(id), `${c.id}: ${id} not in history`);
+      assert.ok(data.items[id], `${c.id}: unknown item ${id}`);
+    });
+  });
+  const c = data.complaints.find((x) => x.id === 'abdominal_pain');
+  const it = data.items;
+  const s = {};
+  Core.toggle(s, it.pain_location, 'ruq');
+  Core.toggle(s, it.duration, 'd1_3');
+  assert.equal(Core.composeText(c.hpi, s, it), 'The patient presented with RUQ pain for 1–3 days.');
+});

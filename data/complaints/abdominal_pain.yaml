@@ -26,6 +26,12 @@ history:
   - section: Relevant history
     items: [risk]
 
+# Quick history page (dist/POMD-history.html): default order of the visible questions.
+# Items in `history:` but not listed here start hidden and can be added back with "+ Add question".
+quick:
+  show: [pain_location, duration, onset, pain_quality, pain_pattern, severity,
+         radiation, meal_relation, aggravating, relieving, assoc_gi, assoc_sys]
+
 # Middle column. Items are defined in data/vocab/pe.yaml.
 pe:
   - section: General & vitals

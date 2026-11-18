@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 2026-11-18 — v0.3.0 精簡版病史頁 `dist/POMD-history.html`（使用者要求）
+
+**新增**
+- 另外產生只有 History + HPI 的精簡頁 `dist/POMD-history.html`。原因：完整版很好用，但門診問病史時畫面太龐大。完整版 `dist/POMD.html` 不變。
+  - 單欄問題清單，不分 LQQOPERA 段落；保留 Show English phrasing、New patient（點兩次清空）、Copy HPI。
+  - 「Edit layout」開關：每題出現 ↑ ↓ 和 Hide；Hide 會一併清掉該題的選取，避免看不見的內容跑進 HPI。「Reset layout」回到預設。
+  - 清單底部的「+ Add question」下拉選單可隨時把隱藏的問題加回（依原 LQQOPERA 分段列出）。
+  - 版面調整只存在記憶體，重新整理就回到預設；不用 localStorage，維持「不儲存任何資料」的規則。
+  - HPI 句子順序仍由 `hpi` 模板決定，不受畫面順序影響。
+- 主訴資料新增 `quick.show`：精簡頁預設顯示的問題與順序。腹痛初稿把 duration 放在 location 後面，預設隱藏 sex、age_group、repro_status、pain_migration、nocturnal、episodes、precipitant、assoc_gu、assoc_other、risk。
+- `build.py` 驗證 `quick.show`（必須是該主訴 history 項目、不可重複），並另外輸出精簡頁（payload 不含疾病資料）。新增 `src/history.html`、`src/history.js` 與精簡頁樣式；測試新增精簡頁資料檢查。
+
 ## 2026-11-04 — 本機與雲端 session 同步
 
 **新增**

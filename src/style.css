@@ -285,6 +285,24 @@ h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: 
 #copy-status.ok { color: var(--present); }
 #copy-status.fail { color: var(--mnm); }
 
+/* ---------- quick history page (dist/POMD-history.html) ---------- */
+
+body.quick { --footer-h: 130px; }
+.brand-sub { font-weight: 400; letter-spacing: 0; opacity: 0.8; }
+.quick #cols { grid-template-columns: minmax(0, 1fr); }
+.quick .col { border-right: 0; }
+.quick-wrap { max-width: 900px; margin: 0 auto; }
+.quick #output { grid-template-columns: minmax(0, 1fr) auto; }
+.quick-add { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.quick-add select { font: inherit; padding: 2px 4px; }
+.item-edit { display: none; gap: 3px; }
+.edit-only, .edit-hint { display: none; }
+.editing .item-edit { display: inline-flex; }
+.editing .edit-only { display: inline-block; }
+.editing .edit-hint { display: block; }
+.editing .item { background: #f7f9fb; }
+.item-edit .btn:disabled { opacity: 0.35; cursor: default; }
+
 /* ---------- narrow screens (phone fallback) ---------- */
 
 @media (max-width: 900px) {

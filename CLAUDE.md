@@ -4,7 +4,7 @@
 
 ## 關鍵規則
 
-- **產出單一檔案 `dist/POMD.html`**，要能在 Windows 11 Edge／Chrome／Firefox 以 `file://` 直接開啟、**完全離線**：不得引用任何外部 URL、CDN、字型、圖片。
+- **產出單一檔案 `dist/POMD.html`**（完整版）與 **`dist/POMD-history.html`**（只有 History + HPI 的精簡版，使用者 2026-11-18 要求），各自都要能在 Windows 11 Edge／Chrome／Firefox 以 `file://` 直接開啟、**完全離線**：不得引用任何外部 URL、CDN、字型、圖片。
 - **不儲存任何病人資料**：不用 localStorage／sessionStorage／IndexedDB／cookie，不寫檔。狀態只存在記憶體。
 - 介面與輸出文字**全英文**；文件（本檔、CHANGELOG）用繁體中文。
 - **不做機率、權重或「最可能診斷」**。標亮只表示「有至少一項典型特徵被點選」，數字只是符合數量。
@@ -21,12 +21,14 @@
 ```
 DESIGN.md                 設計文件（定案）
 CLAUDE.md / CHANGELOG.md
-build.py                  驗證 data/ 並組出 dist/POMD.html（需 PyYAML）
+build.py                  驗證 data/ 並組出 dist/ 兩個 html（需 PyYAML）
 src/
   index.html              外殼，含 /*__CSS__*/ /*__DATA__*/ /*__CORE__*/ /*__APP__*/ __VERSION__ 佔位
   style.css
   core.js                 純邏輯（無 DOM）：選取、比對、標亮、時程、文字組裝；瀏覽器與 Node 共用
   app.js                  DOM／事件／畫面
+  history.html            精簡版外殼（同樣的佔位）
+  history.js              精簡版 DOM／事件：問題可 ↑↓ 移動、隱藏、+ Add question；只輸出 HPI
 data/
   vocab/history.yaml      共用病史項目（items + options）
   vocab/pe.yaml           共用 PE 項目
@@ -34,17 +36,18 @@ data/
   diseases/<id>.yaml      每個疾病一檔，檔名 = id
 tests/core.test.js        Node 內建 test runner
 dist/POMD.html            建置產物（有 commit，方便直接複製到醫院電腦）
+dist/POMD-history.html    精簡版建置產物（不含疾病資料）
 ```
 
 ## 建置與驗證
 
 ```bash
 python3 build.py --check        # 只驗證資料
-python3 build.py                # 驗證 + 產生 dist/POMD.html
+python3 build.py                # 驗證 + 產生 dist/POMD.html 與 dist/POMD-history.html
 node --test tests/*.test.js     # 單元測試 + 對 dist 資料的端對端測試（需先 build）
 ```
 
-- 改完 `data/` 或 `src/` 一定要重新 build，並把 `dist/POMD.html` 一起 commit。
+- 改完 `data/` 或 `src/` 一定要重新 build，並把 `dist/` 兩個 html 一起 commit。
 - `build.py` 有 error 會中止；warning（例如疾病特徵用到主訴沒顯示的項目、疾病沒被任何主訴引用）要看過並處理或說明。
 - 版本號在 `build.py` 的 `APP_VERSION`，會顯示在畫面右上角。
 - 注意 `node --test tests/`（目錄）在 Node 22 會失敗，要用 `tests/*.test.js`。
@@ -57,7 +60,7 @@ node --test tests/*.test.js     # 單元測試 + 對 dist 資料的端對端測�
 - **開始**：`.claude/hooks/session-start.sh` 會在每個 session 開始時 `git fetch` 並把目前分支 rebase 到 `origin/main`；雲端另外會安裝 PyYAML。hook 的 `[sync]` 訊息若是 WARNING（有未 commit 的變更或 rebase 衝突），先告訴使用者，處理好再動手改。
 - **結束**：每完成一項修改、build 與測試都通過後，**直接 commit 並 push 到 `origin main`，不用再問**（使用者 2026-11-04 明確要求，覆寫全域「commit／push 前先問」）。步驟：
   1. 先 commit，再 `git fetch origin main && git rebase origin/main`（有未 commit 變更時無法 rebase）
-  2. 若衝突只在 `dist/POMD.html`（內含 build 日期，兩邊各自 build 就會衝突）：`python3 build.py && git add dist/POMD.html && git rebase --continue`；其他檔案衝突 → 停下來問使用者。
+  2. 若衝突只在 `dist/` 的 html（內含 build 日期，兩邊各自 build 就會衝突）：`python3 build.py && git add dist/ && git rebase --continue`；其他檔案衝突 → 停下來問使用者。
   3. rebase 後若有拉到新的 `data/`／`src/` 變更，重新 build、跑測試，有變動就再 commit。
   4. `git push origin HEAD:main`（雲端 session 在 `claude/...` 分支上也一樣推到 `main`）。
 - 不要 force push。push 被拒（遠端又有新 commit）就回到步驟 1。
@@ -98,6 +101,7 @@ node --test tests/*.test.js     # 單元測試 + 對 dist 資料的端對端測�
 - `labs`／`imaging`：`[{name, note}]`，純建議清單，不可點、不參與比對。
 - `ddx`：`[{group, locations: [location option id...], diseases: [disease id...]}]`；同一疾病可出現在多個群組。
 - `hpi`／`pe_text`：文字組裝規格（見下）。
+- `quick: {show: [item id...]}`：精簡版預設顯示的問題與順序；必須是 `history` 裡的項目、不可重複。沒列的預設隱藏，可用「+ Add question」加回。省略 `quick` 時顯示全部 history 項目。精簡版的版面調整只存在記憶體，重新整理就回到這個預設（不用 localStorage）。HPI 句子順序仍由 `hpi` 模板決定，不受畫面順序影響。
 
 ### 疾病（`data/diseases/<id>.yaml`）
 

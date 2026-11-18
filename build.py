@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Build dist/POMD.html from src/ (code) and data/ (content).
+"""Build dist/POMD.html and dist/POMD-history.html from src/ (code) and data/ (content).
 
 Usage:
-    python3 build.py          # validate data, then build dist/POMD.html
+    python3 build.py          # validate data, then build both pages
     python3 build.py --check  # validate only
 
 Requires PyYAML.
@@ -16,12 +16,13 @@ from pathlib import Path
 
 import yaml
 
-APP_VERSION = "0.2.0"
+APP_VERSION = "0.3.0"
 
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "src"
 DATA = ROOT / "data"
 DIST = ROOT / "dist" / "POMD.html"
+DIST_QUICK = ROOT / "dist" / "POMD-history.html"  # history-only quick page
 
 ITEM_TYPES = {"single", "multi", "presence"}
 ITEM_KEYS = {"id", "label", "type", "template", "join", "ask", "options"}
@@ -29,7 +30,7 @@ OPTION_KEYS = {"id", "label", "frag", "frag_neg", "exclusive", "red_flag", "tc"}
 TC_VALUES = {"acute", "subacute", "chronic"}
 JOIN_VALUES = {"and", "or", ","}
 COMPLAINT_KEYS = {"id", "name", "location_item", "timecourse_item", "history", "pe",
-                  "labs", "imaging", "ddx", "hpi", "pe_text"}
+                  "labs", "imaging", "ddx", "hpi", "pe_text", "quick"}
 DISEASE_KEYS = {"id", "name", "must_not_miss", "timecourse", "status", "one_liner",
                 "symptoms", "pe", "labs", "imaging", "pitfalls"}
 DISEASE_STATUS = {"draft", "reviewed"}
@@ -308,6 +309,21 @@ def load_complaints(e, items, diseases):
                     elif iid in shown:
                         e.err(f"{where}.{col}", f"item {iid!r} listed twice")
                     shown.add(iid)
+        history_ids = [iid for sec in raw.get("history") or [] if isinstance(sec, dict)
+                       for iid in sec.get("items") or [] if iid in items]
+        quick = raw.get("quick")
+        if quick is None:
+            quick_show = list(history_ids)
+        else:
+            quick_show = []
+            if check_keys(e, f"{where}.quick", quick, {"show"}):
+                for iid in quick.get("show") or []:
+                    if iid not in history_ids:
+                        e.err(f"{where}.quick.show", f"item {iid!r} is not in this complaint's history")
+                    elif iid in quick_show:
+                        e.err(f"{where}.quick.show", f"item {iid!r} listed twice")
+                    else:
+                        quick_show.append(iid)
         for k in ("location_item", "timecourse_item"):
             if raw.get(k) not in shown:
                 e.err(where, f"{k} {raw.get(k)!r} must be an item shown in this complaint")
@@ -349,6 +365,7 @@ def load_complaints(e, items, diseases):
             "ddx": raw.get("ddx") or [],
             "hpi": raw.get("hpi") or {},
             "pe_text": raw.get("pe_text") or {},
+            "quick": {"show": quick_show},
         })
     for did in sorted(set(diseases) - used_diseases):
         e.warn(f"data/diseases/{did}.yaml", "not referenced by any complaint")
@@ -357,11 +374,11 @@ def load_complaints(e, items, diseases):
 
 # ---------- output ----------
 
-def build_html(data):
-    template = (SRC / "index.html").read_text(encoding="utf-8")
+def build_html(data, template_name="index.html", app_name="app.js"):
+    template = (SRC / template_name).read_text(encoding="utf-8")
     css = (SRC / "style.css").read_text(encoding="utf-8")
     core = (SRC / "core.js").read_text(encoding="utf-8")
-    app = (SRC / "app.js").read_text(encoding="utf-8")
+    app = (SRC / app_name).read_text(encoding="utf-8")
     payload = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
     # Never let content close the <script> element early.
     payload = payload.replace("</", "<\\/")
@@ -374,7 +391,7 @@ def build_html(data):
     }
     for key, value in replacements.items():
         if key not in template:
-            raise SystemExit(f"src/index.html is missing placeholder {key}")
+            raise SystemExit(f"src/{template_name} is missing placeholder {key}")
         template = template.replace(key, value)
     return template
 
@@ -398,10 +415,20 @@ def main():
         return 0
 
     data = {"version": APP_VERSION, "items": items, "diseases": diseases, "complaints": complaints}
-    html = build_html(data)
+    # The quick page needs only the history items and HPI spec; no diseases.
+    quick_data = {
+        "version": APP_VERSION,
+        "items": items,
+        "complaints": [{k: c[k] for k in ("id", "name", "history", "hpi", "quick")} for c in complaints],
+    }
+    pages = [
+        (DIST, build_html(data)),
+        (DIST_QUICK, build_html(quick_data, "history.html", "history.js")),
+    ]
     DIST.parent.mkdir(exist_ok=True)
-    DIST.write_text(html, encoding="utf-8", newline="\n")
-    print(f"Wrote {DIST.relative_to(ROOT)} ({len(html.encode('utf-8')) // 1024} KB)")
+    for path, html in pages:
+        path.write_text(html, encoding="utf-8", newline="\n")
+        print(f"Wrote {path.relative_to(ROOT)} ({len(html.encode('utf-8')) // 1024} KB)")
     return 0
 
 
