@@ -1,3 +1,7 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 # POMD — 專案說明（給 Claude Code）
 
 門診用「主訴追問與鑑別診斷輔助工具」，個人使用版。設計規格見 `DESIGN.md`（已定案，修改前先問使用者）；修改紀錄見 `CHANGELOG.md`。
@@ -44,7 +48,15 @@ dist/POMD-history.html    精簡版建置產物（不含疾病資料）
 python3 build.py --check        # 只驗證資料
 python3 build.py                # 驗證 + 產生 dist/POMD.html 與 dist/POMD-history.html
 node --test tests/*.test.js     # 單元測試 + 對 dist 資料的端對端測試（需先 build）
+node --test --test-name-pattern="sanitizeState" tests/*.test.js   # 只跑名稱符合的測試
 ```
+
+### 建置流程（跨檔案的關係）
+
+- `build.py` 讀 `data/` → 驗證（id、選項、`when` 運算式、模板 placeholder、`TEXT_VARS`）→ 把 `style.css`、`core.js`、`app.js`（或 `history.js`）和資料 JSON 以字串取代塞進外殼的佔位，資料成為 `window.POMD_DATA = {...};`。
+- 精簡版只帶 items 與每個主訴的 `id, name, history, hpi, quick, defaults`（不含疾病）；`history.js` 不能用到這以外的欄位，新增主訴欄位若精簡版需要，要改 `build.py` 的 `quick_data`。
+- `core.js` 是 UMD 式 IIFE：Node 用 `module.exports`（測試 `require('../src/core.js')`），瀏覽器掛在 `window.POMDCore`。`Core.prepare(data)` 會建立索引（如 `item.optById`），app／history／測試都先經過它。
+- 端對端測試從 `dist/POMD.html` 用 regex 抓出 `window.POMD_DATA = ...;` 再解析，所以改了 `data/` 沒重新 build，測試跑的是舊資料。
 
 - 改完 `data/` 或 `src/` 一定要重新 build，並把 `dist/` 兩個 html 一起 commit。
 - `build.py` 有 error 會中止；warning（例如疾病特徵用到主訴沒顯示的項目、疾病沒被任何主訴引用）要看過並處理或說明。

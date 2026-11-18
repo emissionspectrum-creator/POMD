@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2026-11-18 — CLAUDE.md 補充建置流程說明（/init）
+
+- 加上 Claude Code 標準開頭；新增「只跑單一測試」指令。
+- 新增「建置流程」小節：`build.py` 如何組出兩個 html、精簡版只帶哪些主訴欄位、`core.js` 在 Node／瀏覽器的匯出方式、端對端測試讀的是 `dist/` 裡的資料（改 `data/` 後須先 build）。
+
 ## 2026-11-18 — PE 預設點選 soft、non-tender（使用者要求）
 
 **新增**
