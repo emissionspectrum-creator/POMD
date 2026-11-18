@@ -210,7 +210,7 @@
   }
 
   // Parses a template string into tokens:
-  //   { t: 'text', v } | { t: 'ph', refs: [{id, mode}], def } | { t: 'opt', tokens: [...] }
+  //   { t: 'text', v } | { t: 'ph', refs: [{id, mode}], def } | { t: 'var', name } | { t: 'opt', tokens: [...] }
   function parseTemplate(tpl) {
     var tokens = [];
     var stack = [tokens];
@@ -243,6 +243,8 @@
   }
 
   function parsePlaceholder(body) {
+    // {@name}: a value supplied by the page (e.g. today's date), not an item.
+    if (body.charAt(0) === '@') return { t: 'var', name: body.slice(1).trim() };
     var bar = body.indexOf('|');
     var def = bar >= 0 ? body.slice(bar + 1) : null;
     var refs = (bar >= 0 ? body.slice(0, bar) : body).split(',').map(function (r) {
@@ -271,20 +273,23 @@
   // Returns { text, ok, filled }:
   //   ok     — false when a required placeholder (outside [...] and without default) is empty
   //   filled — true when at least one placeholder produced real (non-default) content
-  function renderTokens(tokens, state, items) {
+  // vars: values for {@name}; they act like fixed text and never count as "filled".
+  function renderTokens(tokens, state, items, vars) {
     var text = '';
     var ok = true;
     var filled = false;
     tokens.forEach(function (tk) {
       if (tk.t === 'text') {
         text += tk.v;
+      } else if (tk.t === 'var') {
+        text += (vars && vars[tk.name]) || '';
       } else if (tk.t === 'ph') {
         var v = renderPlaceholder(tk, state, items);
         if (v) { text += v; filled = true; }
         else if (tk.def !== null) text += tk.def;
         else ok = false;
       } else {
-        var sub = renderTokens(tk.tokens, state, items);
+        var sub = renderTokens(tk.tokens, state, items, vars);
         if (sub.ok && sub.filled) { text += sub.text; filled = true; }
       }
     });
@@ -292,9 +297,23 @@
   }
 
   var templateCache = {};
-  function renderTemplate(tpl, state, items) {
+  function renderTemplate(tpl, state, items, vars) {
     var tokens = templateCache[tpl] || (templateCache[tpl] = parseTemplate(tpl));
-    return renderTokens(tokens, state, items);
+    return renderTokens(tokens, state, items, vars);
+  }
+
+  function pad2(n) {
+    return (n < 10 ? '0' : '') + n;
+  }
+
+  // Taiwan (ROC / Minguo) date: year - 1911, zero-padded month and day, e.g. 115/01/05.
+  function rocDate(d) {
+    return (d.getFullYear() - 1911) + '/' + pad2(d.getMonth() + 1) + '/' + pad2(d.getDate());
+  }
+
+  // Values available to templates as {@name}.
+  function textVars(now) {
+    return { date_roc: rocDate(now) };
   }
 
   function capitalize(s) {
@@ -302,13 +321,14 @@
   }
 
   // spec: { joiner, sentences: [{ lead?, parts: [tpl...], sep?, end?, always? }] }
-  function composeText(spec, state, items) {
+  // vars: optional values for {@name} placeholders (see textVars)
+  function composeText(spec, state, items, vars) {
     var out = [];
     (spec.sentences || []).forEach(function (s) {
       var parts = [];
       var filled = false;
       s.parts.forEach(function (p) {
-        var r = renderTemplate(p, state, items);
+        var r = renderTemplate(p, state, items, vars);
         if (!r.ok) return;
         if (r.filled) filled = true;
         if (r.text.trim()) parts.push(r.text.trim());
@@ -394,6 +414,8 @@
     rankByMatches: rankByMatches,
     joinList: joinList,
     renderTemplate: renderTemplate,
+    rocDate: rocDate,
+    textVars: textVars,
     composeText: composeText
   };
 

@@ -39,6 +39,7 @@ ID_RE = re.compile(r"^[a-z0-9_]+$")
 # "item = a | b"  or (presence items)  "item = a | b"  /  "item = no a | b"
 MATCH_RE = re.compile(r"^\s*([a-z0-9_]+)\s*=\s*(no\s+)?([a-z0-9_]+(?:\s*\|\s*[a-z0-9_]+)*)\s*$")
 PLACEHOLDER_RE = re.compile(r"\{([^{}]*)\}")
+TEXT_VARS = {"date_roc"}  # {@name} values supplied by the page (see core.textVars)
 
 
 class Errors:
@@ -254,6 +255,10 @@ def check_template(e, where, tpl, items, allowed_items):
     if depth != 0:
         e.err(where, "unbalanced [")
     for body in PLACEHOLDER_RE.findall(tpl):
+        if body.startswith("@"):
+            if body[1:].strip() not in TEXT_VARS:
+                e.err(where, f"unknown text variable {{{body}}} (known: {', '.join(sorted(TEXT_VARS))})")
+            continue
         refs = body.split("|", 1)[0]
         for ref in refs.split(","):
             ref = ref.strip()

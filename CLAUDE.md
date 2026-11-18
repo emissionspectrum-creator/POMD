@@ -154,6 +154,7 @@ hpi:
 - 句子只有在至少一個 placeholder 有實際內容時才輸出（或 `always: true`）。
 - presence 項目的後綴：`{x+}` 只列 present（以 and 連接），`{x-}` 只列 absent（以 or 連接，用於 "Denied ..."），`{x*}` 先列 present、再列 absent（各依選項順序），absent 用 `frag_neg`（避免 "no A, B" 的歧義）。
 - 多個項目合併成一個清單：`{assoc_gi+,assoc_sys+}`。
+- `{@date_roc}`：頁面提供的變數（今天的民國日期，例 `115/01/05`，月日補 0），當作固定文字，不算「有內容」。可用變數定義在 `core.textVars`，`build.py` 的 `TEXT_VARS` 要同步。
 - `[ ] { } |` 是保留字元，模板文字中不要另作他用。
 - 每句首字自動大寫。
 

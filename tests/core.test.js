@@ -266,10 +266,10 @@ test('built data: sample biliary case produces the expected HPI and highlights',
   ['fever', 'jaundice'].forEach((o) => { Core.toggle(s, it.assoc_sys, o); Core.toggle(s, it.assoc_sys, o); });
   Core.toggle(s, it.assoc_gi, 'melena');
   Core.toggle(s, it.assoc_gi, 'melena');
-  const hpi = Core.composeText(c.hpi, s, it);
+  const hpi = Core.composeText(c.hpi, s, it, Core.textVars(new Date(2026, 10, 18)));
   assert.equal(
     hpi,
-    'The patient presented with epigastric and RUQ pain for 1–3 days, described as colicky, severity 7/10, ' +
+    '(115/11/18) epigastric and RUQ pain for 1–3 days, described as colicky, severity 7/10, ' +
       'onset after a fatty or heavy meal, radiating to the right shoulder or scapula. ' +
       'Associated with nausea and vomiting. Denied melena, fever, or jaundice.'
   );
@@ -312,7 +312,7 @@ test('quick page data: quick.show lists unique history items and HPI composes', 
   const s = {};
   Core.toggle(s, it.pain_location, 'ruq');
   Core.toggle(s, it.duration, 'd1_3');
-  assert.equal(Core.composeText(c.hpi, s, it), 'The patient presented with RUQ pain for 1–3 days.');
+  assert.equal(Core.composeText(c.hpi, s, it, { date_roc: '115/01/05' }), '(115/01/05) RUQ pain for 1–3 days.');
 });
 
 // ---------- shared state (localStorage) ----------
@@ -350,4 +350,23 @@ test('sanitizeOrder keeps unique history items of the complaint', () => {
   assert.deepEqual(Core.sanitizeOrder(['dur', 'zzz', 'loc', 'dur'], c), ['dur', 'loc']);
   assert.deepEqual(Core.sanitizeOrder([], c), []);
   assert.equal(Core.sanitizeOrder('x', c), null);
+});
+
+// ---------- text variables ----------
+
+test('rocDate: Minguo year, zero-padded month and day', () => {
+  assert.equal(Core.rocDate(new Date(2026, 10, 18)), '115/11/18');
+  assert.equal(Core.rocDate(new Date(2026, 0, 5)), '115/01/05');
+  assert.deepEqual(Core.textVars(new Date(2027, 11, 31)), { date_roc: '116/12/31' });
+});
+
+test('{@var} renders like fixed text and never counts as filled', () => {
+  const items = fixture().items;
+  const vars = { date_roc: '115/11/18' };
+  const s = {};
+  const spec = { sentences: [{ always: true, parts: ['({@date_roc}) {loc|abdominal pain}'] }, { parts: ['seen {@date_roc}'] }] };
+  assert.equal(Core.composeText(spec, s, items, vars), '(115/11/18) abdominal pain.');
+  Core.toggle(s, items.loc, 'ruq');
+  assert.equal(Core.composeText(spec, s, items, vars), '(115/11/18) RUQ pain.');
+  assert.equal(Core.composeText(spec, s, items), '() RUQ pain.');
 });

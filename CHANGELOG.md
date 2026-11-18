@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 2026-11-18 — HPI 開頭改為民國日期（使用者要求）
+
+**修改**
+- HPI 開頭由 "The patient presented with epigastric pain …" 改為 "(115/11/18) epigastric pain …"：日期為當天民國年（西元 − 1911），月日補 0。
+- Sex／Age 不再寫進 HPI（使用者選擇），只用於鑑別診斷比對。
+
+**新增**
+- 句型支援 `{@name}` 頁面變數，目前只有 `{@date_roc}`；當作固定文字，不會讓原本不輸出的句子出現。`core.js` 新增 `rocDate`、`textVars`；`build.py` 檢查未知變數。
+
 ## 2026-11-18 — 完整版新增「Quick history」按鈕（使用者要求）
 
 **新增**

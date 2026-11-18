@@ -226,7 +226,7 @@
 
   function currentText() {
     return {
-      hpi: Core.composeText(complaint.hpi, state, items),
+      hpi: Core.composeText(complaint.hpi, state, items, Core.textVars(new Date())),
       pe: Core.composeText(complaint.pe_text, state, items)
     };
   }

@@ -113,7 +113,7 @@ hpi:
   sentences:
     - always: true
       parts:
-        - "{sex|the patient}[, aged {age_group},] presented with {pain_location|abdominal pain}[ {duration}]"
+        - "({@date_roc}) {pain_location|abdominal pain}[ {duration}]"
         - "{onset}"
         - "{pain_migration}"
         - "{pain_quality}"
