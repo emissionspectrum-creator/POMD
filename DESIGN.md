@@ -1,8 +1,8 @@
 # POMD — 門診主訴追問與鑑別診斷輔助工具 設計文件
 
-> 版本：v0.1（2026-10-31）
+> 版本：v0.2（2026-11-18；v0.1 為 2026-10-31）
 > 作者：林佑達（肝膽腸胃科）＋ Claude
-> 狀態：個人使用版，第一個主訴為「腹痛」
+> 狀態：個人使用版，可擴充多個主訴。本文件只寫各主訴通用的原則；各主訴的設計說明見 `data/complaints/<id>.md`（第 6 節）。
 
 ---
 
@@ -19,7 +19,10 @@
 5. 點開某個診斷時，顯示「疾病說明卡」，並把目前已點選的症狀與 PE 跟典型表現比對
 6. 自動組成英文 HPI 與 PE 段落，一鍵複製貼進病歷
 
+兩個頁面：完整版 `POMD.html`（上述全部功能），與只有病史的精簡版 `POMD-history.html`（3.2 節）。
+
 **不做的事**：不計算機率、不打分數、不給「最可能診斷」。權重判斷留給醫師自己。
+唯一例外：右欄可切換「By matches」，只依符合數量排序（單純計數、不加權，見 4.3）。
 
 ---
 
@@ -28,6 +31,7 @@
 - 使用者：佑達本人，門診中一邊跟病人說話、一邊用**滑鼠點選**
 - 裝置：醫院 Windows 11 電腦，瀏覽器 Edge／Chrome／Firefox；手機為備案（版面需能在窄螢幕使用）
 - **完全離線**：不連網、不載入任何外部 CDN 或字型
+- 備案：GitHub Pages 網路版（repo 為 public，因此不得放入任何病人資料）
 - 提供「New patient」按鈕一鍵清空
 - 介面語言：**全英文**
 
@@ -35,54 +39,73 @@
 
 ## 3. 畫面配置
 
+### 3.1 完整版
+
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│ [Chief complaint: Abdominal pain ▼]  [☐ Show English phrasing]  [New patient] │
+│ [Chief complaint ▼]  [☐ Show English phrasing]  [Quick history]  [New patient] │
 ├───────────────────────┬──────────────────────┬───────────────────┤
 │ 左欄：History          │ 中欄：Physical exam   │ 右欄：Differential │
-│  - 各追問項目          │  - PE 項目（可點發現） │  - 依位置分組      │
-│  - 每項一排可點選項    │ ──────────────────── │  - Must-not-miss  │
-│  - （開關打開時）       │ Labs（建議清單）      │    紅色標示        │
-│    顯示 2–3 種英文問法  │ Imaging / Endoscopy  │  - 相關者標亮      │
-│                       │ （建議清單）          │  - 點診斷 → 說明卡 │
+│  - 依主訴的段落排列    │  - PE 項目（可點發現） │  - 依主訴定義的分組 │
+│  - 每項一排可點選項    │ ──────────────────── │  - 相關者標亮＋數字 │
+│  - （開關打開時）       │ Labs（建議清單）      │  - By matches 切換 │
+│    顯示 2–3 種英文問法  │ Imaging / Endoscopy  │  - 點診斷 → 說明卡 │
+│                       │ （建議清單）          │                   │
 ├───────────────────────┴──────────────────────┴───────────────────┤
-│ 下方：Generated HPI + PE（即時更新）              [Copy]          │
+│ 下方：Generated HPI + PE（即時更新）  [Copy HPI] [Copy PE] [Copy HPI + PE] │
 └──────────────────────────────────────────────────────────────────┘
 ```
 
-- **疾病說明卡**：點右欄某診斷時開啟（側邊面板或浮動視窗，由實作決定），可隨時關閉
-- 手機版：三欄改為上下堆疊或分頁切換
+- **疾病說明卡**：點右欄某診斷時，從右側滑出、蓋住鑑別診斷欄，可按 × 或 Esc 關閉；內容隨點選即時更新
+- 手機版：三欄改為上下堆疊
+
+### 3.2 精簡版（History only）
+
+- 只有病史欄（不含 PE、鑑別診斷、HPI 輸出），給問診時快速點選
+- 開啟「Edit layout」後，問題可拖曳或用 ↑↓ 調整順序、可隱藏；隱藏的題目可用「+ Add question」加回；預設顯示哪些題目由主訴的 `quick` 設定，使用者調整過的版面存在瀏覽器，可「Reset layout」
+- Hide 只是版面設定，不清除該題答案
+- Submit：切到（或開啟）完整版
+- 兩頁透過 localStorage 共用「目前病人」，雙向即時同步；只有 New patient（任一頁）會清空。Edge／Chrome 的 `file://` 可同步；Firefox 的 `file://` 各檔案隔離，兩頁各自可用但不同步
 
 ---
 
-## 4. 核心功能規格
+## 4. 核心功能規格（各主訴通用）
 
 ### 4.1 左欄：病史追問
 
-- 大致依 **LQQOPERA** 順序排列：Location、Quality、Quantity（severity）、Onset／duration、Precipitating factors、Exacerbating／relieving factors、Radiation、Associated symptoms
-- 不硬套框架：腹痛常用但不屬於上述任一項的內容（排便習慣改變、和進食的關係、體重減輕、發燒、黃疸、GI bleeding、red flags 等），放在 Associated symptoms 或其他最合適的位置，由內容設計者判斷
-- 每個項目有一排選項按鈕；可單選或複選（依項目性質設定，例如 Location 可複選、Severity 單選）
-- 再點一次可取消選取
+- **追問框架由各主訴決定**，寫在該主訴的設計文件裡。原則：
+  - 疼痛類主訴：大致依 **LQQOPERA**（Location、Quality、Quantity、Onset／duration、Precipitating、Exacerbating／relieving、Radiation、Associated symptoms）
+  - 非疼痛類主訴：大致依「起始與病程 → 性狀 → 嚴重度／頻率 → 誘因與接觸史 → 伴隨症狀 → 危險因子與用藥」
+  - 不硬套框架：重要但不屬於任何一項的內容，放在最合適的位置，由內容設計者判斷
+- 各主訴通常都有的段落：Patient（性別、年齡層等）、時程（duration）、伴隨症狀、red flags、相關病史
+- 項目類型：
+  - **single**：單選，再點一次取消
+  - **multi**：複選；可有互斥選項（例如 None），選它會清掉其他選項
+  - **presence**：每個選項三態循環 present → absent → 清除，用於伴隨症狀、危險因子等需要「有／沒有」的地方
+- 選項可標 red flag（按鈕旁顯示紅色「!」）
 - **英文問法**：每個項目附 2–3 種給病人聽的英文問法（開放式／封閉式，或正式／口語），由頂部總開關控制是否顯示
+- 主訴可設定**預設點選**（`defaults`，例如 PE 的正常發現）：新病人自動帶入；只有預設值時視為尚未點選
 
 ### 4.2 中欄：理學檢查、抽血、影像
 
-- **PE**：每個 PE 項目可點選發現（例如 Murphy's sign: positive／negative；Tenderness 位置；Rebound；Guarding；Bowel sounds；Jaundice……），點選結果會：
+- **PE**：主訴挑選相關的系統與項目，General & vitals 通常共用。點選結果會：
   - 參與疾病說明卡的比對
   - 帶入下方的 PE 段落
 - **Labs** 與 **Imaging / Endoscopy**：只是建議清單，不可點選、不參與比對
 
 ### 4.3 右欄：鑑別診斷清單
 
-- 依位置分組（RUQ、Epigastric、LUQ、Periumbilical／Diffuse、RLQ、LLQ、Suprapubic、Flank）；點選 Location 後，該位置的群組排到最前面
-- **Must-not-miss** 診斷以紅色標示，並且一直顯示
-- **標亮規則**：只要某疾病的典型特徵（症狀或 PE）中，有任何一項被醫師點選，該疾病就標亮；可顯示符合的數量，例如「3」，但**不做權重計算或排序**
-- **Acute／Chronic**：依 Onset／duration 的選擇，標亮相對應時程的疾病（例如選 acute 時，急腹症更突出）。疾病資料需標記其典型時程
+- **分組方式由主訴決定**（例如腹痛依位置）。同一疾病可以出現在多個群組
+- 主訴可指定一個**排序項目**：點選後，與所選選項相符的群組排到最前面（目前實作為 `location_item`／`locations`）
+- **標亮規則**：某疾病的典型特徵（症狀或 PE）中，只要有任何一項被醫師點選且符合，該疾病就標亮，並顯示符合的數量
+- **By matches**：可切換成依符合數量由高到低排序（單純計數、不加權；同分維持原本順序）。預設仍依分組
+- **Must-not-miss**：疾病資料保留此標記，但右欄**不**特別標示（不用紅色、★或粗體），只在說明卡以中性徽章顯示
+- **時程**：分 acute／subacute／chronic 三級。各主訴的 duration 選項各自標註屬於哪一級，因此界線可依主訴不同；疾病標記典型時程（可多個），右欄以 A／S／C 徽章標亮相符者。時程比對不計入符合數量
 - 不做「變淡／排除」
 
 ### 4.4 疾病說明卡
 
-段落（v0.1）：
+段落：
 
 1. **One-liner**：一句話的典型描述
 2. **Typical symptoms**：典型症狀特徵（可比對）
@@ -91,23 +114,29 @@
 5. **Recommended imaging / endoscopy**：建議檢查（純文字）
 6. **Pitfalls**：容易誤判或需要注意的地方
 
+另外顯示「典型時程」與目前 duration 的比對。
+
 **三色比對**（只針對第 2、3 段）：
 
 - 🟢 **Match**：醫師點選的正好是這個典型特徵
 - ⚪ **Not asked**：這個項目還沒有點選
-- 🟠 **Different**：同一項目點了其他選項（例如典型為 RUQ，但點了 LLQ）
+- 🟠 **Different**：同一項目點了其他選項；卡片上同時顯示目前實際點了什麼
 
-第三種狀態不需要額外資料：因為特徵是以「項目 + 選項」表示，程式可以自行判斷同一項目是否點了別的選項。
+第三種狀態不需要額外資料：因為特徵是以「項目 + 選項」表示，程式可以自行判斷同一項目是否點了別的選項。presence 項目可以描述「典型為有」或「典型為沒有」。
 
 ### 4.5 輸出：HPI 與 PE
 
-- 英文，大致依 LQQOPERA 順序組句；未點選的項目略過
-- 每個選項自帶一段 HPI 片段，由程式組成自然的句子
-- 範例（示意）：
-  > The patient presented with epigastric and RUQ pain for 2 days, described as colicky, severity 7/10, onset after a fatty meal, radiating to the right shoulder. Associated with nausea and vomiting. Denied fever, jaundice, or melena.
-- 陰性症狀（Denied ...）：Associated symptoms 項目需要能點「present／absent」，absent 的項目組成 "Denied ..." 句
-- PE 段落同理，例如 "Abdomen: soft, tenderness over RUQ, Murphy's sign positive, no rebound tenderness."
-- [Copy] 按鈕：一鍵複製 HPI + PE。需在 `file://` 開啟時也能運作（Clipboard API 失效時改用備援方法）
+- 英文；句子的組成與順序由各主訴的模板決定；未點選的項目略過
+- 每個選項自帶一段片段，由程式組成自然的句子
+- 陰性症狀：presence 項目點 absent 的，組成 "Denied ..." 之類的句子
+- 提供 Copy HPI、Copy PE、Copy HPI + PE（病歷常分 S／O 兩欄）。需在 `file://` 開啟時也能運作（Clipboard API 失效時改用備援方法）
+- 範例見各主訴的設計文件
+
+### 4.6 跨主訴共用疾病（原則；做第二個主訴時實作）
+
+- 同一疾病（例如 IBS、UC、腸胃炎）可被多個主訴引用，疾病檔只有一份，不為每個主訴複製
+- 疾病的典型特徵可以引用不同主訴的項目；目前主訴沒有顯示的項目，在說明卡中不顯示、也不計入比對
+- 共用詞彙讓同一個特徵（例如 fever）在所有主訴中是同一個項目
 
 ---
 
@@ -119,48 +148,45 @@
 ### 5.1 三種資料
 
 1. **Complaint（主訴範本）**，例如 `abdominal_pain`
-   - History items：項目 id、名稱、單選／複選、選項清單、英文問法（2–3 種）
-   - 每個選項：id、顯示文字、HPI 片段
-   - PE items：結構同上，選項為發現，附 PE 段落片段
+   - History 與 PE 的段落與項目（引用共用詞彙的項目 id）
    - Labs 建議清單、Imaging／Endoscopy 建議清單
-   - 鑑別診斷：依位置分組，**引用**疾病 id（不在主訴檔內重寫疾病內容）
+   - 鑑別診斷：依主訴定義的分組，**引用**疾病 id（不在主訴檔內重寫疾病內容）；可指定排序項目與時程項目
+   - HPI／PE 文字模板
+   - 選填：預設點選（`defaults`）、精簡版預設顯示的題目（`quick`）
 2. **Disease（疾病）**，每個疾病一份
-   - id、名稱、是否 must-not-miss、典型時程（acute／chronic／both）
+   - id、名稱、是否 must-not-miss、典型時程（acute／subacute／chronic 清單）、審核狀態
    - One-liner、Typical labs、Imaging／endoscopy、Pitfalls（純文字）
    - Typical symptoms 與 Typical PE：以「項目 id + 選項 id」表示，並附一段給人看的說明文字
-3. **共用詞彙**：項目與選項的 id 在所有主訴、疾病間一致，同一個特徵只有一種寫法
+3. **共用詞彙**：項目與選項（id、類型、顯示文字、輸出片段、英文問法）在所有主訴、疾病間一致，同一個特徵只有一種寫法
 
 ### 5.2 推導關係
 
 - 右欄的標亮 = 用疾病的典型特徵反查；**不另外維護「選項 → 疾病」的對照表**
 - 說明卡的三色比對 = 疾病特徵 vs 目前點選狀態
 
-### 5.3 檔案組織（建議，由實作決定細節）
+### 5.3 檔案組織
 
-- 原始內容放在 `data/`（主訴與疾病分檔），格式需讓 Claude Code 容易閱讀修改
-- 用一個簡單的建置腳本（Python 即可）把程式與內容組成 **`dist/POMD.html` 單一檔案**，可直接複製到醫院電腦、雙擊開啟
-- 建置時做基本的一致性檢查：疾病引用的項目／選項 id 是否存在、主訴引用的疾病 id 是否存在
+- 原始內容放在 `data/`（共用詞彙、主訴、疾病分檔，YAML），格式需讓 Claude Code 容易閱讀修改
+- 各主訴的設計說明（Markdown）放在 `data/complaints/<id>.md`，與同名的 `<id>.yaml` 並列；建置不讀 `.md`
+- 用一個簡單的建置腳本（Python）把程式與內容組成兩個單一檔案 **`dist/POMD.html`**、**`dist/POMD-history.html`**，可直接複製到醫院電腦、雙擊開啟
+- 建置時做一致性檢查：疾病引用的項目／選項 id 是否存在、主訴引用的疾病 id 是否存在、模板引用的項目是否存在等
 - 純 HTML + CSS + 原生 JavaScript，不依賴框架與外部資源
 
 ---
 
-## 6. 腹痛範本內容範圍（初稿方向）
+## 6. 新增主訴的流程
 
-涵蓋慢性／亞急性（門診主體）與急性外科急腹症（must-not-miss）。以下為初步清單，內容設計時可增減：
+1. 先寫 `data/complaints/<id>.md`：追問框架與段落、PE 範圍、鑑別診斷分組方式與排序項目、時程界線、疾病清單（標出 must-not-miss 與跨主訴共用的疾病）、HPI／PE 範例
+2. 與佑達對齊設計說明
+3. 補共用詞彙（盡量沿用既有項目）、新增或擴充疾病檔、寫主訴 yaml
+4. 處理建置的 error 與 warning
+5. 測試、門診試用、審核
 
-| 位置 | 疾病（★ = must-not-miss） |
+已有的主訴：
+
+| 主訴 | 設計說明 |
 |---|---|
-| RUQ | Biliary colic、Acute cholecystitis★、Choledocholithiasis、Acute cholangitis★、Acute hepatitis、Liver abscess★、Right lower lobe pneumonia |
-| Epigastric | Peptic ulcer disease、Perforated peptic ulcer★、Functional dyspepsia、GERD、Gastritis、Acute pancreatitis★、Chronic pancreatitis、Gastric cancer、Acute coronary syndrome★ |
-| LUQ | Splenic infarction、Splenic rupture★ |
-| Periumbilical／Diffuse | Early appendicitis、Small bowel obstruction★、Acute mesenteric ischemia★、Acute gastroenteritis、IBS、Constipation、Peritonitis／hollow viscus perforation★、Ruptured AAA★、DKA★ |
-| RLQ | Acute appendicitis★、Crohn's disease、Infectious ileocecitis、Ectopic pregnancy★、Ovarian torsion★ |
-| LLQ | Diverticulitis、Ischemic colitis、Ulcerative colitis、Colorectal cancer、Sigmoid volvulus★ |
-| Suprapubic | Cystitis、Acute urinary retention、Pelvic inflammatory disease |
-| Flank | Renal colic（urolithiasis）、Acute pyelonephritis |
-
-- 一個疾病可以出現在多個位置群組（例如 appendicitis 同時在 periumbilical 與 RLQ）
-- 婦科疾病的標亮可搭配「女性／懷孕可能」相關項目
+| Abdominal pain | `data/complaints/abdominal_pain.md` |
 
 ---
 
@@ -176,7 +202,7 @@
 ## 8. 暫不處理（之後再議）
 
 - 多主訴同時開啟與合併
-- 多醫師協作／公開專案（屆時參考本版另開新專案重構）
+- 多醫師協作（屆時參考本版另開新專案重構）
 - 內容審閱模式（先做出基本版再決定）
 - 與 QuickHand（HIS 自動填入）串接
 - 抽血、影像結果的點選與比對
@@ -184,8 +210,9 @@
 
 ---
 
-## 9. 開發節奏建議
+## 9. 開發節奏
 
-1. **M1 骨架**：完成三欄介面、點選、標亮、說明卡三色比對、HPI 產生與複製，先用 5～6 個疾病驗證流程
-2. **M2 腹痛完整內容**：依第 6 節補齊所有疾病與項目
-3. **M3 佑達試用與審核**：門診試用後依回饋調整，再決定審閱方式
+1. **M1 骨架**（完成）：三欄介面、點選、標亮、說明卡三色比對、HPI 產生與複製
+2. **M2 腹痛完整內容**（完成）：依腹痛設計說明補齊疾病與項目；另加精簡版 History 頁
+3. **M3 佑達試用與審核**（進行中）：門診試用後依回饋調整，疾病逐一審核
+4. **M4 第二個主訴：Diarrhea**：依第 6 節流程進行，並實作 4.6 跨主訴共用疾病

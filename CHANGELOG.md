@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 2026-11-18 — DESIGN.md 通用化，腹痛設計獨立（使用者要求）
+
+為了加入第二個主訴（diarrhea）：原 DESIGN 第 3、4、6 節是照腹痛寫的（LQQOPERA、依位置分組、腹痛疾病表），不適用其他主訴。
+
+- `DESIGN.md` 升為 v0.2，只寫通用原則：追問框架由主訴決定（疼痛類 LQQOPERA、非疼痛類另一套順序）、分組方式與排序項目由主訴決定、時程界線由各主訴 duration 的 `tc` 定義；新增 4.6「跨主訴共用疾病」原則（待做第二個主訴時實作）；第 6 節改為「新增主訴的流程」。
+- 新增 `data/complaints/abdominal_pain.md`：從 DESIGN 移出的腹痛內容（LQQOPERA 段落、位置分組與疾病表、時程界線、預設 PE、HPI／PE 範例），以及原本記在 CLAUDE.md 的腹痛決定（appendicitis 合併、第二位置群組、台灣臨床脈絡）。
+- 同步現況：右欄不標示 must-not-miss、By matches 排序例外、acute／subacute／chronic 三級、三個 Copy 按鈕、精簡版 History 頁與兩頁同步、GitHub Pages 備案。
+- `CLAUDE.md`：指向新的文件位置，刪除已經寫進 DESIGN 或腹痛文件的重複條目。
+- 只改文件，程式與資料不變。
+
 ## 2026-11-18 — CLAUDE.md 補充建置流程說明（/init）
 
 - 加上 Claude Code 標準開頭；新增「只跑單一測試」指令。

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # POMD — 專案說明（給 Claude Code）
 
-門診用「主訴追問與鑑別診斷輔助工具」，個人使用版。設計規格見 `DESIGN.md`（已定案，修改前先問使用者）；修改紀錄見 `CHANGELOG.md`。
+門診用「主訴追問與鑑別診斷輔助工具」，個人使用版。設計規格見 `DESIGN.md`（各主訴通用的原則，修改前先問使用者）；各主訴的設計說明見 `data/complaints/<id>.md`（新增主訴先寫這份並與使用者對齊）；修改紀錄見 `CHANGELOG.md`。
 
 ## 關鍵規則
 
@@ -22,7 +22,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## 目錄結構
 
 ```
-DESIGN.md                 設計文件（定案）
+DESIGN.md                 設計文件（通用原則）
 CLAUDE.md / CHANGELOG.md
 build.py                  驗證 data/ 並組出 dist/ 兩個 html（需 PyYAML）
 src/
@@ -36,6 +36,7 @@ data/
   vocab/history.yaml      共用病史項目（items + options）
   vocab/pe.yaml           共用 PE 項目
   complaints/<id>.yaml    主訴範本：版面、建議檢查、鑑別診斷分組、HPI／PE 句型
+  complaints/<id>.md      該主訴的設計說明（build 不讀）
   diseases/<id>.yaml      每個疾病一檔，檔名 = id
 tests/core.test.js        Node 內建 test runner
 dist/POMD.html            建置產物（有 commit，方便直接複製到醫院電腦）
@@ -176,20 +177,15 @@ hpi:
 
 ## 設計決定（DESIGN.md 未明定之處）
 
+腹痛特有的決定（appendicitis 合併、第二位置群組、台灣臨床脈絡、時程界線）見 `data/complaints/abdominal_pain.md`。
+
 - 項目定義放在共用 `data/vocab/`，主訴只引用 id → 未來多主訴可共用同一詞彙，疾病特徵跨主訴一致。
 - 資料格式用 YAML（易讀、可寫多行文字與註解）；建置需 PyYAML。
-- 時程分 acute／subacute／chronic 三級（DESIGN 寫 acute／chronic／both；疾病以清單表示「both」）。1–4 週算 subacute。
-- 疾病說明卡為右側滑出面板，蓋住鑑別診斷欄，可按 × 或 Esc 關閉；內容隨點選即時更新。說明卡額外顯示「典型時程」與目前 duration 的比對。
 - Different 狀態下，說明卡會顯示目前實際點了什麼（selected: ...）。
-- Early appendicitis 與 acute appendicitis 合併為同一疾病 `acute_appendicitis`，同時列在 Periumbilical／Diffuse 與 RLQ 群組。
-- 除 DESIGN 第 6 節表格外，另把部分疾病放進第二個位置群組：acute pancreatitis → LUQ、diverticulitis → RLQ、ectopic pregnancy／ovarian torsion → LLQ、ruptured AAA → Flank。
-- 疾病內容加入台灣臨床脈絡（Klebsiella 肝膿瘍、B 肝 flare、腸結核、草藥 DILI、胃癌盛行率與 EGD 年齡門檻）。
 - 「New patient」按鈕：有點選時需在 3 秒內點兩次才清空（避免誤觸，又不跳對話框）。
 - 兩頁共用目前病人（使用者 2026-11-18 決定）：點選存在 localStorage `pomd.patient.v1`（`{complaint, state}`），兩頁用 `storage` 事件雙向即時同步；不自動過期，只有 New patient（任一頁）會清空。精簡版版面存在 `pomd.quickLayout.v1`（每個主訴一個順序陣列）。讀取時以 `Core.sanitizeState`／`sanitizeOrder` 過濾無效資料。
 - 精簡版 Submit：`window.open('', 'pomd-main')` 找到完整版分頁就切過去，否則開啟同資料夾的 `POMD.html`；完整版載入時把 `window.name` 設為 `pomd-main`。反方向同理：完整版的「Quick history」按鈕用 `pomd-quick`（精簡版載入時設定）。
 - 這些跨頁功能只在 Edge／Chrome 有效（`file://` 視為同一 origin）；Firefox 的 `file://` 各檔案隔離，兩頁仍可各自使用但不會同步。
 - 精簡版的 Hide 只是版面設定，不清除該題答案（完整版仍看得到）。
-- 除了 DESIGN 要求的「Copy HPI + PE」，另外提供 Copy HPI、Copy PE（病歷常分 S／O 兩欄）。
 - Copy 先用 Clipboard API，失敗時改用隱藏 textarea + `execCommand('copy')`。
-- 選項可標 `red_flag`，按鈕旁顯示紅色「!」。
 - 每個項目有「clear」小按鈕，可單獨清除該項。
