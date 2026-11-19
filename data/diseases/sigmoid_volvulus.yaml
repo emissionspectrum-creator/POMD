@@ -25,6 +25,12 @@ symptoms:
   - when: episodes = recurrent
     text: Previous similar episodes are common
 
+  # abdominal_distension complaint
+  - when: distension_pattern = rapid
+    text: Rapid, massive distension
+  - when: distension_duration = lt1d | d1_7
+    text: Acute
+
 pe:
   - when: abd_contour = marked
     text: Massive, tympanic distension
@@ -34,6 +40,10 @@ pe:
     text: Empty rectum
   - when: vitals = fever | tachycardia | hypotension
     text: Fever, tachycardia, hypotension — strangulation
+
+  # abdominal_distension complaint
+  - when: distension_pe = tympany
+    text: Tympanic throughout
 
 labs:
   - Electrolytes, creatinine, CBC, lactate

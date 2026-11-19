@@ -25,6 +25,14 @@ symptoms:
   - when: age_group = age_40_59 | age_60_plus
     text: Middle-aged or older
 
+  # abdominal_distension complaint
+  - when: distension_pattern = progressive
+    text: Increasing girth (ascites) or a RUQ mass
+  - when: distension_site = upper | whole
+    text: Upper or whole abdomen
+  - when: distension_duration = w1_4 | m1_3
+    text: Weeks to months
+
 pe:
   - when: palpable = hepatomegaly | mass
     text: Hard, irregular liver or mass

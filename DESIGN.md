@@ -195,6 +195,7 @@
 | Diarrhea | `data/complaints/diarrhea.md` |
 | Abnormal liver tests | `data/complaints/abnormal_lft.md` |
 | Black stool | `data/complaints/black_stool.md` |
+| Abdominal distension / fullness | `data/complaints/abdominal_distension.md` |
 
 ---
 
@@ -226,3 +227,4 @@
 4. **M4 第二個主訴：Diarrhea**（完成）：依第 6 節流程進行，並實作 4.6 跨主訴共用疾病與詞彙
 5. **M5 第三個主訴：Abnormal liver tests**（完成）：依病因分段，新增可收合細項
 6. **M6 第四個主訴：Black stool**（完成）：先確認是否真的 melena、再評估嚴重度、最後找來源；依糞便外觀排序右欄
+7. **M7 第五個主訴：Abdominal distension / fullness**（完成）：先分主觀脹或客觀膨大，再依機轉（氣、胃排空、阻塞、腹水、腫塊）追問；依腹脹型態排序右欄

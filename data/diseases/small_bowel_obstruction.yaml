@@ -25,6 +25,14 @@ symptoms:
   - when: risk = prior_surgery | hernia
     text: Prior abdominal surgery (adhesions) or a known hernia
 
+  # abdominal_distension complaint
+  - when: distension_pattern = rapid
+    text: Distension over hours to days
+  - when: distension_duration = lt1d | d1_7
+    text: Acute
+  - when: distension_site = whole
+    text: Whole abdomen (central)
+
 pe:
   - when: abd_contour = mild | marked
     text: Distension, tympanic to percussion
@@ -40,6 +48,10 @@ pe:
     text: Tachycardia or fever (suspect strangulation)
   - when: rebound = present
     text: Peritoneal signs — strangulation or perforation
+
+  # abdominal_distension complaint
+  - when: distension_pe = tympany | peristalsis
+    text: Tympanic; visible peristalsis in thin patients
 
 labs:
   - Electrolytes, creatinine (dehydration, hypokalemia, metabolic alkalosis from vomiting)

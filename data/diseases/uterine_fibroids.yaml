@@ -1,0 +1,44 @@
+id: uterine_fibroids
+name: Uterine fibroids (leiomyoma)
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Benign uterine tumors causing heavy, prolonged periods, pelvic pressure and urinary frequency, and — when large
+  — a firm, non-tender midline lower-abdominal swelling; common in women in their 30s–40s.
+
+symptoms:
+  - when: sex = female
+    text: Woman, usually premenopausal
+  - when: gyn_clues = heavy_periods
+    text: Heavy or prolonged periods
+  - when: gyn_clues = known_fibroids
+    text: Known fibroids
+  - when: distension_pattern = lump | progressive
+    text: Lower abdominal lump that slowly enlarges
+  - when: distension_site = lower
+    text: Lower abdomen
+  - when: assoc_gu = frequency
+    text: Urinary frequency (bladder pressure)
+  - when: assoc_gi = constipation
+    text: Constipation (rectal pressure)
+  - when: age_group = under_40 | age_40_59
+    text: Age 30–50
+
+pe:
+  - when: palpable = mass
+    text: Firm, irregular midline pelvic mass
+  - when: tenderness = none
+    text: Non-tender
+  - when: skin = pallor
+    text: Pallor (iron-deficiency anemia)
+
+labs:
+  - CBC, ferritin (anemia from heavy bleeding)
+
+imaging:
+  - Pelvic / transvaginal ultrasound
+
+pitfalls:
+  - Rapid growth after menopause is not typical of fibroids — consider leiomyosarcoma or an ovarian mass.
+  - Always check a pregnancy test in a woman of reproductive age with a pelvic mass.

@@ -1,0 +1,45 @@
+id: nephrotic_syndrome
+name: Nephrotic syndrome
+must_not_miss: false
+timecourse: [subacute]
+status: draft
+one_liner: >
+  Heavy proteinuria with hypoalbuminemia causing periorbital and leg edema, frothy urine, and sometimes
+  ascites — from minimal change disease, membranous nephropathy, FSGS, or diabetic kidney disease.
+
+symptoms:
+  - when: ascites_clues = frothy_urine
+    text: Frothy urine; puffy eyes in the morning
+  - when: congestion_sx = leg_swelling
+    text: Leg swelling
+  - when: distension_pattern = progressive
+    text: Gradually increasing girth
+  - when: risk = diabetes
+    text: Long-standing diabetes
+  - when: assoc_sys = no jaundice
+    text: No jaundice
+  - when: congestion_sx = no orthopnea
+    text: No orthopnea
+
+pe:
+  - when: congestion_pe = edema
+    text: Pitting edema, often marked
+  - when: congestion_pe = no jvp
+    text: JVP not raised
+  - when: palpable = ascites
+    text: Shifting dullness
+  - when: liver_pe = no spider | palmar
+    text: No stigmata of chronic liver disease
+
+labs:
+  - "Urine protein-creatinine ratio > 3.5 g/g; albumin < 3 g/dL; high cholesterol"
+  - Creatinine; HbA1c, HBsAg, anti-HCV, ANA, anti-PLA2R
+
+imaging:
+  - Renal ultrasound before biopsy
+  - Ascitic fluid (if tapped) — low SAAG, low protein
+
+pitfalls:
+  - Dipstick the urine in every patient with new edema or ascites.
+  - Risk of venous thrombosis (renal vein, DVT) — especially membranous nephropathy with very low albumin.
+  - Hepatitis B and malignancy are secondary causes worth looking for in Taiwan.

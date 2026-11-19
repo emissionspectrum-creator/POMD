@@ -23,6 +23,16 @@ symptoms:
   - when: diarrhea_duration = m1_3 | gt3m
     text: Chronic
 
+  # abdominal_distension complaint
+  - when: distension_pattern = fluctuating | postprandial
+    text: Bloating soon after meals, building through the day
+  - when: bloating_features = flatulence | belching
+    text: Excessive gas
+  - when: assoc_gi = diarrhea | steatorrhea
+    text: Loose or fatty stools
+  - when: distension_duration = gt3m | m1_3
+    text: Chronic
+
 pe:
   - when: abd_contour = mild | marked
     text: Abdominal distension

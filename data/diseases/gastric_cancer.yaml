@@ -39,6 +39,14 @@ symptoms:
   - when: blood_loss_sx = fatigue | dyspnea
     text: Fatigue and exertional dyspnea (anemia)
 
+  # abdominal_distension complaint
+  - when: distension_pattern = postprandial | progressive
+    text: Progressive postprandial fullness; ascites in advanced disease
+  - when: assoc_gi = vomit_old_food
+    text: Vomiting old food (outlet obstruction)
+  - when: distension_duration = w1_4 | m1_3
+    text: Weeks to months
+
 pe:
   - when: skin = pallor
     text: Pallor (iron-deficiency anemia)
@@ -50,6 +58,10 @@ pe:
     text: Hepatomegaly or ascites (metastatic)
   - when: tenderness = epigastric | none
     text: Mild epigastric tenderness or none
+
+  # abdominal_distension complaint
+  - when: distension_pe = succussion
+    text: Succussion splash (outlet obstruction)
 
 labs:
   - CBC — iron-deficiency anemia; ferritin

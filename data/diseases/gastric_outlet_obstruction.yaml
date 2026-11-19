@@ -1,0 +1,52 @@
+id: gastric_outlet_obstruction
+name: Gastric outlet obstruction
+must_not_miss: true
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Mechanical obstruction at the pylorus or duodenum — from distal gastric or pancreatic cancer or a scarred
+  peptic ulcer — with progressive postprandial fullness, early satiety, and non-bilious vomiting of food eaten
+  hours before.
+
+symptoms:
+  - when: distension_pattern = postprandial
+    text: Upper abdominal fullness after meals
+  - when: distension_site = upper
+    text: Epigastric distension
+  - when: assoc_gi = vomit_old_food
+    text: Non-bilious vomiting of food eaten hours earlier
+  - when: assoc_gi = early_satiety | vomiting
+    text: Early satiety and vomiting
+  - when: relieving = vomiting
+    text: Fullness relieved by vomiting
+  - when: assoc_sys = weight_loss
+    text: Weight loss (malignancy, poor intake)
+  - when: risk = pud | hpylori
+    text: Prior peptic ulcer or H. pylori
+  - when: age_group = age_60_plus | age_40_59
+    text: Older patients — malignancy is now the commonest cause
+
+pe:
+  - when: distension_pe = succussion
+    text: Succussion splash more than 3 hours after eating
+  - when: distension_pe = peristalsis
+    text: Visible gastric peristalsis (left to right)
+  - when: palpable = mass
+    text: Epigastric mass
+  - when: general = dehydrated
+    text: Dehydration
+  - when: skin = virchow
+    text: Left supraclavicular node (gastric cancer)
+
+labs:
+  - Hypochloremic, hypokalemic metabolic alkalosis with persistent vomiting
+  - Creatinine (pre-renal injury)
+
+imaging:
+  - CT abdomen — distended stomach and the level and cause of obstruction
+  - EGD with biopsy after gastric decompression (aspiration risk)
+
+pitfalls:
+  - Distinguish from gastroparesis — the history is similar; EGD or CT settles it.
+  - Pancreatic head and periampullary cancers present this way too, not just gastric cancer.
+  - Correct the metabolic alkalosis and hypokalemia with saline and potassium before endoscopy or surgery.

@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## 2026-11-19 — 新增第五個主訴 Abdominal distension / fullness（v0.8.0，使用者要求）
+
+依 `data/complaints/abdominal_distension.md`（與使用者對齊：pregnancy 不放，其他照建議）實作。
+
+**程式**
+- 無。
+
+**內容（全部 `draft`）**
+- 追問：先看型態、部位、時程，分出主觀脹或客觀膨大 → 伴隨症狀與警訊 → 依機轉分段（Gas & bowel；Liver, heart & kidney，酒精沿用收合細項；Pelvic & urinary）→ 藥物與病史。
+- 新詞彙：distension_pattern（`group_item`：起伏 → Gas & functional；餐後上腹 → Upper GI；急速 → Obstruction；漸進 → Ascites 與 Mass；局部腫塊 → Mass）、distension_site、distension_duration（< 1 週 acute、1 週–3 月 subacute、> 3 月 chronic）、bloating_features、ascites_clues、gyn_clues、distension_drugs（GLP-1、fiber／lactulose／acarbose）；PE 新增 distension_pe（bulging flanks、flank dullness、fluid wave、tympany、succussion splash、visible peristalsis、dilated veins）。shifting dullness 沿用 `palpable.ascites`。
+- assoc_gi 新增 vomiting of old food（只在本主訴顯示；其他主訴本來就列選項子集）。
+- 共用 PE `abd_contour` 的 marked 由「Markedly distended / tympanic」改為「Markedly distended」：叩診（tympany vs dullness）改由 distension_pe 記錄，避免腹水病人輸出「distended and tympanic, dullness in the flanks」的矛盾。腹痛等主訴的輸出因此少了「and tympanic」。
+- 新疾病 12 個（★：gastric outlet obstruction、malignant ascites、SBP、ovarian tumor）：functional bloating、gastroparesis、gastric outlet obstruction、colonic pseudo-obstruction（Ogilvie）、cirrhosis with ascites、malignant ascites、SBP、heart failure、nephrotic syndrome、TB peritonitis、ovarian tumor、uterine fibroids。
+- 共用疾病補腹脹特徵：IBS、SIBO、lactose intolerance、constipation、functional dyspepsia、gastric cancer、PUD、SBO、sigmoid volvulus、colorectal cancer、acute urinary retention、liver malignancy。
+- 新增端對端測試（29 個測試）。
+
 ## 2026-11-19 — 新增第四個主訴 Black stool（v0.7.0，使用者要求）
 
 依 `data/complaints/black_stool.md`（已與使用者對齊，Q1–Q7 照建議）實作。

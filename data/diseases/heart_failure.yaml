@@ -1,0 +1,46 @@
+id: heart_failure
+name: Heart failure (cardiac ascites)
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Right-sided or biventricular heart failure, constrictive pericarditis or severe tricuspid regurgitation
+  causing hepatic congestion and ascites, with orthopnea, leg edema, and a raised JVP.
+
+symptoms:
+  - when: distension_pattern = progressive
+    text: Gradually increasing girth
+  - when: congestion_sx = orthopnea | heart_failure
+    text: Orthopnea / PND; known heart failure or valve disease
+  - when: congestion_sx = leg_swelling
+    text: Leg swelling
+  - when: distension_site = whole | upper
+    text: Whole abdomen, often with RUQ fullness (congested liver)
+  - when: assoc_gi = early_satiety | anorexia
+    text: Early satiety and anorexia (gut congestion)
+  - when: age_group = age_60_plus
+    text: Older patients
+
+pe:
+  - when: congestion_pe = jvp
+    text: Raised JVP — the key finding that separates it from cirrhosis
+  - when: congestion_pe = edema
+    text: Pitting leg edema
+  - when: congestion_pe = crackles
+    text: Bibasal crackles
+  - when: palpable = hepatomegaly
+    text: Tender, enlarged liver
+  - when: palpable = ascites
+    text: Shifting dullness
+
+labs:
+  - NT-proBNP; ascitic fluid SAAG ≥ 1.1 with high total protein (≥ 2.5 g/dL)
+  - Mild cholestatic LFT rise
+
+imaging:
+  - Echocardiography — RV function, tricuspid regurgitation, pericardial constriction
+  - Chest X-ray; ultrasound shows dilated hepatic veins and IVC
+
+pitfalls:
+  - Always look at the neck veins in new ascites — a raised JVP points away from cirrhosis.
+  - Constrictive pericarditis (prior TB, surgery, radiotherapy) can present with ascites before edema.

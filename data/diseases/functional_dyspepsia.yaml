@@ -27,6 +27,14 @@ symptoms:
   - when: age_group = under_40 | age_40_59
     text: Usually younger patients
 
+  # abdominal_distension complaint
+  - when: distension_pattern = postprandial
+    text: Postprandial upper abdominal fullness (postprandial distress syndrome)
+  - when: distension_site = upper
+    text: Upper abdomen
+  - when: distension_duration = gt3m
+    text: Chronic
+
 pe:
   - when: tenderness = none | epigastric
     text: Normal exam or mild epigastric tenderness

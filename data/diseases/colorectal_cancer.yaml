@@ -44,6 +44,12 @@ symptoms:
   - when: blood_loss_sx = fatigue | dyspnea
     text: Fatigue and exertional dyspnea (iron-deficiency anemia)
 
+  # abdominal_distension complaint
+  - when: distension_pattern = rapid | progressive
+    text: Increasing distension (obstructing tumor) or ascites
+  - when: distension_duration = w1_4 | m1_3
+    text: Weeks to months
+
 pe:
   - when: skin = pallor
     text: Pallor

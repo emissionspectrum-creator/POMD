@@ -1,0 +1,230 @@
+id: abdominal_distension
+name: Abdominal distension / fullness
+group_item: distension_pattern   # fluctuating → gas & functional; postprandial → upper GI; rapid → obstruction; progressive / lump → ascites, masses
+timecourse_item: distension_duration
+
+# Left column: subjective bloating or true distension? (pattern, site, time course) → red flags →
+# one section per mechanism (gas & bowel, ascites, pelvic / urinary) → medications & history.
+# Design notes: data/complaints/abdominal_distension.md.
+history:
+  - section: Patient
+    items: [sex, age_group]
+  - section: Character & time course
+    items:
+      - distension_pattern
+      - distension_site
+      - distension_duration
+      - item: episodes
+        ask:
+          - "Have you had bloating or swelling like this before?"
+          - "Is this new, or has it been coming and going for a long time?"
+      - bloating_features
+  - section: Associated symptoms
+    items:
+      - item: assoc_gi
+        options: [nausea, vomiting, vomit_old_food, obstipation, early_satiety, anorexia, heartburn, constipation,
+                  diarrhea, bowel_change, steatorrhea, melena, hematochezia]
+        ask:
+          - "Have you been sick or vomited? Was it food you ate many hours before?"
+          - "Are you still passing wind and opening your bowels?"
+          - "Do you feel full after only a little food? Any change in your bowel habit, or black or bloody stools?"
+      - item: pain_location
+        label: Abdominal pain
+        ask:
+          - "Do you have any tummy pain with it? Where?"
+      - item: assoc_sys
+        label: Systemic
+        options: [weight_loss, fever, night_sweats, jaundice, malaise]
+        ask:
+          - "Have you lost weight without trying, even though your belly is bigger?"
+          - "Any fever, night sweats, or yellowing of your skin or eyes?"
+  - section: Gas & bowel
+    items:
+      - item: meal_relation
+        label: Meals
+        options: [worse_eating, unrelated]
+        ask:
+          - "Is it worse after you eat?"
+      - item: relieving
+        label: Better with
+        options: [defecation, vomiting, nothing]
+        ask:
+          - "Does it get better after you pass wind or open your bowels?"
+      - item: food_trigger
+        options: [dairy, sweeteners, fatty_food]
+        ask:
+          - "Is it worse after milk, sugar-free sweets or drinks, or fatty food?"
+  - section: Liver, heart & kidney
+    items:
+      - item: alcohol_use
+        details:
+          label: Amount & duration
+          note: >
+            Grams of alcohol = mL × % × 0.8. Beer 5%: 330 mL can ≈ 13 g, 600 mL bottle ≈ 24 g ·
+            Kaoliang 58%: 100 mL ≈ 46 g, 600 mL bottle ≈ 280 g (38%: 100 mL ≈ 30 g) ·
+            Rice wine 19.5%: 600 mL bottle ≈ 94 g · Tonic wine ~10%: 600 mL ≈ 48 g ·
+            Wine 12%: 150 mL glass ≈ 15 g, 750 mL bottle ≈ 72 g · Whiskey 40%: 30 mL shot ≈ 10 g, 700 mL ≈ 224 g
+          items: [alcohol_type, alcohol_amount, alcohol_years, alcohol_last]
+      - item: viral_history
+        options: [hbv, hbv_tx, hcv, hcv_cured]
+      - item: congestion_sx
+        options: [orthopnea, leg_swelling, heart_failure]
+        ask:
+          - "Do you get short of breath lying flat, or wake up breathless at night?"
+          - "Have your legs been swelling? Have you been told you have heart failure or a heart valve problem?"
+      - ascites_clues
+  - section: Pelvic & urinary
+    items:
+      - item: assoc_gu
+        label: Urinary / gynecologic
+        options: [cannot_void, frequency, vaginal_bleeding]
+        ask:
+          - "Are you passing urine normally, or going much more often?"
+          - "Any vaginal bleeding that isn't a normal period?"
+      - gyn_clues
+  - section: Medications & history
+    items:
+      - distension_drugs
+      - item: diarrhea_drugs
+        label: Other medications
+        options: [ppi, metformin]
+        ask:
+          - "Do you take acid-reducing tablets or metformin?"
+      - item: risk
+        label: Past history
+        options: [diabetes, prior_surgery, hernia, retention_drugs, chronic_constipation, pud, hpylori, gi_cancer_fhx]
+        ask:
+          - "Do you have diabetes? Have you had any operations on your belly, or a hernia?"
+          - "Do you take painkillers like codeine or tramadol, or medicines that dry your mouth?"
+          - "Any stomach ulcer or H. pylori before? Any bowel or stomach cancer in the family?"
+      - item: diarrhea_history
+        label: GI surgery
+        options: [gastric_surgery, bowel_resection]
+
+quick:
+  show: [sex, age_group, distension_pattern, distension_site, distension_duration, episodes, bloating_features,
+         assoc_gi, pain_location, assoc_sys, meal_relation, relieving, food_trigger,
+         alcohol_use, viral_history, congestion_sx, ascites_clues, assoc_gu, gyn_clues,
+         distension_drugs, risk]
+
+defaults:
+  guarding: [soft]
+  tenderness: [none]
+
+pe:
+  - section: General & vitals
+    items:
+      - item: general
+        options: [comfortable, ill, dehydrated, confused]
+      - item: vitals
+        options: [fever, tachycardia, hypotension, tachypnea]
+      - item: skin
+        options: [icterus, pallor, virchow]
+      - item: liver_pe
+        options: [spider, palmar, asterixis]
+      - item: congestion_pe
+        options: [jvp, edema, crackles]
+  - section: Abdomen
+    items:
+      - abd_contour
+      - distension_pe
+      - bowel_sounds
+      - guarding
+      - tenderness
+      - rebound
+      - item: palpable
+        options: [ascites, hepatomegaly, splenomegaly, mass, bladder]
+      - hernia
+  - section: Rectal
+    items:
+      - item: rectal
+        options: [normal, hard_stool, empty, mass, melena]
+
+labs:
+  - {name: "CBC, electrolytes, creatinine, glucose", note: "anemia, vomiting-related hypokalemia, diabetes"}
+  - {name: "LFT, albumin, PT / INR", note: "cirrhosis, liver synthetic function"}
+  - {name: "HBsAg, anti-HCV", note: "new ascites or suspected cirrhosis"}
+  - {name: Urinalysis (protein) / urine protein-creatinine ratio, note: "nephrotic syndrome"}
+  - {name: NT-proBNP, note: "heart failure as a cause of ascites"}
+  - {name: "Diagnostic paracentesis", note: "every new ascites and every admitted cirrhotic with ascites — cell count (PMN ≥ 250 = SBP), albumin (SAAG), total protein, culture in blood-culture bottles, cytology; ADA if TB suspected"}
+  - {name: "CA-125", note: "pelvic mass in a woman; nonspecific — also raised by any ascites"}
+  - {name: "CEA, AFP", note: "suspected GI or liver malignancy"}
+  - {name: "TSH, HbA1c", note: "gastroparesis work-up"}
+  - {name: Lactose / glucose hydrogen breath test, note: "suspected lactose intolerance or SIBO (limited availability)"}
+
+imaging:
+  - {name: Abdominal ultrasound, note: "first-line — ascites, liver texture, splenomegaly, masses, bladder volume"}
+  - {name: Plain abdominal X-ray, note: "dilated loops, air-fluid levels, coffee-bean sign, stool load"}
+  - {name: CT abdomen / pelvis with contrast, note: "obstruction, peritoneal carcinomatosis, pelvic or abdominal mass"}
+  - {name: Pelvic / transvaginal ultrasound, note: "ovarian mass, fibroids"}
+  - {name: EGD, note: "postprandial fullness with alarm features, vomiting, or age over 40–50 in Taiwan"}
+  - {name: Colonoscopy, note: "change in bowel habit, bleeding, anemia, or age-appropriate screening"}
+  - {name: Gastric emptying scintigraphy, note: "suspected gastroparesis after EGD excludes obstruction"}
+  - {name: Echocardiography, note: "suspected cardiac ascites"}
+
+ddx:
+  - group: Gas & functional
+    options: [fluctuating]
+    diseases: [functional_bloating, ibs, sibo, lactose_intolerance, constipation]
+  - group: Upper GI & gastric emptying
+    options: [postprandial]
+    diseases: [functional_dyspepsia, gastroparesis, gastric_outlet_obstruction, gastric_cancer, peptic_ulcer_disease]
+  - group: Obstruction & ileus
+    options: [rapid]
+    diseases: [small_bowel_obstruction, sigmoid_volvulus, colorectal_cancer, colonic_pseudo_obstruction]
+  - group: Ascites
+    options: [progressive]
+    diseases: [cirrhotic_ascites, malignant_ascites, sbp, heart_failure, nephrotic_syndrome, tb_peritonitis]
+  - group: Mass & organomegaly
+    options: [progressive, lump]
+    diseases: [ovarian_tumor, uterine_fibroids, acute_urinary_retention, liver_malignancy]
+
+hpi:
+  joiner: " "
+  sentences:
+    - always: true
+      parts:
+        - "({@date_roc}) {distension_pattern|abdominal distension}[ {distension_site}][ {distension_duration}]"
+    - parts: ["{episodes}"]
+    - lead: "Associated with "
+      parts: ["{bloating_features+,assoc_gi+,assoc_sys+,assoc_gu+}"]
+    - parts: ["{pain_location}"]
+    - lead: "Symptoms are "
+      parts: ["{meal_relation}", "{relieving}"]
+    - lead: "Worse after "
+      parts: ["{food_trigger+}"]
+    - lead: "Denied "
+      parts: ["{bloating_features-,assoc_gi-,assoc_sys-,assoc_gu-}"]
+    - parts: ["{alcohol_use}", "{alcohol_type}", "{alcohol_amount}", "{alcohol_years}", "{alcohol_last}"]
+    - lead: "Medications include "
+      parts: ["{distension_drugs+,diarrhea_drugs+}"]
+    - lead: "Not taking "
+      parts: ["{distension_drugs-,diarrhea_drugs-}"]
+    - lead: "Relevant history includes "
+      parts: ["{viral_history+,congestion_sx+,ascites_clues+,gyn_clues+,risk+,diarrhea_history+}"]
+    - lead: "No history of "
+      parts: ["{viral_history-,congestion_sx-,ascites_clues-,gyn_clues-,risk-,diarrhea_history-}"]
+
+pe_text:
+  joiner: "\n"
+  sentences:
+    - lead: "General: "
+      parts: ["{general}"]
+    - lead: "Vital signs: "
+      parts: ["{vitals*}"]
+    - lead: "Skin & eyes: "
+      parts: ["{skin*}"]
+    - lead: "Other: "
+      parts: ["{liver_pe*,congestion_pe*}"]
+    - lead: "Abdomen: "
+      parts:
+        - "{abd_contour}"
+        - "{distension_pe*}"
+        - "{bowel_sounds}"
+        - "{guarding}"
+        - "{tenderness}"
+        - "{rebound}"
+        - "{palpable*}"
+        - "{hernia}"
+    - lead: "Rectal exam: "
+      parts: ["{rectal}"]

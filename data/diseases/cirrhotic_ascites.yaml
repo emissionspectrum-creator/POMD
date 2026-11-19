@@ -1,0 +1,57 @@
+id: cirrhotic_ascites
+name: Cirrhosis with ascites
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Gradually increasing girth and weight with ankle swelling in a patient with chronic hepatitis B or C, alcohol
+  use, or MASLD — portal hypertension causes about 80% of ascites (SAAG ≥ 1.1).
+
+symptoms:
+  - when: distension_pattern = progressive
+    text: Steadily increasing girth over weeks
+  - when: distension_site = whole
+    text: Whole abdomen
+  - when: bloating_features = tight_clothes | visible
+    text: Clothes or belt tighter; visible swelling
+  - when: viral_history = hbv | hcv | hbv_tx | hcv_cured
+    text: Chronic hepatitis B or C (including treated HCV)
+  - when: alcohol_use = heavy | regular | former
+    text: Heavy or former heavy drinking
+  - when: alcohol_amount = g40_60 | g60_100 | gt100
+    text: Heavy daily alcohol intake
+  - when: assoc_sys = jaundice
+    text: Jaundice (decompensation)
+  - when: congestion_sx = leg_swelling
+    text: Ankle swelling
+  - when: assoc_gi = melena
+    text: Melena (varices)
+
+pe:
+  - when: palpable = ascites
+    text: Shifting dullness
+  - when: distension_pe = bulging_flanks | flank_dullness | fluid_wave
+    text: Bulging flanks, flank dullness, fluid wave
+  - when: distension_pe = caput
+    text: Dilated abdominal wall veins
+  - when: liver_pe = spider | palmar
+    text: Spider angiomata, palmar erythema
+  - when: skin = icterus
+    text: Scleral icterus
+  - when: palpable = splenomegaly
+    text: Splenomegaly
+  - when: congestion_pe = no jvp
+    text: JVP not raised (unlike cardiac ascites)
+
+labs:
+  - "Low albumin, low platelets, raised INR and bilirubin; HBsAg, anti-HCV"
+  - "Paracentesis: SAAG ≥ 1.1 g/dL with low total protein (< 2.5 g/dL)"
+
+imaging:
+  - Ultrasound — nodular liver, splenomegaly, ascites; Doppler for portal vein thrombosis
+  - AFP and ultrasound (or CT) to look for HCC as a trigger of decompensation
+
+pitfalls:
+  - Every new ascites needs a diagnostic tap, even in known cirrhosis.
+  - Look for the trigger of decompensation — HCC, portal vein thrombosis, SBP, alcohol relapse, HBV flare or stopped antivirals.
+  - Avoid NSAIDs; limit salt (about 2 g sodium a day) and use spironolactone ± furosemide.

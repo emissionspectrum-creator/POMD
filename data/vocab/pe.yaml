@@ -56,7 +56,7 @@
   options:
     - {id: flat, label: Not distended, frag: non-distended}
     - {id: mild, label: Mildly distended, frag: mildly distended}
-    - {id: marked, label: Markedly distended / tympanic, frag: markedly distended and tympanic}
+    - {id: marked, label: Markedly distended, frag: markedly distended}
 
 - id: bowel_sounds
   label: Bowel sounds
@@ -233,3 +233,18 @@
     - {id: telangiectasia, label: Mucocutaneous telangiectasias, frag: telangiectasias on the lips or fingertips}
     - {id: purpura, label: Bruising / purpura, frag: bruising or purpura}
 
+# ---------- Abdominal distension / fullness (data/complaints/abdominal_distension.yaml) ----------
+# Shifting dullness is palpable.ascites; contour is abd_contour.
+
+- id: distension_pe
+  label: Inspection & percussion
+  type: presence
+  join: ","
+  options:
+    - {id: bulging_flanks, label: Bulging flanks, frag: bulging flanks}
+    - {id: flank_dullness, label: Flank dullness, frag: dullness in the flanks, frag_neg: no flank dullness}
+    - {id: fluid_wave, label: Fluid wave, frag: a positive fluid wave}
+    - {id: tympany, label: Tympanic throughout, frag: tympanic throughout}
+    - {id: succussion, label: Succussion splash, frag: a succussion splash, frag_neg: no succussion splash, red_flag: true}
+    - {id: peristalsis, label: Visible peristalsis, frag: visible peristalsis}
+    - {id: caput, label: Dilated abdominal veins, frag: dilated abdominal wall veins}

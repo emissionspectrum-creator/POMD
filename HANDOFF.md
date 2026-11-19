@@ -107,6 +107,8 @@
 - `node --test tests/`（目錄）在 Node 22 會失敗，要用 `tests/*.test.js`。
 - 「無痛」這類特徵寫不出來：`pain_location` 是 multi，不能寫 `= no ...`（黑便踩過）；寫進 one_liner 就好。
 - 共用項目新增選項（例如 assoc_gi 的 retching）會出現在**所有顯示整個項目**的主訴；不想讓舊主訴看到，就在舊主訴改用 `{item, options}` 列出子集。
+- 共用疾病補特徵前，先看它原本有沒有同一個 `when`（例如 IBS 早就有 `relieving = defecation`）；項目已在新主訴顯示，舊特徵就會自動參與比對，重複寫會讓同一點選算兩次。
+- 共用選項的 frag 若把兩種發現綁在一起（例如原本的「markedly distended and tympanic」），在新主訴可能與其他發現矛盾；拆開，並在 CHANGELOG 註明舊主訴輸出的改變。
 - multi 項目的片段以 and 串接，選項要都是可並列的名詞片語；修飾語（如「惡臭」）併入某個選項，不要單獨成選項。
 
 ## 6. 驗證工具

@@ -25,6 +25,14 @@ symptoms:
   - when: assoc_sys = no weight_loss
     text: No weight loss
 
+  # abdominal_distension complaint
+  - when: distension_pattern = fluctuating
+    text: Bloating that comes and goes with meals
+  - when: bloating_features = flatulence
+    text: Flatulence
+  - when: assoc_gi = diarrhea
+    text: Loose stools
+
 pe:
   - when: tenderness = none | diffuse
     text: Normal or mildly tender abdomen

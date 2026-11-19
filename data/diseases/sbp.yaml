@@ -1,0 +1,48 @@
+id: sbp
+name: Spontaneous bacterial peritonitis
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Infection of cirrhotic ascites without a surgical source — fever, diffuse abdominal discomfort, worsening
+  ascites, confusion or kidney injury — sometimes with no symptoms at all.
+
+symptoms:
+  - when: distension_pattern = progressive | rapid
+    text: Worsening ascites
+  - when: assoc_sys = fever
+    text: Fever (often low-grade or absent)
+  - when: pain_location = diffuse
+    text: Diffuse abdominal pain or discomfort
+  - when: viral_history = hbv | hcv
+    text: Cirrhosis from hepatitis B or C
+  - when: alcohol_use = heavy | regular | former
+    text: Alcohol-related cirrhosis
+  - when: assoc_gi = melena | vomiting
+    text: Recent GI bleeding (a strong trigger) or vomiting
+  - when: assoc_sys = jaundice
+    text: Jaundice
+
+pe:
+  - when: palpable = ascites
+    text: Ascites
+  - when: tenderness = diffuse
+    text: Diffuse mild tenderness (rebound is uncommon)
+  - when: vitals = fever | tachycardia | hypotension
+    text: Fever, tachycardia, or hypotension
+  - when: general = confused
+    text: Hepatic encephalopathy
+  - when: liver_pe = asterixis
+    text: Asterixis
+
+labs:
+  - "Ascitic PMN ≥ 250/mm³ — treat before the culture returns"
+  - Ascitic fluid culture in blood-culture bottles; blood cultures; creatinine (hepatorenal injury)
+
+imaging:
+  - Ultrasound-guided tap if needed; CT if secondary peritonitis is suspected (perforation, abscess)
+
+pitfalls:
+  - Tap every cirrhotic with ascites who is admitted, has GI bleeding, or deteriorates — symptoms are often absent.
+  - Polymicrobial culture or very high protein / low glucose fluid suggests secondary (surgical) peritonitis.
+  - Give IV albumin with antibiotics to reduce kidney injury; long-term prophylaxis afterwards.

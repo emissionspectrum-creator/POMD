@@ -1,0 +1,46 @@
+id: colonic_pseudo_obstruction
+name: Acute colonic pseudo-obstruction (Ogilvie syndrome)
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Massive colonic dilatation without a mechanical cause in an elderly, immobile, or hospitalized patient —
+  after surgery, infection, or on opioids — with progressive painless or mildly painful distension.
+
+symptoms:
+  - when: distension_pattern = rapid
+    text: Distension developing over days
+  - when: distension_site = whole
+    text: Whole abdomen
+  - when: assoc_gi = constipation | obstipation
+    text: Reduced stool and flatus (some may still pass flatus)
+  - when: risk = retention_drugs
+    text: Opioids or anticholinergic drugs
+  - when: age_group = age_60_plus
+    text: Elderly
+  - when: risk = prior_surgery
+    text: Recent surgery (orthopedic, cardiac, cesarean)
+
+pe:
+  - when: abd_contour = marked
+    text: Marked tympanic distension
+  - when: distension_pe = tympany
+    text: Tympanic throughout
+  - when: bowel_sounds = normal | hypo
+    text: Bowel sounds often present
+  - when: tenderness = none | diffuse
+    text: Little tenderness — new tenderness suggests ischemia or perforation
+  - when: rebound = absent
+    text: No peritonism (unless perforated)
+
+labs:
+  - "Electrolytes: potassium, magnesium, calcium; correct them"
+  - Leukocytosis or rising lactate suggests ischemia
+
+imaging:
+  - Plain X-ray — cecal diameter; > 12 cm carries perforation risk
+  - CT to exclude a mechanical obstruction
+
+pitfalls:
+  - Exclude mechanical obstruction (colorectal cancer, volvulus) before treating it as pseudo-obstruction.
+  - Stop opioids and anticholinergics; neostigmine or colonoscopic decompression if conservative care fails.

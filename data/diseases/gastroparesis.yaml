@@ -1,0 +1,50 @@
+id: gastroparesis
+name: Gastroparesis
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Delayed gastric emptying without obstruction — early satiety, postprandial fullness, nausea and vomiting of
+  undigested food, most often in long-standing diabetes, after viral illness, or with drugs such as opioids
+  and GLP-1 agonists.
+
+symptoms:
+  - when: distension_pattern = postprandial
+    text: Postprandial upper abdominal fullness
+  - when: distension_site = upper
+    text: Upper abdomen
+  - when: assoc_gi = early_satiety | nausea | vomiting
+    text: Early satiety, nausea, vomiting
+  - when: assoc_gi = vomit_old_food
+    text: Vomiting food eaten many hours earlier
+  - when: meal_relation = worse_eating
+    text: Worse after meals, especially fatty or high-fiber meals
+  - when: risk = diabetes
+    text: Diabetes (often with neuropathy, retinopathy, or poor control)
+  - when: distension_drugs = glp1
+    text: GLP-1 receptor agonist
+  - when: risk = retention_drugs
+    text: Opioids or anticholinergic drugs
+  - when: diarrhea_history = gastric_surgery
+    text: Previous gastric surgery (vagotomy)
+
+pe:
+  - when: distension_pe = succussion
+    text: Succussion splash several hours after a meal
+  - when: tenderness = none | epigastric
+    text: Non-tender or mild epigastric tenderness
+  - when: general = dehydrated
+    text: Dehydration if vomiting
+
+labs:
+  - Glucose and HbA1c — hyperglycemia itself slows emptying
+  - TSH, electrolytes, calcium
+
+imaging:
+  - EGD first to exclude gastric outlet obstruction (food retained in the stomach is supportive but not diagnostic)
+  - Gastric emptying scintigraphy (4-hour solid meal) off opioids and GLP-1 agonists
+
+pitfalls:
+  - Always exclude mechanical gastric outlet obstruction before diagnosing gastroparesis.
+  - GLP-1 agonists (semaglutide, tirzepatide) are now a common cause — and retained food raises aspiration risk at endoscopy or anesthesia.
+  - Symptoms correlate poorly with emptying time; overlap with functional dyspepsia is large.

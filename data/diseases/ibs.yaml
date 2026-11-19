@@ -42,6 +42,12 @@ symptoms:
   - when: diarrhea_duration = m1_3 | gt3m
     text: Chronic (symptoms for at least 3 months)
 
+  # abdominal_distension complaint
+  - when: distension_pattern = fluctuating
+    text: Bloating that comes and goes, worse by evening
+  - when: distension_duration = gt3m
+    text: Chronic
+
 pe:
   - when: tenderness = none | llq | diffuse
     text: Normal exam or mild non-specific tenderness

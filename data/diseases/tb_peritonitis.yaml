@@ -1,0 +1,47 @@
+id: tb_peritonitis
+name: Tuberculous peritonitis
+must_not_miss: false
+timecourse: [subacute]
+status: draft
+one_liner: >
+  Weeks of abdominal swelling with low-grade fever, night sweats, and weight loss; exudative, lymphocytic
+  ascites with high ADA — more common in cirrhosis, dialysis, diabetes, and immunocompromise.
+
+symptoms:
+  - when: distension_pattern = progressive
+    text: Gradually increasing abdominal swelling
+  - when: distension_duration = w1_4 | m1_3
+    text: Weeks to a few months
+  - when: assoc_sys = fever | night_sweats
+    text: Low-grade fever, night sweats
+  - when: assoc_sys = weight_loss
+    text: Weight loss
+  - when: pain_location = diffuse
+    text: Vague diffuse abdominal pain
+  - when: ascites_clues = tb
+    text: Prior TB or TB contact
+  - when: risk = diabetes
+    text: Diabetes or other immunocompromise
+
+pe:
+  - when: palpable = ascites
+    text: Ascites
+  - when: tenderness = diffuse
+    text: Diffuse tenderness; a "doughy" abdomen
+  - when: palpable = mass
+    text: Matted bowel loops or omental mass
+  - when: vitals = fever
+    text: Fever
+
+labs:
+  - "Ascites: SAAG < 1.1, protein > 2.5 g/dL, lymphocyte-predominant, ADA > 39 U/L"
+  - AFB smear and culture of ascites (low yield), TB PCR; chest X-ray, IGRA
+
+imaging:
+  - CT — high-density ascites, smooth peritoneal thickening, omental changes, necrotic nodes
+  - Laparoscopic peritoneal biopsy when the diagnosis remains uncertain
+
+pitfalls:
+  - Easily mistaken for peritoneal carcinomatosis — ADA and biopsy separate them.
+  - Chest X-ray is normal in many cases.
+  - Taiwan's TB incidence is falling but remains higher in older adults and indigenous communities.

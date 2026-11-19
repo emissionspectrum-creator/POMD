@@ -25,6 +25,14 @@ symptoms:
   - when: assoc_gi = no hematochezia | melena
     text: No GI bleeding
 
+  # abdominal_distension complaint
+  - when: distension_pattern = fluctuating
+    text: Bloating that builds between bowel movements
+  - when: distension_site = lower | whole
+    text: Lower or whole abdomen
+  - when: distension_drugs = fermentable
+    text: Fiber supplements or lactulose can add to bloating
+
 pe:
   - when: abd_contour = mild | flat
     text: Mild distension or normal contour

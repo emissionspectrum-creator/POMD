@@ -1,0 +1,51 @@
+id: malignant_ascites
+name: Malignant ascites / peritoneal carcinomatosis
+must_not_miss: true
+timecourse: [subacute]
+status: draft
+one_liner: >
+  Rapidly increasing ascites with weight loss and anorexia from peritoneal spread of ovarian, gastric,
+  colorectal or pancreatic cancer (or liver metastases); the abdomen grows while the limbs waste.
+
+symptoms:
+  - when: distension_pattern = progressive
+    text: Girth increasing over weeks
+  - when: distension_duration = w1_4 | m1_3
+    text: Weeks to a few months
+  - when: assoc_sys = weight_loss
+    text: Weight loss despite a bigger abdomen
+  - when: assoc_gi = anorexia | early_satiety
+    text: Anorexia, early satiety
+  - when: ascites_clues = known_cancer
+    text: Known malignancy
+  - when: gyn_clues = postmenopausal
+    text: Postmenopausal woman — think ovarian cancer
+  - when: age_group = age_40_59 | age_60_plus
+    text: Middle-aged or older
+  - when: viral_history = no hbv | hcv
+    text: No known chronic liver disease
+
+pe:
+  - when: palpable = ascites
+    text: Shifting dullness
+  - when: palpable = mass | hepatomegaly
+    text: Abdominal or pelvic mass; nodular liver
+  - when: skin = virchow
+    text: Left supraclavicular node
+  - when: liver_pe = no spider | palmar
+    text: No stigmata of chronic liver disease
+  - when: rectal = mass
+    text: Rectal shelf or mass
+
+labs:
+  - "Paracentesis: SAAG < 1.1, high protein, cytology (repeat up to 3 samples)"
+  - CA-125 (raised in any ascites), CEA, CA 19-9
+
+imaging:
+  - CT chest / abdomen / pelvis with contrast — omental cake, peritoneal nodules, primary tumor
+  - Pelvic ultrasound in women
+
+pitfalls:
+  - CA-125 is raised by ascites of any cause — interpret with imaging.
+  - Peritoneal TB looks similar (high protein, lymphocytes) — check ADA before assuming malignancy.
+  - Hepatic metastases or HCC can give portal-hypertensive (high SAAG) ascites.

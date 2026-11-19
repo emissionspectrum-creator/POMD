@@ -23,6 +23,14 @@ symptoms:
   - when: onset = hours | sudden
     text: Develops over hours
 
+  # abdominal_distension complaint
+  - when: distension_pattern = lump | rapid
+    text: Lower abdominal swelling over hours
+  - when: distension_site = lower
+    text: Lower abdomen
+  - when: distension_duration = lt1d | d1_7
+    text: Acute
+
 pe:
   - when: palpable = bladder
     text: Distended, palpable bladder, dull to percussion

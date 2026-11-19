@@ -41,6 +41,12 @@ symptoms:
   - when: blood_loss_sx = postural_dizziness | syncope
     text: Dizziness or syncope if the bleed is large
 
+  # abdominal_distension complaint
+  - when: distension_pattern = postprandial
+    text: Upper abdominal fullness or bloating after meals
+  - when: distension_site = upper
+    text: Upper abdomen
+
 pe:
   - when: tenderness = epigastric
     text: Mild epigastric tenderness

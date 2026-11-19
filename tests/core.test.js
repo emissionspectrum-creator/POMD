@@ -500,6 +500,45 @@ test('built data: black stool complaint — appearance ordering, mimics, shared 
   assert.equal(Core.orderGroups(c, r)[0].group.group, 'Small bowel & right colon');
 });
 
+test('built data: abdominal distension complaint — pattern ordering, ascites, shared diseases, HPI', () => {
+  const data = loadBuiltData();
+  const it = data.items;
+  const c = data.complaints.find((x) => x.id === 'abdominal_distension');
+  const ab = data.complaints.find((x) => x.id === 'abdominal_pain');
+  assert.ok(c && ab);
+  // bloating is the complaint itself; vomiting old food only here
+  assert.ok(!Core.itemOptions(c, it.assoc_gi).some((o) => o.id === 'bloating'));
+  assert.ok(Core.itemOptions(c, it.assoc_gi).some((o) => o.id === 'vomit_old_food'));
+  assert.ok(!Core.itemOptions(ab, it.assoc_gi).some((o) => o.id === 'vomit_old_food'));
+  // shared disease: distension features hidden in abdominal pain
+  const sbo = data.diseases.small_bowel_obstruction;
+  assert.ok(Core.diseaseFeatures(sbo, c).some((f) => f.item === 'distension_pattern'));
+  assert.ok(!Core.diseaseFeatures(sbo, ab).some((f) => f.item === 'distension_pattern'));
+  // progressive girth with liver disease → ascites first, cirrhosis top by matches
+  const s = Core.defaultState(c, it);
+  Core.toggle(s, it.distension_pattern, 'progressive');
+  Core.toggle(s, it.distension_duration, 'm1_3');
+  Core.toggle(s, it.viral_history, 'hbv');
+  Core.toggle(s, it.palpable, 'ascites');
+  Core.toggle(s, it.liver_pe, 'spider');
+  assert.equal(Core.orderGroups(c, s)[0].group.group, 'Ascites');
+  assert.deepEqual(Core.selectedTimecourses(c, s, it), ['subacute']);
+  assert.equal(Core.rankByMatches(c, data.diseases, s, it)[0].id, 'cirrhotic_ascites');
+  const hpi = Core.composeText(c.hpi, s, it, { date_roc: '115/01/05' });
+  assert.match(hpi, /^\(115\/01\/05\) a steadily increasing abdominal girth for 1–3 months\./);
+  assert.match(hpi, /Relevant history includes chronic hepatitis B\./);
+  // fluctuating → gas & functional; postprandial with old-food vomiting → upper GI
+  const f = Core.defaultState(c, it);
+  Core.toggle(f, it.distension_pattern, 'fluctuating');
+  assert.equal(Core.orderGroups(c, f)[0].group.group, 'Gas & functional');
+  const g = Core.defaultState(c, it);
+  Core.toggle(g, it.distension_pattern, 'postprandial');
+  Core.toggle(g, it.assoc_gi, 'vomit_old_food');
+  Core.toggle(g, it.risk, 'diabetes');
+  assert.equal(Core.orderGroups(c, g)[0].group.group, 'Upper GI & gastric emptying');
+  assert.equal(Core.rankByMatches(c, data.diseases, g, it)[0].id, 'gastroparesis');
+});
+
 test('details blocks: sub-items count as shown and are summarized', () => {
   const { items } = fixture();
   const complaint = {

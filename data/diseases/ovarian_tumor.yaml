@@ -1,0 +1,50 @@
+id: ovarian_tumor
+name: Ovarian tumor / ovarian cancer
+must_not_miss: true
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Persistent new bloating, early satiety, pelvic pressure or urinary frequency in a woman, especially over 50;
+  a large benign cyst gives a lower-abdominal swelling, while ovarian cancer often presents late with ascites.
+
+symptoms:
+  - when: sex = female
+    text: Woman
+  - when: age_group = age_40_59 | age_60_plus
+    text: Usually over 50 (germ-cell tumors in the young)
+  - when: gyn_clues = postmenopausal
+    text: Postmenopausal
+  - when: distension_pattern = progressive | lump
+    text: Persistent, progressive swelling or a lower abdominal lump
+  - when: distension_site = lower | whole
+    text: Lower abdomen (whole abdomen with ascites)
+  - when: assoc_gi = early_satiety | anorexia
+    text: Early satiety, poor appetite
+  - when: assoc_gu = frequency
+    text: Urinary frequency or urgency
+  - when: gyn_clues = fhx_ovarian | known_fibroids
+    text: Family history of ovarian / breast cancer (BRCA); a known ovarian cyst
+  - when: assoc_sys = weight_loss
+    text: Weight loss (advanced disease)
+
+pe:
+  - when: palpable = mass
+    text: Pelvic or lower abdominal mass
+  - when: palpable = ascites
+    text: Ascites
+  - when: tenderness = none | suprapubic
+    text: Usually non-tender
+  - when: distension_pe = flank_dullness
+    text: Flank dullness (ascites)
+
+labs:
+  - CA-125 (interpret with menopausal status and imaging); CEA, CA 19-9 for a GI primary
+  - AFP, β-hCG, LDH in younger women (germ-cell tumors)
+
+imaging:
+  - Transvaginal / pelvic ultrasound — first test
+  - CT chest / abdomen / pelvis for staging; refer to gynecologic oncology
+
+pitfalls:
+  - Symptoms are vague and are often labelled IBS or "indigestion" — new bloating in women over 50 deserves a pelvic ultrasound.
+  - A gastric or colorectal primary can metastasize to the ovary (Krukenberg tumor) — consider EGD and colonoscopy.

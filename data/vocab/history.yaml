@@ -274,6 +274,7 @@
     - {id: hematemesis, label: Vomiting blood, frag: hematemesis, red_flag: true}
     - {id: coffee_ground, label: Coffee-ground vomit, frag: coffee-ground vomiting, red_flag: true}
     - {id: retching, label: Retching before bleeding, frag: forceful retching or vomiting before the bleeding}
+    - {id: vomit_old_food, label: Vomiting food from hours before, frag: vomiting of food eaten many hours earlier, red_flag: true}
     - {id: anorexia, label: Loss of appetite, frag: anorexia}
     - {id: early_satiety, label: Early satiety, frag: early satiety}
     - {id: bloating, label: Bloating, frag: bloating}
@@ -896,3 +897,93 @@
     - {id: aortic_stenosis, label: Aortic stenosis, frag: aortic stenosis}
     - {id: aortic_graft, label: Aortic graft / AAA repair, frag: an aortic graft or AAA repair, red_flag: true}
     - {id: gastric_surgery, label: Prior gastric surgery, frag: prior gastric surgery}
+
+# ---------- Abdominal distension / fullness (data/complaints/abdominal_distension.yaml) ----------
+# distension_pattern drives the right-column order: fluctuating → gas & functional, postprandial → upper GI,
+# rapid → obstruction, progressive → ascites and masses, lump → masses.
+
+- id: distension_pattern
+  label: Pattern
+  type: multi
+  ask:
+    - "Does the swelling come and go, or has your belly been getting steadily bigger?"
+    - "Is it flat when you wake up and worse as the day goes on?"
+    - "Is it more a feeling of fullness in the upper tummy after you eat?"
+  options:
+    - {id: fluctuating, label: "Comes and goes, worse by evening", frag: "bloating that comes and goes, flatter in the morning and worse as the day goes on"}
+    - {id: postprandial, label: Upper fullness after meals, frag: upper abdominal fullness after meals}
+    - {id: rapid, label: "Rapid, over hours to days", frag: rapidly increasing distension over hours to days, red_flag: true}
+    - {id: progressive, label: Steadily growing girth, frag: a steadily increasing abdominal girth, red_flag: true}
+    - {id: lump, label: Localized swelling / lump, frag: a localized abdominal swelling, red_flag: true}
+
+- id: distension_site
+  label: Where
+  type: multi
+  template: "involving the {}"
+  ask:
+    - "Where do you feel the swelling or fullness — upper tummy, the whole belly, or lower down?"
+  options:
+    - {id: upper, label: Upper abdomen, frag: upper abdomen}
+    - {id: whole, label: Whole abdomen, frag: whole abdomen}
+    - {id: lower, label: Lower abdomen, frag: lower abdomen}
+
+# Distension uses its own duration: < 1 week acute, 1 week – 3 months subacute, > 3 months chronic.
+- id: distension_duration
+  label: Duration
+  type: single
+  ask:
+    - "How long have you noticed this?"
+    - "When did your belly first start to feel swollen or full?"
+  options:
+    - {id: lt1d, label: "<24 h", frag: since today, tc: [acute]}
+    - {id: d1_7, label: "1–7 d", frag: for 1–7 days, tc: [acute]}
+    - {id: w1_4, label: "1–4 wk", frag: for 1–4 weeks, tc: [subacute]}
+    - {id: m1_3, label: "1–3 mo", frag: for 1–3 months, tc: [subacute]}
+    - {id: gt3m, label: ">3 mo", frag: for more than 3 months, tc: [chronic]}
+
+- id: bloating_features
+  label: Features
+  type: presence
+  ask:
+    - "Have your clothes or belt been getting tighter? Has anyone said your belly looks bigger?"
+    - "Are you burping or passing a lot of wind?"
+  options:
+    - {id: tight_clothes, label: Clothes / belt getting tighter, frag: clothes and belt becoming tighter}
+    - {id: visible, label: Belly visibly bigger, frag: visible abdominal swelling}
+    - {id: belching, label: Belching, frag: frequent belching}
+    - {id: flatulence, label: Passing a lot of gas, frag: excessive flatulence}
+
+- id: ascites_clues
+  label: Other clues
+  type: presence
+  ask:
+    - "Have you noticed frothy urine, or puffiness around your eyes in the morning?"
+    - "Have you ever had tuberculosis, or been close to someone who had it?"
+    - "Have you ever been told you have cancer?"
+  options:
+    - {id: frothy_urine, label: Frothy urine / puffy face, frag: frothy urine or facial puffiness}
+    - {id: tb, label: Prior TB / TB contact, frag: prior tuberculosis or TB contact}
+    - {id: known_cancer, label: Known cancer, frag: a known malignancy, red_flag: true}
+
+- id: gyn_clues
+  label: Gynecologic
+  type: presence
+  ask:
+    - "Have your periods stopped? Have you had any bleeding since?"
+    - "Are your periods heavy or long? Have you been told you have fibroids or an ovarian cyst?"
+    - "Has anyone in your family had ovarian or breast cancer?"
+  options:
+    - {id: postmenopausal, label: Postmenopausal, frag: postmenopausal status}
+    - {id: heavy_periods, label: Heavy / prolonged periods, frag: heavy or prolonged periods}
+    - {id: known_fibroids, label: Known fibroids / ovarian cyst, frag: known uterine fibroids or an ovarian cyst}
+    - {id: fhx_ovarian, label: Family history of ovarian / breast cancer, frag: a family history of ovarian or breast cancer}
+
+- id: distension_drugs
+  label: Medications
+  type: presence
+  ask:
+    - "Are you on any injections or tablets for diabetes or weight loss, like semaglutide?"
+    - "Do you take fibre supplements, lactulose, or acarbose?"
+  options:
+    - {id: glp1, label: "GLP-1 agonist (semaglutide, liraglutide)", frag: GLP-1 receptor agonists}
+    - {id: fermentable, label: "Fiber / lactulose / acarbose", frag: "fiber supplements, lactulose, or acarbose"}
