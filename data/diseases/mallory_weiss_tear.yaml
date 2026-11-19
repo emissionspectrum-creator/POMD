@@ -1,0 +1,47 @@
+id: mallory_weiss_tear
+name: Mallory-Weiss tear
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Hematemesis — sometimes with melena — after repeated forceful retching or vomiting, classically after
+  a drinking binge; a mucosal tear at the gastroesophageal junction that usually stops bleeding on its own.
+
+symptoms:
+  - when: assoc_gi = retching
+    text: Forceful retching or vomiting before the bleeding
+  - when: assoc_gi = hematemesis
+    text: Hematemesis (fresh blood after initially non-bloody vomit)
+  - when: assoc_gi = vomiting | nausea
+    text: Vomiting from any cause — alcohol, gastroenteritis, pregnancy, chemotherapy
+  - when: risk = alcohol
+    text: Heavy drinking or a recent binge
+  - when: melena_duration = lt1d | d1_3
+    text: Acute, within hours to a day of retching
+  - when: melena_count = once | two_three
+    text: Usually limited, self-terminating bleeding
+  - when: bleed_drugs = aspirin | antiplatelet | warfarin | doac
+    text: Antithrombotics prolong bleeding
+  - when: bleed_history = varices
+    text: Portal hypertension increases bleeding severity
+
+pe:
+  - when: general = comfortable
+    text: Usually stable
+  - when: tenderness = none | epigastric
+    text: Non-tender or mild epigastric tenderness
+  - when: rectal = melena | normal
+    text: Melena only if bleeding is significant
+
+labs:
+  - CBC, BUN, creatinine
+  - Electrolytes — hypokalemia and alkalosis from vomiting
+  - Lipase and LFT if alcohol-related
+
+imaging:
+  - EGD confirms the tear and excludes varices or ulcer; most tears need no endoscopic therapy
+
+pitfalls:
+  - Only about half of patients report the classic history of retching before hematemesis.
+  - Severe chest pain, dyspnea, or subcutaneous emphysema after vomiting suggests Boerhaave syndrome (esophageal rupture), not a Mallory-Weiss tear.
+  - In a heavy drinker, assume varices may be present until EGD.

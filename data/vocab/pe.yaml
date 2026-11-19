@@ -221,3 +221,15 @@
     - {id: lymphadenopathy, label: Cervical lymphadenopathy, frag: cervical lymphadenopathy, frag_neg: no cervical lymphadenopathy}
     - {id: tonsillar_exudate, label: Tonsillar exudate, frag: tonsillar exudate}
     - {id: rash, label: Rash, frag: a rash}
+
+# ---------- Black stool (data/complaints/black_stool.yaml) ----------
+
+- id: bleed_pe
+  label: Nose, mouth & skin
+  type: presence
+  join: ","
+  options:
+    - {id: oronasal_blood, label: Blood in nose / pharynx, frag: blood or clots in the nose or posterior pharynx, frag_neg: no blood in the nose or pharynx}
+    - {id: telangiectasia, label: Mucocutaneous telangiectasias, frag: telangiectasias on the lips or fingertips}
+    - {id: purpura, label: Bruising / purpura, frag: bruising or purpura}
+

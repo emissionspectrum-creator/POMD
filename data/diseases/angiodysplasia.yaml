@@ -1,0 +1,49 @@
+id: angiodysplasia
+name: Angiodysplasia (GI angioectasia)
+must_not_miss: false
+timecourse: [acute, chronic]
+status: draft
+one_liner: >
+  Painless, intermittent black or maroon stools, or iron-deficiency anemia, in an older patient with CKD /
+  dialysis, aortic stenosis (Heyde syndrome), or an LVAD; lesions in the stomach, small bowel, or right colon.
+
+symptoms:
+  - when: stool_appearance = tarry | maroon
+    text: Melena or maroon stools
+  - when: melena_duration = intermittent
+    text: Intermittent bleeding over months
+  - when: episodes = recurrent
+    text: Recurrent episodes
+  - when: blood_loss_sx = fatigue | dyspnea
+    text: Fatigue and exertional dyspnea from chronic anemia
+  - when: bleed_history = ckd | aortic_stenosis
+    text: CKD / dialysis or aortic stenosis
+  - when: bleed_history = prior_gi_bleed
+    text: Previous obscure GI bleeding
+  - when: bleed_drugs = aspirin | antiplatelet | warfarin | doac
+    text: Antithrombotics unmask bleeding
+  - when: age_group = age_60_plus
+    text: Usually over 60
+
+pe:
+  - when: skin = pallor
+    text: Pallor
+  - when: bleed_pe = telangiectasia
+    text: Lip or fingertip telangiectasias (hereditary hemorrhagic telangiectasia)
+  - when: tenderness = none
+    text: Non-tender abdomen
+  - when: rectal = melena | fresh_blood
+    text: Melena or maroon blood on the glove
+
+labs:
+  - CBC, ferritin (iron-deficiency anemia)
+  - Creatinine
+
+imaging:
+  - EGD and colonoscopy; capsule endoscopy for small-bowel lesions, then device-assisted enteroscopy for therapy
+  - Echocardiography if an aortic stenosis murmur is heard
+
+pitfalls:
+  - The most common cause of small-bowel ("obscure") bleeding in older adults.
+  - Heyde syndrome — aortic stenosis causes acquired von Willebrand deficiency; bleeding may stop after valve replacement.
+  - Finding one angioectasia does not prove it is the source; look for others.

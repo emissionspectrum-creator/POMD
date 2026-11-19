@@ -80,7 +80,7 @@ node --test --test-name-pattern="sanitizeState" tests/*.test.js   # 只跑名稱
   3. rebase 後若有拉到新的 `data/`／`src/` 變更，重新 build、跑測試，有變動就再 commit。
   4. `git push origin HEAD:main`（雲端 session 在 `claude/...` 分支上也一樣推到 `main`）。
 - 不要 force push。push 被拒（遠端又有新 commit）就回到步驟 1。
-- 雲端沒有本機的 playwright chromium，瀏覽器實測回本機做。
+- 雲端 session 有預裝 Chromium（`require('playwright')` 可直接用、`chromium.launch()` 免參數），也可以在雲端做瀏覽器實測。
 
 ## 資料格式
 

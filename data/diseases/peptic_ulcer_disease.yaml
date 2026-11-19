@@ -29,6 +29,18 @@ symptoms:
   - when: assoc_sys = no weight_loss
     text: No weight loss (weight loss raises concern for malignancy)
 
+  # black_stool complaint
+  - when: stool_appearance = tarry
+    text: Melena — a bleeding ulcer is the commonest cause of upper GI bleeding
+  - when: assoc_gi = hematemesis | coffee_ground
+    text: Hematemesis or coffee-ground vomit
+  - when: bleed_drugs = nsaid | aspirin | antiplatelet | steroid
+    text: NSAIDs, aspirin, other antiplatelets; steroids add risk when combined with NSAIDs
+  - when: bleed_history = prior_gi_bleed
+    text: Previous ulcer bleeding
+  - when: blood_loss_sx = postural_dizziness | syncope
+    text: Dizziness or syncope if the bleed is large
+
 pe:
   - when: tenderness = epigastric
     text: Mild epigastric tenderness
@@ -38,6 +50,9 @@ pe:
     text: Pallor if there is chronic blood loss
   - when: rectal = melena
     text: Melena on rectal exam if bleeding
+  # black_stool complaint
+  - when: vitals = tachycardia | hypotension
+    text: Tachycardia or hypotension with a significant bleed
 
 labs:
   - CBC — iron-deficiency anemia from occult bleeding
@@ -54,3 +69,4 @@ pitfalls:
   - Sudden severe pain with rigidity means perforation; persistent vomiting suggests gastric outlet obstruction.
   - PPI use, antibiotics, and bismuth cause false-negative H. pylori tests.
   - Exclude ACS in older patients with new "epigastric" pain, especially on exertion.
+  - In black stool, NSAID ulcers often bleed without any preceding pain — ask about every painkiller, including herbal remedies.

@@ -1,0 +1,49 @@
+id: aortoenteric_fistula
+name: Aortoenteric fistula
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  A small "herald" bleed — hematemesis or melena that stops on its own — in a patient with a prior aortic
+  graft or AAA repair, followed hours to weeks later by exsanguinating hemorrhage; usually the third or fourth duodenum.
+
+symptoms:
+  - when: bleed_history = aortic_graft
+    text: Previous aortic graft or endovascular AAA repair
+  - when: stool_appearance = tarry | maroon
+    text: Melena or maroon stools
+  - when: assoc_gi = hematemesis
+    text: Hematemesis
+  - when: melena_count = once
+    text: A single self-limited "herald" bleed
+  - when: blood_loss_sx = syncope | postural_dizziness
+    text: Syncope or shock with the major bleed
+  - when: assoc_sys = fever
+    text: Fever (graft infection)
+  - when: pain_location = periumbilical | diffuse | flank_l
+    text: Abdominal or back pain
+  - when: risk = atherosclerosis
+    text: Atherosclerotic vascular disease
+  - when: age_group = age_60_plus
+    text: Older patients
+
+pe:
+  - when: vitals = tachycardia | hypotension
+    text: Tachycardia or hypotension
+  - when: palpable = mass
+    text: Pulsatile abdominal mass (primary AAA)
+  - when: rectal = melena
+    text: Melena on rectal exam
+
+labs:
+  - CBC, type & cross-match
+  - Blood cultures if febrile
+
+imaging:
+  - CT angiography — first test when suspected; may show peri-graft gas or fluid
+  - EGD to the 3rd / 4th part of the duodenum, mainly to exclude another source
+
+pitfalls:
+  - Any GI bleeding in a patient with an aortic graft is an aortoenteric fistula until proven otherwise — send to the ED.
+  - The herald bleed stops and the patient looks well; delay is fatal.
+  - Primary fistulas (from an untreated AAA) are rare; most follow open graft repair.

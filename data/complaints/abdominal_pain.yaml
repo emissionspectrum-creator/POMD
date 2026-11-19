@@ -22,7 +22,15 @@ history:
   - section: Radiation
     items: [radiation]
   - section: Associated symptoms
-    items: [assoc_gi, assoc_sys, assoc_gu, assoc_other]
+    items:
+      # retching (Mallory-Weiss) is for the black stool complaint
+      - item: assoc_gi
+        options: [nausea, vomiting, hematemesis, coffee_ground, anorexia, early_satiety, bloating, heartburn,
+                  dysphagia, diarrhea, bloody_diarrhea, constipation, obstipation, melena, hematochezia, tenesmus,
+                  bowel_change, steatorrhea]
+      - assoc_sys
+      - assoc_gu
+      - assoc_other
   - section: Relevant history
     items: [risk]
 

@@ -1,0 +1,41 @@
+id: dieulafoy_lesion
+name: Dieulafoy lesion
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Sudden, painless, often massive and recurrent bleeding from a large-caliber submucosal artery (usually
+  in the proximal stomach) in an older patient, with a normal-looking or near-normal endoscopy.
+
+symptoms:
+  - when: stool_appearance = tarry | maroon
+    text: Melena, or maroon stools if brisk
+  - when: assoc_gi = hematemesis
+    text: Hematemesis
+  - when: blood_loss_sx = postural_dizziness | syncope
+    text: Often hemodynamically significant
+  - when: episodes = recurrent
+    text: Recurrent, intermittent bleeding
+  - when: bleed_history = prior_gi_bleed | ckd
+    text: Prior unexplained bleeding; CKD, cardiovascular disease
+  - when: age_group = age_60_plus
+    text: Usually older, often male
+
+pe:
+  - when: vitals = tachycardia | hypotension
+    text: Tachycardia or hypotension
+  - when: tenderness = none
+    text: Non-tender abdomen
+  - when: rectal = melena
+    text: Melena on rectal exam
+
+labs:
+  - CBC, type & cross-match, coagulation
+
+imaging:
+  - EGD — may be missed if not actively bleeding; repeat endoscopy is often needed
+  - CT angiography or angiography if endoscopy fails
+
+pitfalls:
+  - Initial EGD finds the lesion in only about 70% — a "negative" EGD with major bleeding warrants a second look.
+  - Lesions also occur in the duodenum, jejunum, and colon.

@@ -272,6 +272,8 @@
     - {id: nausea, label: Nausea, frag: nausea}
     - {id: vomiting, label: Vomiting, frag: vomiting}
     - {id: hematemesis, label: Vomiting blood, frag: hematemesis, red_flag: true}
+    - {id: coffee_ground, label: Coffee-ground vomit, frag: coffee-ground vomiting, red_flag: true}
+    - {id: retching, label: Retching before bleeding, frag: forceful retching or vomiting before the bleeding}
     - {id: anorexia, label: Loss of appetite, frag: anorexia}
     - {id: early_satiety, label: Early satiety, frag: early satiety}
     - {id: bloating, label: Bloating, frag: bloating}
@@ -768,3 +770,129 @@
     - {id: autoimmune, label: Other autoimmune disease, frag: another autoimmune disease}
     - {id: fhx_liver, label: Family history of liver disease, frag: a family history of liver disease}
     - {id: exercise, label: Strenuous exercise / muscle injury, frag: recent strenuous exercise or muscle injury}
+
+# ---------- Black stool (data/complaints/black_stool.yaml) ----------
+# Black stool is the complaint itself, so assoc_gi's melena option is not shown there; stool_appearance
+# describes it instead (and drives the right-column order: tarry → upper GI, maroon → small bowel / colon,
+# formed / dark green → not true melena).
+
+- id: stool_appearance
+  label: Stool appearance
+  type: multi
+  ask:
+    - "What do the stools look like — black and sticky like tar, or black but otherwise normal?"
+    - "Do they smell much worse than usual? Are they shiny, and hard to flush away?"
+    - "Is there any red or dark red blood mixed in?"
+  options:
+    - {id: tarry, label: "Tarry, sticky, foul", frag: "tarry, sticky, foul-smelling black stools", red_flag: true}
+    - {id: formed, label: Black but formed, frag: formed black stools}
+    - {id: dark_green, label: Dark green / greenish-black, frag: dark green stools}
+    - {id: maroon, label: Maroon / dark red, frag: maroon stools, red_flag: true}
+    - {id: fresh_blood, label: Mixed with fresh blood, frag: stools mixed with fresh blood}
+
+# Black stool uses its own duration: up to 1 week acute, 1–4 weeks subacute, on and off > 1 month chronic.
+- id: melena_duration
+  label: Duration
+  type: single
+  ask:
+    - "When did you first notice the black stools?"
+    - "Has this happened on and off over the past weeks or months?"
+  options:
+    - {id: lt1d, label: "<24 h", frag: since today, tc: [acute]}
+    - {id: d1_3, label: "1–3 d", frag: for 1–3 days, tc: [acute]}
+    - {id: d4_7, label: "4–7 d", frag: for 4–7 days, tc: [acute]}
+    - {id: w1_4, label: "1–4 wk", frag: for 1–4 weeks, tc: [subacute]}
+    - {id: intermittent, label: "On and off >1 mo", frag: on and off for more than a month, tc: [chronic]}
+
+- id: melena_count
+  label: How many times
+  type: single
+  ask:
+    - "How many black stools have you passed altogether?"
+  options:
+    - {id: once, label: Once, frag: a single episode}
+    - {id: two_three, label: 2–3 times, frag: 2–3 episodes}
+    - {id: four_plus, label: 4 or more, frag: 4 or more episodes, red_flag: true}
+
+- id: melena_last
+  label: Last black stool
+  type: single
+  ask:
+    - "When was the last black stool? Was it today?"
+    - "Has your most recent stool gone back to a normal colour?"
+  options:
+    - {id: today, label: Today, frag: the last one today, red_flag: true}
+    - {id: yesterday, label: Yesterday, frag: the last one yesterday}
+    - {id: gt2d, label: ">2 days ago", frag: the last one more than 2 days ago}
+    - {id: normal_since, label: Normal stool since, frag: with normal-coloured stool since}
+
+- id: melena_mimic
+  label: Dark-stool causes
+  type: presence
+  ask:
+    - "Are you taking any iron tablets, or stomach medicine that contains bismuth? Any charcoal tablets?"
+    - "In the last couple of days, have you eaten pig blood cake, duck blood, squid ink, or a lot of black sesame?"
+  options:
+    - {id: iron, label: Oral iron, frag: oral iron}
+    - {id: bismuth, label: Bismuth antacids, frag: bismuth-containing antacids}
+    - {id: charcoal, label: Activated charcoal, frag: activated charcoal}
+    - {id: dark_food, label: Dark foods, frag: "dark foods (pig blood cake, duck blood, squid ink, black sesame)"}
+
+- id: swallowed_blood
+  label: Swallowed blood
+  type: presence
+  ask:
+    - "Have you had any nosebleeds, or bleeding from your gums or after dental work?"
+    - "Have you coughed up any blood?"
+  options:
+    - {id: nosebleed, label: Nosebleed, frag: epistaxis}
+    - {id: gums, label: Gum / dental bleeding, frag: gum bleeding or recent dental work}
+    - {id: hemoptysis, label: Coughing up blood, frag: hemoptysis, red_flag: true}
+
+- id: blood_loss_sx
+  label: Blood loss symptoms
+  type: presence
+  ask:
+    - "Do you feel dizzy or light-headed when you stand up? Have you fainted or nearly fainted?"
+    - "Any racing heartbeat, chest pain, or getting short of breath more easily than usual?"
+    - "Have you been breaking out in cold sweats, or felt unusually tired?"
+  options:
+    - {id: postural_dizziness, label: Dizzy on standing, frag: dizziness on standing, red_flag: true}
+    - {id: syncope, label: Fainting / near-fainting, frag: syncope or presyncope, red_flag: true}
+    - {id: palpitations, label: Palpitations, frag: palpitations}
+    - {id: chest_pain, label: Chest pain / tightness, frag: chest pain, red_flag: true}
+    - {id: dyspnea, label: Short of breath, frag: shortness of breath}
+    - {id: cold_sweats, label: Cold sweats, frag: cold sweats}
+    - {id: confusion, label: Confusion, frag: confusion, red_flag: true}
+    - {id: fatigue, label: Fatigue, frag: fatigue}
+
+- id: bleed_drugs
+  label: Medications
+  type: presence
+  ask:
+    - "Do you take aspirin, or any other blood thinner — clopidogrel, warfarin, or one of the newer ones like rivaroxaban or apixaban?"
+    - "Any painkillers or anti-inflammatories, including ones bought over the counter or herbal pain remedies? Any steroids?"
+    - "Do you take any medicines for mood or anxiety?"
+  options:
+    - {id: aspirin, label: Aspirin, frag: aspirin}
+    - {id: antiplatelet, label: "Other antiplatelet (clopidogrel, ticagrelor)", frag: "other antiplatelet agents (clopidogrel or ticagrelor)"}
+    - {id: warfarin, label: Warfarin, frag: warfarin, red_flag: true}
+    - {id: doac, label: DOAC, frag: direct oral anticoagulants, red_flag: true}
+    - {id: nsaid, label: "NSAID / COX-2 (incl. unlabeled painkillers)", frag: NSAIDs or COX-2 inhibitors}
+    - {id: steroid, label: Corticosteroids, frag: systemic corticosteroids}
+    - {id: ssri, label: SSRI, frag: SSRIs}
+
+- id: bleed_history
+  label: GI / bleeding history
+  type: presence
+  ask:
+    - "Have you ever had bleeding from the stomach or bowel before? Have you been told you have varices?"
+    - "Do you have kidney disease or are you on dialysis? Any problem with a heart valve?"
+    - "Have you had an operation on your aorta, or on your stomach?"
+  options:
+    - {id: prior_gi_bleed, label: Prior GI bleeding, frag: a previous GI bleed}
+    - {id: varices, label: Known varices, frag: known esophageal or gastric varices, red_flag: true}
+    - {id: ckd, label: CKD / dialysis, frag: chronic kidney disease or dialysis}
+    - {id: aortic_stenosis, label: Aortic stenosis, frag: aortic stenosis}
+    - {id: aortic_graft, label: Aortic graft / AAA repair, frag: an aortic graft or AAA repair, red_flag: true}
+    - {id: gastric_surgery, label: Prior gastric surgery, frag: prior gastric surgery}

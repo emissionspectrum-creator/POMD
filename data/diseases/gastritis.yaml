@@ -23,6 +23,14 @@ symptoms:
   - when: risk = nsaid | alcohol | hpylori
     text: Regular NSAIDs, heavy drinking, H. pylori
 
+  # black_stool complaint
+  - when: stool_appearance = tarry
+    text: Melena, usually modest
+  - when: assoc_gi = coffee_ground | hematemesis
+    text: Coffee-ground vomit
+  - when: bleed_drugs = nsaid | aspirin | antiplatelet | warfarin | doac
+    text: NSAIDs, aspirin, or anticoagulants
+
 pe:
   - when: tenderness = epigastric | none
     text: Mild epigastric tenderness or normal exam

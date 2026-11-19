@@ -1,0 +1,37 @@
+id: swallowed_blood
+name: Swallowed blood (epistaxis, oral bleeding, hemoptysis)
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  True melena from blood swallowed after a posterior nosebleed, gum or dental bleeding, or hemoptysis,
+  with no GI lesion; may also cause "hematemesis".
+
+symptoms:
+  - when: swallowed_blood = nosebleed | gums | hemoptysis
+    text: Recent nosebleed, gum or dental bleeding, or hemoptysis
+  - when: stool_appearance = tarry
+    text: Can produce true tarry stools
+  - when: assoc_gi = hematemesis
+    text: Vomiting swallowed blood
+  - when: bleed_drugs = aspirin | antiplatelet | warfarin | doac
+    text: Antithrombotics prolong nose or gum bleeding
+
+pe:
+  - when: bleed_pe = oronasal_blood
+    text: Blood or clots in the nose or posterior pharynx
+  - when: tenderness = none
+    text: Non-tender abdomen
+  - when: rectal = melena
+    text: Melena on rectal exam
+
+labs:
+  - CBC, PT / INR if on warfarin
+
+imaging:
+  - ENT examination of the nasal cavity; chest X-ray if hemoptysis
+  - EGD if no clear source or bleeding continues
+
+pitfalls:
+  - Posterior epistaxis may not be noticed by the patient — look at the posterior pharynx.
+  - Hemoptysis can be mistaken for hematemesis; ask about coughing.

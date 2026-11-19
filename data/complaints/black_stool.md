@@ -1,6 +1,6 @@
 # 主訴設計說明：Black stool（黑便）
 
-> 狀態：**草稿，待佑達對齊**（尚未建立 `black_stool.yaml`）。通用原則見 `DESIGN.md`。
+> 資料檔：`black_stool.yaml`（同資料夾）。通用原則見 `DESIGN.md`。2026-11-19 與佑達對齊（Q1–Q7 照建議）後實作；新疾病皆為 `draft`。
 > 標記：〔共用〕＝沿用既有項目（只顯示相關選項）；〔新〕＝新增項目；〔共〕＝與其他主訴共用的疾病。
 
 ## 1. 追問框架與理由
@@ -19,25 +19,26 @@
 
 段落：Patient → Stool & time course → Is it really melena? → Severity → Associated symptoms → Medications → Relevant history。
 
-## 2. 病史項目（草案）
+## 2. 病史項目
 
-| 段落 | 項目 | 選項（草案） |
+| 段落 | 項目 | 選項 |
 |---|---|---|
 | Patient | sex, age_group〔共用〕 | |
-| Stool & time course | stool_appearance〔新，multi〕 | tarry／sticky（tarry, black, sticky）、foul smell、black but formed、dark green / greenish-black、maroon / dark red、mixed with fresh blood |
-| | melena_duration〔新，single〕 | today（< 24 h）、1–3 d、4–7 d → acute；1–4 wk → subacute；intermittent > 1 mo → chronic |
-| | melena_count〔新，single〕 | once、2–3 times、≥ 4 times；last episode: today／ongoing（Q4） |
-| | episodes〔共用，改問法〕 | first episode／recurrent（「以前也解過黑便嗎？」） |
-| Is it really melena? | melena_mimic〔新，presence〕 | oral iron、bismuth（含鉍胃藥）、activated charcoal、dark foods（pig blood cake／duck blood、squid ink、black sesame）、Chinese herbal medicine |
+| Stool & time course | stool_appearance〔新，multi；`group_item`〕 | tarry, sticky, foul（惡臭併入此選項）、black but formed、dark green、maroon／dark red、mixed with fresh blood |
+| | melena_duration〔新〕 | < 24 h、1–3 d、4–7 d（acute）；1–4 wk（subacute）；on and off > 1 mo（chronic） |
+| | melena_count〔新〕 | once、2–3 times、4 or more |
+| | melena_last〔新〕 | today、yesterday、> 2 days ago、normal stool since（Q4） |
+| | episodes〔共用，改問法〕 | first／recurrent |
+| Is it really melena? | melena_mimic〔新，presence〕 | oral iron、bismuth antacids、activated charcoal、dark foods（豬血糕、鴨血、墨魚、黑芝麻） |
+| | herbs〔共用，只顯示 chinese_herbal〕 | Chinese herbal medicine |
 | | swallowed_blood〔新，presence〕 | nosebleed、gum／dental bleeding、coughing up blood |
-| Severity | assoc_other〔共用，標籤改為 Blood loss symptoms〕 | syncope、chest pain、dyspnea、diaphoresis、confusion |
-| | blood_loss_sx〔新，presence〕 | dizziness on standing、palpitations、fatigue／exertional dyspnea（與 assoc_other 合併成一題也可，Q3） |
-| Associated symptoms | assoc_gi〔共用〕 | hematemesis、**coffee-ground vomit〔新選項〕**、**retching before bleeding〔新選項〕**、nausea、vomiting、anorexia、early satiety、dysphagia、heartburn、hematochezia、bowel change |
-| | pain_location〔共用，標籤 Pain location〕 | 全部位置 + None |
+| Severity | blood_loss_sx〔新，presence〕 | dizzy on standing、syncope、palpitations、chest pain、short of breath、cold sweats、confusion、fatigue（Q3：合併成一題） |
+| Associated symptoms | assoc_gi〔共用〕 | hematemesis、coffee-ground vomit〔新選項〕、retching before bleeding〔新選項〕、nausea、vomiting、anorexia、early satiety、dysphagia、heartburn、hematochezia、bowel change |
+| | pain_location〔共用，標籤 Abdominal pain〕 | 全部位置 |
 | | assoc_sys〔共用，標籤 Systemic〕 | weight loss、jaundice、fever、malaise |
-| Medications | bleed_drugs〔新，presence〕 | aspirin、other antiplatelet（clopidogrel、ticagrelor）、warfarin、DOAC、NSAID／COX-2（含成分不明的止痛藥、酸痛藥）、corticosteroids、SSRI（Q2） |
+| Medications | bleed_drugs〔新，presence〕 | aspirin、other antiplatelet、warfarin、DOAC、NSAID／COX-2（含成分不明止痛藥）、corticosteroids、SSRI（Q2） |
 | Relevant history | risk〔共用〕 | pud、hpylori、liver_disease、alcohol、gi_cancer_fhx、ibd、atherosclerosis、af |
-| | bleed_history〔新，presence〕 | prior GI bleeding、known varices／cirrhosis、CKD／dialysis、aortic stenosis、aortic graft／AAA repair、prior gastric surgery |
+| | bleed_history〔新，presence〕 | prior GI bleeding、known varices、CKD／dialysis、aortic stenosis、aortic graft／AAA repair、prior gastric surgery |
 
 設計上的決定：
 - 「Black stool」在 `assoc_gi` 已有 melena 選項（腹痛、腹瀉用）；這個主訴本身就是黑便，所以不顯示該選項，改用 stool_appearance 描述。疾病的黑便特徵改寫成 `stool_appearance = tarry`。
@@ -46,8 +47,9 @@
 ## 3. 理學檢查
 
 - General & vitals：general（comfortable、pale／diaphoretic、confused）、vitals（tachycardia、hypotension、tachypnea）、hydration（orthostatic、slow refill）、skin（pallor、icterus、liver stigmata、Virchow node）
-- Liver：liver_pe（asterixis、spider angiomata、palmar erythema）
+- Chronic liver disease：liver_pe（asterixis、spider angiomata、palmar erythema）
 - Abdomen：abd_contour、bowel_sounds（hyperactive：上消化道出血常見）、guarding、tenderness、rebound、palpable（mass、hepatomegaly、splenomegaly、ascites）
+- Nose, mouth & skin：bleed_pe〔新〕（blood in nose／pharynx、mucocutaneous telangiectasias、bruising／purpura）
 - Rectal：rectal（melena on glove、fresh blood、mass、normal）— **這是確認 melena 最重要的 PE**
 - 預設點選：soft、non-tender（同腹痛）
 
@@ -63,7 +65,7 @@
 
 | 群組 | 排序對應 | 疾病（★ = must-not-miss；〔共〕= 與其他主訴共用） |
 |---|---|---|
-| Peptic & mucosal (upper GI) | tarry | Peptic ulcer disease〔共〕、Gastritis（erosive gastritis／duodenitis）〔共〕、Erosive esophagitis〔新〕、Mallory-Weiss tear〔新〕 |
+| Peptic & mucosal (upper GI) | tarry | Peptic ulcer disease〔共〕、Gastritis（erosive gastritis／duodenitis）〔共〕、Erosive esophagitis〔新〕、Mallory-Weiss tear〔新；使用者確認維持此名稱〕 |
 | Portal hypertension | tarry | Variceal bleeding★〔新〕（portal hypertensive gastropathy 寫在 pitfalls） |
 | Upper GI tumor & vascular | tarry | Gastric cancer〔共〕、Dieulafoy lesion〔新〕、Angiodysplasia〔新〕、Aortoenteric fistula★〔新〕 |
 | Small bowel & right colon | maroon, mixed | Angiodysplasia〔新〕、NSAID enteropathy〔新〕、Small bowel tumor（GIST、lymphoma）〔新〕、Meckel's diverticulum〔新〕、Crohn's disease〔共〕、Colorectal cancer〔共〕 |
@@ -84,21 +86,23 @@
 - Glasgow-Blatchford score 的要素（BUN、Hb、SBP、HR、melena、syncope、肝病、心衰竭）列在說明中；工具不計算
 - 影像／內視鏡：EGD（24 小時內）、EGD 陰性再做 colonoscopy、capsule endoscopy／CT enterography（小腸）、CT angiography（進行中的大量出血）、Meckel scan（年輕人）
 
-## 7. HPI／PE 範例（示意）
+## 7. HPI／PE 範例（實際輸出）
 
-> (115/11/19) tarry, sticky black stools with a foul smell for 1–3 days, 2–3 times, last episode today. First episode. Associated with dizziness on standing and epigastric pain. Denied hematemesis, coffee-ground vomiting, or syncope. No oral iron, bismuth, or dark foods. Medications include aspirin and NSAIDs. Relevant history includes peptic ulcer disease.
+> (115/11/19) tarry, sticky, foul-smelling black stools for 1–3 days, 2–3 episodes, the last one today. This is the first such episode. Associated with dizziness on standing. Epigastric pain. Denied syncope or presyncope, hematemesis, or coffee-ground vomiting. No oral iron or dark foods (pig blood cake, duck blood, squid ink, black sesame). Medications include aspirin and NSAIDs or COX-2 inhibitors. Not taking direct oral anticoagulants. Relevant history includes peptic ulcer disease. No history of an aortic graft or AAA repair.
 
 > General: pale and diaphoretic.
 > Vital signs: tachycardic, normotensive.
-> Abdomen: hyperactive bowel sounds, soft, tenderness over the epigastrium, no rebound tenderness.
+> Skin & eyes: conjunctival pallor.
+> Other: no blood in the nose or pharynx.
+> Abdomen: hyperactive bowel sounds, soft, non-tender.
 > Rectal exam: melena on the glove.
 
-## 8. 待對齊的問題
+## 8. 對齊結果與實作差異
 
-1. **右欄排序項目**：用 stool_appearance 當 `group_item`（tarry → 上消化道、maroon → 小腸／右側大腸、成形黑／墨綠 → 假黑便），還是不設、依固定順序？**建議：設 stool_appearance。**
-2. **藥物**：另立 bleed_drugs（分 aspirin、其他抗血小板、warfarin、DOAC、NSAID、類固醇、SSRI），還是沿用 `risk` 的 nsaid、anticoag 兩個粗選項？**建議：另立**（處置因藥物不同差很多）。
-3. **嚴重度**：assoc_other（暈厥、胸痛、喘、冒冷汗、意識改變）＋新的 blood_loss_sx（起身頭暈、心悸、疲倦）分兩題，還是合併成一題新項目？**建議：合併成一題新項目 `blood_loss_sx`**（assoc_other 有 cough、polyuria 等不相干選項，且一題比較好問）。
-4. **次數／最後一次**：只問次數（melena_count），還是另外問「最後一次是何時（today／yesterday／> 2 days ago）」？**建議：兩題都要**；最後一次是判斷是否仍在出血的關鍵。
-5. **must-not-miss**：只標 variceal bleeding、aortoenteric fistula？還是 PUD（出血性潰瘍）也標？**建議：只標這兩個**，PUD 維持腹痛的標記（不標）。
-6. **疾病範圍**：上表 11 個新疾病（erosive esophagitis、Mallory-Weiss、variceal bleeding、Dieulafoy、angiodysplasia、aortoenteric fistula、NSAID enteropathy、small bowel tumor、Meckel's、pseudo-melena、swallowed blood）是否合適？要刪減或補充？**建議：照表。**
-7. **id 與名稱**：`black_stool`／「Black stool」（下拉選單顯示），還是 `melena`／「Melena」？**建議：`black_stool`**，因為病人說的是黑便，是否為真 melena 正是要問的。
+- Q1–Q5、Q7 照建議；Q6 照表（Mallory-Weiss tear 維持此名稱）。
+- 與草稿不同之處：
+  - 「foul smell」併入 tarry 選項，不另立選項：multi 項目的片段會以 and 串接，單獨的「惡臭」讀起來不通順。
+  - Chinese herbal medicine 沿用 abnormal_lft 的 `herbs`（只顯示該選項），不放在 melena_mimic，避免同一概念兩種寫法。
+  - assoc_gi 新增的 retching 只在本主訴顯示；腹痛改用 `{item, options}` 列出原有選項加上 coffee-ground vomit。
+  - 「無痛」（painless）無法表達：`pain_location` 是 multi，不能寫 `= no ...`；改寫在 one_liner。
+  - PE 新增 bleed_pe（鼻咽血塊、黏膜皮膚微血管擴張、瘀青）。

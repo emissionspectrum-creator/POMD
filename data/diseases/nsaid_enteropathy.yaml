@@ -1,0 +1,41 @@
+id: nsaid_enteropathy
+name: NSAID enteropathy
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Iron-deficiency anemia or intermittent dark stools from small-bowel erosions, ulcers, or diaphragm-like strictures
+  in a regular NSAID or aspirin user, with a normal EGD and colonoscopy.
+
+symptoms:
+  - when: bleed_drugs = nsaid | aspirin
+    text: Regular NSAID (including unlabeled painkillers) or aspirin use
+  - when: stool_appearance = tarry | maroon
+    text: Melena or maroon stools
+  - when: melena_duration = w1_4 | intermittent
+    text: Intermittent, low-grade bleeding
+  - when: blood_loss_sx = fatigue | dyspnea
+    text: Fatigue, exertional dyspnea (anemia)
+  - when: pain_location = periumbilical | diffuse
+    text: Vague periumbilical pain; colicky pain if strictures
+  - when: assoc_gi = nausea | vomiting
+    text: Vomiting from diaphragm strictures (obstruction)
+
+pe:
+  - when: skin = pallor
+    text: Pallor
+  - when: tenderness = none | periumbilical
+    text: Usually non-tender, or mild periumbilical tenderness
+  - when: rectal = melena
+    text: Melena on rectal exam
+
+labs:
+  - CBC, ferritin
+  - Albumin (protein loss)
+
+imaging:
+  - Capsule endoscopy after a negative EGD and colonoscopy (check patency first if strictures are suspected)
+
+pitfalls:
+  - Seen in a majority of long-term NSAID users on capsule endoscopy; PPIs protect the stomach but not the small bowel.
+  - In Taiwan, ask about herbal or "muscle-pain" remedies of unknown content — some contain NSAIDs or steroids.

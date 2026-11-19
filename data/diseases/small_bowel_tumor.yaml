@@ -1,0 +1,45 @@
+id: small_bowel_tumor
+name: Small bowel tumor (GIST, lymphoma, adenocarcinoma, NET)
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Intermittent melena or maroon stools, iron-deficiency anemia, or partial obstruction with weight loss;
+  GIST typically bleeds from a central ulcer. A common cause of obscure GI bleeding under 50.
+
+symptoms:
+  - when: stool_appearance = tarry | maroon
+    text: Melena or maroon stools
+  - when: melena_duration = w1_4 | intermittent
+    text: Intermittent bleeding over weeks to months
+  - when: episodes = recurrent
+    text: Recurrent episodes
+  - when: assoc_sys = weight_loss | fever
+    text: Weight loss; fever or night sweats (lymphoma)
+  - when: pain_location = periumbilical | diffuse
+    text: Crampy periumbilical pain (intermittent obstruction or intussusception)
+  - when: assoc_gi = nausea | vomiting | anorexia
+    text: Nausea, vomiting, anorexia
+  - when: blood_loss_sx = fatigue
+    text: Fatigue (anemia)
+
+pe:
+  - when: skin = pallor
+    text: Pallor
+  - when: palpable = mass
+    text: Palpable abdominal mass (advanced)
+  - when: rectal = melena | fresh_blood
+    text: Melena or maroon blood on rectal exam
+
+labs:
+  - CBC, ferritin
+  - LDH (lymphoma)
+
+imaging:
+  - CT enterography — first test for suspected small-bowel tumor
+  - Capsule endoscopy or device-assisted enteroscopy with biopsy
+
+pitfalls:
+  - Consider in patients under 50 with obscure bleeding, where angiodysplasia is less likely.
+  - GIST may be exophytic and look normal on capsule endoscopy — CT is complementary.
+  - Melanoma metastases and Peutz-Jeghers polyps are other causes.

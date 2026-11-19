@@ -29,6 +29,16 @@ symptoms:
   - when: risk = hpylori | gi_cancer_fhx | smoking
     text: H. pylori, family history, smoking
 
+  # black_stool complaint
+  - when: stool_appearance = tarry
+    text: Melena, often intermittent
+  - when: melena_duration = w1_4 | intermittent
+    text: Recurrent or slow bleeding over weeks
+  - when: assoc_gi = coffee_ground | hematemesis
+    text: Coffee-ground vomit
+  - when: blood_loss_sx = fatigue | dyspnea
+    text: Fatigue and exertional dyspnea (anemia)
+
 pe:
   - when: skin = pallor
     text: Pallor (iron-deficiency anemia)

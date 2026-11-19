@@ -1,0 +1,37 @@
+id: meckel_diverticulum
+name: Meckel's diverticulum (bleeding)
+must_not_miss: false
+timecourse: [acute]
+status: draft
+one_liner: >
+  Painless, sometimes large, maroon or black stools in a child or young adult (more often male), from an ulcer
+  in ectopic gastric mucosa of the ileum.
+
+symptoms:
+  - when: age_group = under_40
+    text: Child or young adult
+  - when: sex = male
+    text: More common in males
+  - when: stool_appearance = maroon | tarry
+    text: Maroon (or black) stools
+  - when: episodes = recurrent
+    text: May recur
+  - when: blood_loss_sx = postural_dizziness | syncope
+    text: Can be large enough to cause dizziness or syncope
+
+pe:
+  - when: tenderness = none
+    text: Non-tender abdomen
+  - when: rectal = fresh_blood | melena
+    text: Maroon or black blood on the glove
+
+labs:
+  - CBC
+
+imaging:
+  - Meckel scan (Tc-99m pertechnetate) — less sensitive in adults
+  - CT enterography or capsule endoscopy; surgery may be both diagnostic and curative
+
+pitfalls:
+  - The commonest cause of significant lower GI bleeding in children; less common but still seen in young adults with a negative EGD and colonoscopy.
+  - Can also present with obstruction, intussusception, or diverticulitis mimicking appendicitis.

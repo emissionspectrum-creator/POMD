@@ -36,6 +36,14 @@ symptoms:
   - when: diarrhea_duration = w2_4 | m1_3 | gt3m
     text: Weeks to months; new onset after 50 is an alarm feature
 
+  # black_stool complaint
+  - when: stool_appearance = maroon | fresh_blood
+    text: Maroon or blood-streaked stools; right-sided tumors can give dark, near-black stools
+  - when: melena_duration = w1_4 | intermittent
+    text: Intermittent bleeding over weeks to months
+  - when: blood_loss_sx = fatigue | dyspnea
+    text: Fatigue and exertional dyspnea (iron-deficiency anemia)
+
 pe:
   - when: skin = pallor
     text: Pallor

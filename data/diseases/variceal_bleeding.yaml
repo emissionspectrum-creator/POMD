@@ -1,0 +1,60 @@
+id: variceal_bleeding
+name: Variceal bleeding (esophagogastric varices)
+must_not_miss: true
+timecourse: [acute]
+status: draft
+one_liner: >
+  Large-volume hematemesis and / or melena with hemodynamic compromise in a patient with cirrhosis
+  (in Taiwan, mostly HBV, HCV, or alcohol), stigmata of chronic liver disease, splenomegaly, or ascites.
+
+symptoms:
+  - when: stool_appearance = tarry | maroon
+    text: Melena; maroon stools if the bleeding is brisk
+  - when: assoc_gi = hematemesis
+    text: Large-volume hematemesis
+  - when: blood_loss_sx = postural_dizziness | syncope | confusion | cold_sweats
+    text: Dizziness, syncope, cold sweats; confusion (shock or hepatic encephalopathy)
+  - when: melena_count = four_plus
+    text: Repeated, ongoing bleeding
+  - when: melena_last = today
+    text: Ongoing bleeding
+  - when: melena_duration = lt1d | d1_3
+    text: Abrupt onset
+  - when: risk = liver_disease | alcohol
+    text: Cirrhosis, chronic HBV / HCV, or heavy alcohol use
+  - when: bleed_history = varices | prior_gi_bleed
+    text: Known varices or a previous variceal bleed
+  - when: assoc_sys = jaundice
+    text: Jaundice
+
+pe:
+  - when: vitals = tachycardia | hypotension
+    text: Tachycardia, hypotension
+  - when: general = pale_diaphoretic | confused
+    text: Pale and diaphoretic; confused (encephalopathy)
+  - when: hydration = orthostatic
+    text: Orthostatic drop
+  - when: skin = liver_stigmata | icterus
+    text: Stigmata of chronic liver disease, jaundice
+  - when: liver_pe = spider | palmar | asterixis
+    text: Spider angiomata, palmar erythema, asterixis
+  - when: palpable = splenomegaly | ascites
+    text: Splenomegaly, ascites
+  - when: rectal = melena
+    text: Melena on rectal exam
+
+labs:
+  - CBC (thrombocytopenia), PT / INR, albumin, bilirubin, creatinine — Child-Pugh / MELD
+  - Type & cross-match
+  - Ammonia not needed for diagnosis; check glucose if confused
+
+imaging:
+  - Urgent EGD (within 12 h) for band ligation or cyanoacrylate injection for gastric varices
+  - Ultrasound / CT for cirrhosis, portal vein thrombosis, and HCC
+
+pitfalls:
+  - This is an emergency — refer to the ED; vasoactive drugs (terlipressin / octreotide) and prophylactic antibiotics are started before endoscopy.
+  - Avoid over-transfusion (target Hb 7–8 g/dL); it raises portal pressure.
+  - Up to half of bleeds in cirrhosis are from non-variceal sources such as ulcers — but treat as variceal until EGD.
+  - Portal hypertensive gastropathy and GAVE cause slow, chronic bleeding and iron-deficiency anemia rather than acute melena.
+  - A first variceal bleed may be the first sign of undiagnosed cirrhosis or HCC with portal vein invasion.

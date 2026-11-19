@@ -38,6 +38,12 @@ symptoms:
   - when: extraintestinal = arthralgia | oral_ulcers | red_eye | skin_nodules
     text: Mouth ulcers, joint, eye, or skin manifestations
 
+  # black_stool complaint
+  - when: stool_appearance = maroon | tarry
+    text: Maroon or dark stools from small-bowel ulcers (uncommon)
+  - when: melena_duration = w1_4 | intermittent
+    text: Intermittent
+
 pe:
   - when: tenderness = rlq
     text: RLQ tenderness

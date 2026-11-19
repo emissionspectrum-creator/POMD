@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## 2026-11-19 — 新增第四個主訴 Black stool（v0.7.0，使用者要求）
+
+依 `data/complaints/black_stool.md`（已與使用者對齊，Q1–Q7 照建議）實作。
+
+**程式**
+- 右欄被排到前面的群組，標題旁的提示由寫死的「← location」改為「← selected」（腹瀉、黑便的排序項目不是位置）。
+
+**內容（全部 `draft`）**
+- 追問三步：是不是真的 melena（外觀、鐵劑／鉍劑／活性碳／深色食物／中藥、吞下的血）→ 嚴重度（次數、最後一次、失血症狀）→ 找來源（上消化道症狀、藥物、肝病、洗腎、主動脈手術史）。
+- 新詞彙：stool_appearance（`group_item`：tarry → 上消化道群組；maroon／混鮮血 → 小腸與右側大腸；成形黑／墨綠 → 假黑便）、melena_duration（≤ 1 週 acute、1–4 週 subacute、間歇 > 1 月 chronic）、melena_count、melena_last、melena_mimic、swallowed_blood、blood_loss_sx、bleed_drugs、bleed_history；PE 新增 bleed_pe。
+- assoc_gi 新增 coffee-ground vomit（腹痛也顯示）與 retching before bleeding（只在黑便顯示；腹痛改列出選項子集）。
+- 新疾病 11 個（★：variceal bleeding、aortoenteric fistula）：erosive esophagitis、Mallory-Weiss tear、variceal bleeding、Dieulafoy lesion、angiodysplasia、aortoenteric fistula、NSAID enteropathy、small bowel tumor、Meckel's diverticulum、pseudo-melena、swallowed blood。
+- 共用疾病補黑便特徵：PUD、gastritis、gastric cancer、colorectal cancer、Crohn's disease。
+- 新增端對端測試（28 個測試）。
+
 ## 2026-11-19 — Abdominal pain：新增每次發作的持續時間（v0.6.2，使用者要求）
 
 - 新詞彙 `episode_duration`（Each episode lasts）：<5 min／5–30 min／30–60 min／1–6 h／>6 h，放在 Quality 段的 Pattern 之後；與 `duration`（從發病至今）分開。

@@ -1,0 +1,44 @@
+id: erosive_esophagitis
+name: Erosive esophagitis
+must_not_miss: false
+timecourse: [acute, subacute, chronic]
+status: draft
+one_liner: >
+  Usually slow, low-volume bleeding from reflux-related erosions in a patient with long-standing heartburn,
+  often older, bedbound, or on antiplatelets / anticoagulants; occasionally melena or coffee-ground vomit.
+
+symptoms:
+  - when: assoc_gi = heartburn
+    text: Heartburn or acid regurgitation
+  - when: assoc_gi = dysphagia
+    text: Dysphagia or odynophagia (severe esophagitis or stricture)
+  - when: assoc_gi = coffee_ground | hematemesis
+    text: Coffee-ground vomit or small-volume hematemesis
+  - when: stool_appearance = tarry
+    text: Melena, usually modest in volume
+  - when: blood_loss_sx = no postural_dizziness | syncope
+    text: Usually hemodynamically stable
+  - when: bleed_drugs = aspirin | antiplatelet | warfarin | doac | nsaid
+    text: Antithrombotics or NSAIDs make erosions bleed
+  - when: pain_location = epigastric
+    text: Epigastric or retrosternal discomfort
+
+pe:
+  - when: skin = pallor
+    text: Pallor if bleeding is chronic
+  - when: tenderness = none | epigastric
+    text: Abdomen usually non-tender or mildly epigastric
+  - when: rectal = melena
+    text: Melena on rectal exam
+
+labs:
+  - CBC; iron studies if anemia
+  - Usually normal BUN
+
+imaging:
+  - EGD — graded by the Los Angeles classification; repeat after treatment for grade C / D to exclude Barrett's
+
+pitfalls:
+  - Esophagitis rarely explains a large bleed — look for another lesion if the patient is unstable.
+  - Pill esophagitis (doxycycline, NSAIDs, bisphosphonates, potassium) is a cause in patients without reflux.
+  - Consider infectious esophagitis (Candida, CMV, HSV) in immunocompromised patients.

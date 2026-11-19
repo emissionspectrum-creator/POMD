@@ -464,6 +464,42 @@ test('built data: diarrhea complaint — subsets, groups, shared diseases, HPI',
   assert.equal(Core.composeText(c.pe_text, s, it), 'Abdomen: soft, non-tender.');
 });
 
+test('built data: black stool complaint — appearance ordering, mimics, shared diseases, HPI', () => {
+  const data = loadBuiltData();
+  const it = data.items;
+  const c = data.complaints.find((x) => x.id === 'black_stool');
+  const ab = data.complaints.find((x) => x.id === 'abdominal_pain');
+  assert.ok(c && ab);
+  // melena is the complaint itself: not offered as an associated symptom; retching only here
+  assert.ok(!Core.itemOptions(c, it.assoc_gi).some((o) => o.id === 'melena'));
+  assert.ok(Core.itemOptions(c, it.assoc_gi).some((o) => o.id === 'retching'));
+  assert.ok(!Core.itemOptions(ab, it.assoc_gi).some((o) => o.id === 'retching'));
+  // shared disease: black stool features hidden in abdominal pain
+  const pud = data.diseases.peptic_ulcer_disease;
+  assert.ok(Core.diseaseFeatures(pud, c).some((f) => f.item === 'stool_appearance'));
+  assert.ok(!Core.diseaseFeatures(pud, ab).some((f) => f.item === 'stool_appearance'));
+  // formed black stool with iron → mimics group first
+  const m = Core.defaultState(c, it);
+  Core.toggle(m, it.stool_appearance, 'formed');
+  Core.toggle(m, it.melena_mimic, 'iron');
+  assert.equal(Core.orderGroups(c, m)[0].group.group, 'Not true melena');
+  assert.equal(Core.rankByMatches(c, data.diseases, m, it)[0].id, 'pseudo_melena');
+  // tarry stool → upper GI first; maroon → small bowel first
+  const s = Core.defaultState(c, it);
+  Core.toggle(s, it.stool_appearance, 'tarry');
+  Core.toggle(s, it.melena_duration, 'd1_3');
+  Core.toggle(s, it.bleed_drugs, 'nsaid');
+  assert.equal(Core.orderGroups(c, s)[0].group.group, 'Peptic & mucosal');
+  assert.deepEqual(Core.selectedTimecourses(c, s, it), ['acute']);
+  assert.ok(Core.matchCount(pud, s, it, c) >= 2);
+  const hpi = Core.composeText(c.hpi, s, it, { date_roc: '115/01/05' });
+  assert.match(hpi, /^\(115\/01\/05\) tarry, sticky, foul-smelling black stools for 1–3 days\./);
+  assert.match(hpi, /Medications include NSAIDs or COX-2 inhibitors\./);
+  const r = Core.defaultState(c, it);
+  Core.toggle(r, it.stool_appearance, 'maroon');
+  assert.equal(Core.orderGroups(c, r)[0].group.group, 'Small bowel & right colon');
+});
+
 test('details blocks: sub-items count as shown and are summarized', () => {
   const { items } = fixture();
   const complaint = {

@@ -1,0 +1,40 @@
+id: pseudo_melena
+name: Pseudo-melena (iron, bismuth, food)
+must_not_miss: false
+timecourse: [acute, subacute, chronic]
+status: draft
+one_liner: >
+  Black or dark green but formed, non-sticky stools without the foul smell of melena, in a patient taking oral iron
+  or bismuth, or after pig blood cake, duck blood, squid ink, or black sesame; vital signs and hemoglobin are normal.
+
+symptoms:
+  - when: stool_appearance = formed | dark_green
+    text: Formed, black or dark green, not tarry
+  - when: melena_mimic = iron | bismuth | charcoal | dark_food
+    text: Oral iron, bismuth, activated charcoal, or dark foods
+  - when: herbs = chinese_herbal
+    text: Some Chinese herbal preparations darken stool
+  - when: blood_loss_sx = no postural_dizziness | syncope | palpitations
+    text: No symptoms of blood loss
+
+pe:
+  - when: general = comfortable
+    text: Well
+  - when: vitals = no tachycardia | hypotension
+    text: Normal heart rate and blood pressure
+  - when: skin = no pallor
+    text: No pallor
+  - when: rectal = normal
+    text: Formed dark stool, not tarry, on the glove
+
+labs:
+  - CBC and BUN normal or unchanged from baseline
+  - Stool occult blood (guaiac) — iron does not cause a true positive; bismuth can interfere
+
+imaging:
+  - None if the history is clear and hemoglobin is normal
+
+pitfalls:
+  - Patients on iron often have iron-deficiency anemia from GI blood loss — do not stop at "it's the iron" if the hemoglobin is falling.
+  - The definitive feature of melena is a tarry, sticky consistency and a distinctive smell; color alone is unreliable.
+  - Bismuth can also blacken the tongue.

@@ -105,6 +105,9 @@
 - CSS 中 `.item.answered` 要用 `> .item-head` 限定，否則巢狀的細項也會被套用。
 - 新增主訴層級的欄位時，記得加進 `build.py` 的 `quick_data`，否則精簡版拿不到。
 - `node --test tests/`（目錄）在 Node 22 會失敗，要用 `tests/*.test.js`。
+- 「無痛」這類特徵寫不出來：`pain_location` 是 multi，不能寫 `= no ...`（黑便踩過）；寫進 one_liner 就好。
+- 共用項目新增選項（例如 assoc_gi 的 retching）會出現在**所有顯示整個項目**的主訴；不想讓舊主訴看到，就在舊主訴改用 `{item, options}` 列出子集。
+- multi 項目的片段以 and 串接，選項要都是可並列的名詞片語；修飾語（如「惡臭」）併入某個選項，不要單獨成選項。
 
 ## 6. 驗證工具
 
@@ -125,7 +128,7 @@ console.log(Core.rankByMatches(c,d.diseases,s,I).slice(0,6).map(x=>x.id+':'+x.n)
 "
 ```
 
-**瀏覽器實測**（只在本機；雲端沒有 chromium）：
+**瀏覽器實測**（本機；雲端 session 現在也有預裝 Chromium，`require('playwright')` 直接可用）：
 - 在 session scratchpad 執行 `npm i playwright-core`，不要裝進專案。
 - `chromium.launch({ executablePath: ~/.cache/ms-playwright/chromium-<最新>/chrome-linux64/chrome })`，以 `file:///.../dist/POMD.html` 開啟。
 - 檢查項目：

@@ -171,7 +171,7 @@ h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: 
 .group { margin-bottom: 4px; }
 .group h3 { margin-top: 8px; }
 .group.promoted h3 { color: var(--sel); }
-.group.promoted h3::after { content: "  \2190 location"; font-size: 10px; text-transform: none; letter-spacing: 0; }
+.group.promoted h3::after { content: "  \2190 selected"; font-size: 10px; text-transform: none; letter-spacing: 0; }
 .group ul { list-style: none; margin: 0; padding: 0; }
 
 .dx {

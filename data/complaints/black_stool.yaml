@@ -1,0 +1,186 @@
+id: black_stool
+name: Black stool
+group_item: stool_appearance    # tarry → upper GI groups first; maroon / fresh blood → small bowel & colon; formed / green → mimics
+timecourse_item: melena_duration
+
+# Left column: is it really melena? → how much / is it ongoing → where is it from.
+# Design notes: data/complaints/black_stool.md.
+history:
+  - section: Patient
+    items: [sex, age_group]
+  - section: Stool & time course
+    items:
+      - stool_appearance
+      - melena_duration
+      - melena_count
+      - melena_last
+      - item: episodes
+        ask:
+          - "Have you ever had black stools or bleeding from the gut before?"
+          - "Is this the first time?"
+  - section: Is it really melena?
+    items:
+      - melena_mimic
+      - item: herbs
+        label: Chinese herbal medicine
+        options: [chinese_herbal]
+        ask:
+          - "Are you taking any Chinese herbal medicine at the moment?"
+      - swallowed_blood
+  - section: Severity
+    items: [blood_loss_sx]
+  - section: Associated symptoms
+    items:
+      - item: assoc_gi
+        options: [hematemesis, coffee_ground, retching, nausea, vomiting, anorexia, early_satiety, dysphagia,
+                  heartburn, hematochezia, bowel_change]
+        ask:
+          - "Have you vomited blood, or anything that looked like coffee grounds?"
+          - "Before that, had you been retching or vomiting hard — for example after drinking?"
+          - "Any trouble swallowing, heartburn, or feeling full after only a little food?"
+      - item: pain_location
+        label: Abdominal pain
+        ask:
+          - "Do you have any tummy pain? Where?"
+      - item: assoc_sys
+        label: Systemic
+        options: [weight_loss, jaundice, fever, malaise]
+        ask:
+          - "Have you lost weight without trying? About how much, and over how long?"
+          - "Has anyone noticed your skin or eyes turning yellow?"
+  - section: Medications
+    items: [bleed_drugs]
+  - section: Relevant history
+    items:
+      - item: risk
+        options: [pud, hpylori, liver_disease, alcohol, gi_cancer_fhx, ibd, atherosclerosis, af]
+        ask:
+          - "Have you ever had a stomach ulcer, or been treated for H. pylori?"
+          - "Do you have liver disease, hepatitis B or C? How much alcohol do you drink?"
+          - "Any heart disease, stroke, or irregular heartbeat? Any bowel or stomach cancer in the family?"
+      - bleed_history
+
+quick:
+  show: [sex, age_group, stool_appearance, melena_duration, melena_count, melena_last, episodes,
+         melena_mimic, herbs, swallowed_blood, blood_loss_sx, assoc_gi, pain_location, assoc_sys,
+         bleed_drugs, risk, bleed_history]
+
+defaults:
+  guarding: [soft]
+  tenderness: [none]
+
+pe:
+  - section: General & vitals
+    items:
+      - item: general
+        options: [comfortable, pale_diaphoretic, confused]
+      - item: vitals
+        options: [tachycardia, hypotension, tachypnea]
+      - item: hydration
+        options: [orthostatic, slow_refill]
+      - item: skin
+        options: [pallor, icterus, liver_stigmata, virchow]
+      - bleed_pe
+      - item: liver_pe
+        options: [asterixis, spider, palmar]
+  - section: Abdomen
+    items:
+      - abd_contour
+      - bowel_sounds
+      - guarding
+      - tenderness
+      - rebound
+      - item: palpable
+        options: [mass, hepatomegaly, splenomegaly, ascites]
+  - section: Rectal
+    items:
+      - item: rectal
+        options: [normal, melena, fresh_blood, mass]
+
+labs:
+  - {name: CBC, note: "hemoglobin (may be normal early in acute bleeding); low MCV suggests chronic blood loss"}
+  - {name: "BUN, creatinine", note: "a high BUN : creatinine ratio supports an upper GI source"}
+  - {name: "PT / INR, aPTT", note: "anticoagulants, liver disease"}
+  - {name: Type & screen, note: "if bleeding is significant or ongoing"}
+  - {name: "LFT, albumin, platelets", note: "clues to cirrhosis and portal hypertension"}
+  - {name: Ferritin / iron studies, note: "intermittent or chronic black stools; iron-deficiency anemia"}
+  - {name: H. pylori test, note: "after an ulcer is found (biopsy urease test, or breath / stool antigen off PPI)"}
+  - {name: Stool occult blood, note: "only when pseudo-melena is suspected — iron does not cause a positive guaiac; FIT is insensitive to upper GI blood"}
+  - {name: Glasgow-Blatchford score elements, note: "BUN, hemoglobin, systolic BP, heart rate, melena, syncope, liver disease, heart failure — a score of 0–1 may suit outpatient care"}
+
+imaging:
+  - {name: EGD, note: "first test for true melena; within 24 h, sooner if unstable or variceal bleeding is suspected"}
+  - {name: Colonoscopy, note: "if EGD is negative, or maroon stools / change in bowel habit"}
+  - {name: Capsule endoscopy / CT enterography, note: "suspected small bowel bleeding after a negative EGD and colonoscopy"}
+  - {name: CT angiography, note: "active brisk bleeding, or suspected aortoenteric fistula"}
+  - {name: Meckel scan (Tc-99m pertechnetate), note: "young patient with painless maroon or black stools"}
+  - {name: Abdominal ultrasound, note: "cirrhosis, splenomegaly, ascites"}
+
+ddx:
+  - group: Peptic & mucosal
+    options: [tarry]
+    diseases: [peptic_ulcer_disease, gastritis, erosive_esophagitis, mallory_weiss_tear]
+  - group: Portal hypertension
+    options: [tarry]
+    diseases: [variceal_bleeding]
+  - group: Upper GI tumor & vascular
+    options: [tarry]
+    diseases: [gastric_cancer, dieulafoy_lesion, angiodysplasia, aortoenteric_fistula]
+  - group: Small bowel & right colon
+    options: [maroon, fresh_blood]
+    diseases: [angiodysplasia, nsaid_enteropathy, small_bowel_tumor, meckel_diverticulum, crohns_disease,
+               colorectal_cancer]
+  - group: Not true melena
+    options: [formed, dark_green]
+    diseases: [pseudo_melena, swallowed_blood]
+
+hpi:
+  joiner: " "
+  sentences:
+    - always: true
+      parts:
+        - "({@date_roc}) {stool_appearance|black stools}[ {melena_duration}]"
+        - "{melena_count}"
+        - "{melena_last}"
+    - parts: ["{episodes}"]
+    - lead: "Associated with "
+      parts: ["{blood_loss_sx+,assoc_gi+,assoc_sys+,swallowed_blood+}"]
+    - parts: ["{pain_location}"]
+    - lead: "Denied "
+      parts: ["{blood_loss_sx-,assoc_gi-,assoc_sys-,swallowed_blood-}"]
+    - lead: "Recent intake of "
+      parts: ["{melena_mimic+,herbs+}"]
+    - lead: "No "
+      parts: ["{melena_mimic-,herbs-}"]
+    - lead: "Medications include "
+      parts: ["{bleed_drugs+}"]
+    - lead: "Not taking "
+      parts: ["{bleed_drugs-}"]
+    - lead: "Relevant history includes "
+      parts: ["{risk+,bleed_history+}"]
+    - lead: "No history of "
+      parts: ["{risk-,bleed_history-}"]
+
+pe_text:
+  joiner: "\n"
+  sentences:
+    - lead: "General: "
+      parts: ["{general}"]
+    - lead: "Vital signs: "
+      parts: ["{vitals*}"]
+    - lead: "Hydration: "
+      parts: ["{hydration*}"]
+    - lead: "Skin & eyes: "
+      parts: ["{skin*}"]
+    - lead: "Other: "
+      parts: ["{bleed_pe*,liver_pe*}"]
+    - lead: "Abdomen: "
+      parts:
+        - "{abd_contour}"
+        - "{bowel_sounds}"
+        - "{guarding}"
+        - "{tenderness}"
+        - "{rebound}"
+        - "{palpable*}"
+    - lead: "Rectal exam: "
+      parts: ["{rectal}"]
