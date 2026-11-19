@@ -1,0 +1,40 @@
+id: dementia_frailty
+name: Dementia / frailty with poor intake
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Gradual weight loss in an older adult who forgets meals, cannot shop or cook, has poor teeth or swallowing,
+  lives alone, or has limited money or help — intake falls without any single disease.
+
+symptoms:
+  - when: psych_social = memory
+    text: Memory decline, forgetting meals
+  - when: psych_social = needs_help | lives_alone | financial
+    text: "Lives alone, needs help, financial limits"
+  - when: intake_barrier = dental
+    text: Poor teeth or dentures
+  - when: assoc_gi = dysphagia
+    text: Oropharyngeal dysphagia (coughing with meals)
+  - when: age_group = age_60_plus
+    text: Older adult
+  - when: wl_duration = m6_12 | gt12m
+    text: Slow, over months to years
+  - when: risk = new_meds
+    text: Many medications (anorexia, dry mouth, sedation)
+
+pe:
+  - when: wl_head_pe = poor_dentition
+    text: Poor dentition
+  - when: wasting_pe = low_bmi | temporal | muscle
+    text: Low BMI, sarcopenia
+
+labs:
+  - Mini-Cog / MMSE; albumin, B12, TSH, calcium
+
+imaging: []
+
+pitfalls:
+  - Watch the patient eat or ask who prepares meals — the answer is often social, not medical.
+  - Review every drug — anticholinergics, digoxin, opioids and polypharmacy suppress appetite.
+  - Taiwan's Long-Term Care 2.0 services, meal delivery and dental care can be arranged through the local care center.

@@ -1,0 +1,38 @@
+id: drug_alcohol_weight_loss
+name: Medication- or alcohol-related weight loss
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Weight loss from drugs that suppress appetite or cause glycosuria or nausea (GLP-1 agonists, SGLT2 inhibitors,
+  metformin, topiramate, excess thyroxine, stimulants, polypharmacy) or from heavy drinking replacing food.
+
+symptoms:
+  - when: distension_drugs = glp1
+    text: GLP-1 receptor agonist
+  - when: wl_drugs = sglt2 | topiramate | stimulants
+    text: SGLT2 inhibitor, topiramate, stimulant
+  - when: wl_drugs = thyroxine
+    text: Thyroxine (over-replacement)
+  - when: diarrhea_drugs = metformin
+    text: Metformin (GI upset)
+  - when: risk = new_meds
+    text: New drug or herbal supplement around onset
+  - when: alcohol_use = heavy
+    text: Heavy drinking
+  - when: alcohol_amount = g60_100 | gt100
+    text: More than 60 g of alcohol a day
+  - when: assoc_gi = nausea
+    text: Nausea
+
+pe: []
+
+labs:
+  - TSH on thyroxine; LFT, GGT, MCV for alcohol
+
+imaging: []
+
+pitfalls:
+  - GLP-1 agonists obtained for weight loss may not be volunteered as "medication" — ask directly.
+  - Attribute weight loss to a drug only if the timing fits, and recheck after stopping it.
+  - Heavy drinkers also carry the highest risk of esophageal, liver and gastric cancer.

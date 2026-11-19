@@ -26,6 +26,12 @@ symptoms:
   - when: age_group = age_60_plus | age_40_59
     text: Older patients — malignancy is now the commonest cause
 
+  # weight_loss complaint
+  - when: appetite = cant_eat
+    text: Hungry but fills up or vomits after small meals
+  - when: wl_duration = lt1m | m1_6
+    text: Weeks to months
+
 pe:
   - when: distension_pe = succussion
     text: Succussion splash more than 3 hours after eating

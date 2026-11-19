@@ -19,6 +19,16 @@ symptoms:
   - when: diarrhea_duration = w2_4 | m1_3 | gt3m
     text: Weeks to months
 
+  # weight_loss complaint
+  - when: appetite = increased | normal
+    text: Weight loss despite a good or increased appetite
+  - when: wl_drugs = thyroxine
+    text: Excess thyroxine replacement
+  - when: assoc_gi = diarrhea
+    text: Frequent loose stools
+  - when: wl_duration = m1_6 | lt1m
+    text: Weeks to months
+
 pe:
   - when: systemic_pe = goiter | tremor
     text: Goiter, fine tremor

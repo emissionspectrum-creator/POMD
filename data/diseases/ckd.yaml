@@ -1,0 +1,45 @@
+id: ckd
+name: Chronic kidney disease (advanced)
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Anorexia, nausea, metallic taste, fatigue and weight loss as kidney function falls toward stage 4–5 (uremia),
+  usually in a patient with diabetes or hypertension; common in Taiwan.
+
+symptoms:
+  - when: organ_history = ckd
+    text: Known CKD
+  - when: appetite = decreased
+    text: Anorexia, metallic taste
+  - when: assoc_gi = nausea | vomiting
+    text: Nausea, morning vomiting
+  - when: assoc_sys = malaise | pruritus
+    text: Fatigue, itching
+  - when: congestion_sx = leg_swelling
+    text: Leg swelling
+  - when: risk = diabetes
+    text: Diabetes
+  - when: risk = new_meds
+    text: Nephrotoxic herbs or analgesics
+  - when: wl_duration = m6_12 | gt12m
+    text: Months to years
+
+pe:
+  - when: skin = pallor
+    text: Pallor (anemia)
+  - when: congestion_pe = edema
+    text: Edema
+  - when: wasting_pe = muscle
+    text: Muscle wasting
+
+labs:
+  - Creatinine / eGFR, BUN, electrolytes, bicarbonate, calcium, phosphate
+  - Urinalysis, urine albumin-creatinine ratio; CBC
+
+imaging:
+  - Renal ultrasound — small kidneys suggest chronicity
+
+pitfalls:
+  - Uremic anorexia can mimic GI malignancy; check creatinine early.
+  - Chinese herbal products (e.g. aristolochic acid) and long-term analgesics contribute to CKD in Taiwan.

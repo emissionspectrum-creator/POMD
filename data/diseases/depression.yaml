@@ -1,0 +1,36 @@
+id: depression
+name: Depression
+must_not_miss: false
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Weight loss with poor appetite, low mood, loss of interest, poor sleep and fatigue — one of the most common
+  causes of weight loss in older adults, often presenting with physical complaints rather than sadness.
+
+symptoms:
+  - when: psych_social = low_mood
+    text: Low mood, loss of interest
+  - when: psych_social = poor_sleep
+    text: Poor sleep, early waking
+  - when: appetite = decreased
+    text: Poor appetite
+  - when: assoc_sys = malaise
+    text: Fatigue, low energy
+  - when: psych_social = lives_alone
+    text: Social isolation, bereavement
+  - when: wl_duration = m1_6 | m6_12
+    text: Weeks to months
+
+pe:
+  - when: general = comfortable
+    text: Often unremarkable examination
+
+labs:
+  - PHQ-9; TSH, CBC, glucose, calcium to exclude medical causes
+
+imaging: []
+
+pitfalls:
+  - Ask directly about suicidal thoughts — it does not plant the idea.
+  - Depression and cancer (especially pancreatic) can coexist; complete the basic work-up.
+  - Mirtazapine helps both appetite and mood; SSRIs may reduce appetite at first.

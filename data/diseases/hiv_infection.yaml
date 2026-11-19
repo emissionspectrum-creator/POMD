@@ -1,0 +1,46 @@
+id: hiv_infection
+name: HIV infection (advanced)
+must_not_miss: true
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Unexplained weight loss, fever, chronic diarrhea, oral thrush or generalized lymphadenopathy in someone with
+  sexual or injection risk — advanced HIV or an opportunistic infection; often the risk is not volunteered.
+
+symptoms:
+  - when: risk = sti_risk
+    text: Sexual or injection-drug exposure
+  - when: assoc_sys = fever | night_sweats
+    text: Fever, night sweats
+  - when: assoc_gi = diarrhea
+    text: Chronic diarrhea
+  - when: intake_barrier = odynophagia
+    text: Odynophagia (Candida or CMV esophagitis)
+  - when: assoc_other = cough | dyspnea
+    text: Cough, dyspnea (PCP, TB)
+  - when: wl_systemic = lump
+    text: Swollen glands
+  - when: wl_duration = m1_6 | m6_12
+    text: Months
+
+pe:
+  - when: wl_head_pe = thrush
+    text: Oral thrush
+  - when: infection_pe = lymphadenopathy
+    text: Cervical lymphadenopathy
+  - when: wl_head_pe = nodes
+    text: Generalized lymphadenopathy
+  - when: wasting_pe = temporal | muscle
+    text: Wasting
+
+labs:
+  - HIV antigen / antibody combination test (with consent); viral load and CD4 if positive
+  - Syphilis, HBV, HCV serology
+
+imaging:
+  - Chest X-ray (PCP, TB)
+
+pitfalls:
+  - Offer HIV testing to everyone with unexplained weight loss — risk history is often incomplete.
+  - HIV care in Taiwan is free through designated hospitals; refer promptly.
+  - Oral thrush without antibiotics, steroids or dentures is a strong clue.

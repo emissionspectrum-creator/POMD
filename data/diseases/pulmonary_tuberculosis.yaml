@@ -1,0 +1,48 @@
+id: pulmonary_tuberculosis
+name: Pulmonary tuberculosis
+must_not_miss: true
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Weeks to months of cough, low-grade fever, night sweats, anorexia and weight loss, sometimes hemoptysis,
+  especially in older adults, diabetics, the immunocompromised, or those with prior TB or a TB contact.
+
+symptoms:
+  - when: assoc_other = cough
+    text: Cough for more than 2 weeks
+  - when: wl_systemic = hemoptysis
+    text: Hemoptysis
+  - when: assoc_sys = fever | night_sweats
+    text: Low-grade evening fever, night sweats
+  - when: appetite = decreased
+    text: Anorexia
+  - when: wl_duration = m1_6
+    text: Weeks to months
+  - when: ascites_clues = tb
+    text: Prior TB or TB contact
+  - when: risk = diabetes | immunocompromised | smoking
+    text: Diabetes, immunosuppression, smoking
+  - when: age_group = age_60_plus
+    text: Older adults (reactivation)
+
+pe:
+  - when: vitals = fever
+    text: Fever
+  - when: lung_pe = reduced_bs
+    text: Reduced breath sounds (effusion) — often a normal exam
+  - when: infection_pe = lymphadenopathy
+    text: Cervical lymphadenopathy (scrofula)
+  - when: wasting_pe = temporal | muscle
+    text: Wasting
+
+labs:
+  - Sputum AFB smear, mycobacterial culture and NAAT × 3
+  - HIV test for every new TB diagnosis
+
+imaging:
+  - Chest X-ray — upper-lobe infiltrates or cavities; CT if X-ray is unclear
+
+pitfalls:
+  - Notifiable in Taiwan; report within one week and arrange contact tracing.
+  - Fluoroquinolones for "pneumonia" can mask TB and delay diagnosis.
+  - Older patients may have few respiratory symptoms — weight loss and malaise can be the only clue.

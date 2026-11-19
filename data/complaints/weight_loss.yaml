@@ -1,0 +1,246 @@
+id: weight_loss
+name: Unintentional weight loss
+group_item: appetite   # decreased → malignancy, infection, organ disease, mood; normal / increased → endocrine, malabsorption; can't eat → upper GI
+timecourse_item: wl_duration
+
+# Left column: is it real and significant (intent, amount, time, evidence)? → appetite →
+# one section per system (GI, systemic & chest, endocrine, heart / lung / kidney, mood & social) →
+# medications, substances & history. Design notes: data/complaints/weight_loss.md.
+history:
+  - section: Patient
+    items: [sex, age_group]
+  - section: Weight loss
+    items: [wl_intent, wl_amount, wl_duration, appetite, wl_evidence]
+  - section: Intake & GI
+    items:
+      - item: assoc_gi
+        options: [nausea, vomiting, dysphagia, early_satiety, heartburn, diarrhea, steatorrhea, bowel_change,
+                  constipation, melena, hematochezia]
+        ask:
+          - "Any trouble swallowing — does food stick on the way down?"
+          - "Do you feel full after only a little food? Any nausea or vomiting?"
+          - "Any change in your bowels — diarrhea, greasy floating stools, or black or bloody stools?"
+      - intake_barrier
+      - item: pain_location
+        label: Abdominal pain
+        ask:
+          - "Do you have any tummy pain? Where?"
+  - section: Systemic & chest
+    items:
+      - item: assoc_sys
+        label: Systemic
+        options: [fever, night_sweats, malaise, jaundice, pruritus]
+        ask:
+          - "Any fevers, or night sweats bad enough to change your clothes or sheets?"
+          - "Have you been unusually tired? Any yellowing of your skin or eyes, or itching?"
+      - wl_systemic
+      - item: assoc_other
+        label: Chest & other
+        options: [cough, dyspnea, polyuria]
+        ask:
+          - "Have you had a cough for more than two weeks? Any shortness of breath?"
+          - "Have you been very thirsty or passing a lot of urine?"
+      - item: ascites_clues
+        label: TB & cancer history
+        options: [tb, known_cancer]
+        ask:
+          - "Have you ever had tuberculosis, or been close to someone who had it?"
+          - "Have you ever been treated for cancer?"
+  - section: Endocrine
+    items:
+      - item: extraintestinal
+        label: Thyroid
+        options: [thyrotoxic]
+        ask:
+          - "Do you feel hot when others are comfortable? Any racing heart or shaky hands?"
+      - endo_sx
+  - section: Heart, lung & kidney
+    items:
+      - item: congestion_sx
+        options: [orthopnea, leg_swelling, heart_failure]
+        ask:
+          - "Do you get short of breath lying flat, or wake up breathless at night? Are your legs swollen?"
+          - "Have you been told you have heart failure?"
+      - organ_history
+  - section: Mood, cognition & social
+    items: [psych_social]
+  - section: Medications, substances & history
+    items:
+      - item: distension_drugs
+        label: Weight-loss / diabetes injections
+        options: [glp1]
+      - item: diarrhea_drugs
+        label: Diabetes tablets
+        options: [metformin]
+        ask:
+          - "Do you take metformin for diabetes?"
+      - wl_drugs
+      - item: alcohol_use
+        details:
+          label: Amount & duration
+          note: >
+            Grams of alcohol = mL × % × 0.8. Beer 5%: 330 mL can ≈ 13 g, 600 mL bottle ≈ 24 g ·
+            Kaoliang 58%: 100 mL ≈ 46 g, 600 mL bottle ≈ 280 g (38%: 100 mL ≈ 30 g) ·
+            Rice wine 19.5%: 600 mL bottle ≈ 94 g · Tonic wine ~10%: 600 mL ≈ 48 g ·
+            Wine 12%: 150 mL glass ≈ 15 g, 750 mL bottle ≈ 72 g · Whiskey 40%: 30 mL shot ≈ 10 g, 700 mL ≈ 224 g
+          items: [alcohol_type, alcohol_amount, alcohol_years, alcohol_last]
+      - item: risk
+        label: Past history
+        options: [smoking, betel, diabetes, pud, hpylori, liver_disease, gi_cancer_fhx, immunocompromised,
+                  sti_risk, new_meds]
+        ask:
+          - "Do you smoke or chew betel nut? Do you have diabetes or liver disease?"
+          - "Any stomach ulcer or H. pylori before? Any cancer in the family?"
+          - "Any new medicines or herbal supplements? Any risk of HIV, such as new sexual partners?"
+      - item: diarrhea_history
+        label: GI & thyroid history
+        options: [gastric_surgery, chronic_pancreatitis, hyperthyroid]
+        ask:
+          - "Have you had stomach surgery, chronic pancreatitis, or an overactive thyroid?"
+      - screening
+
+quick:
+  show: [sex, age_group, wl_intent, wl_amount, wl_duration, appetite, wl_evidence,
+         assoc_gi, intake_barrier, pain_location, assoc_sys, wl_systemic, assoc_other, ascites_clues,
+         extraintestinal, endo_sx, congestion_sx, organ_history, psych_social,
+         distension_drugs, diarrhea_drugs, wl_drugs, alcohol_use, risk, screening]
+
+defaults:
+  wl_intent: [unintentional]
+  guarding: [soft]
+  tenderness: [none]
+
+pe:
+  - section: General & vitals
+    items:
+      - item: general
+        options: [comfortable, ill, dehydrated, confused]
+      - item: vitals
+        options: [fever, tachycardia, hypotension, tachypnea]
+      - wasting_pe
+  - section: Head, neck & skin
+    items:
+      - item: skin
+        options: [pallor, icterus, virchow]
+      - item: infection_pe
+        label: Neck nodes
+        options: [lymphadenopathy]
+      - wl_head_pe
+      - item: systemic_pe
+        label: Thyroid
+        options: [goiter, tremor]
+  - section: Chest
+    items:
+      - lung_pe
+      - item: congestion_pe
+        options: [jvp, edema, crackles]
+  - section: Abdomen
+    items:
+      - guarding
+      - tenderness
+      - item: palpable
+        options: [hepatomegaly, splenomegaly, mass, ascites]
+  - section: Rectal
+    items:
+      - item: rectal
+        options: [normal, mass, melena]
+
+labs:
+  - {name: "CBC with differential, ESR / CRP", note: "anemia, cytopenias, inflammation — part of every initial work-up"}
+  - {name: "Electrolytes, calcium, creatinine", note: "hypercalcemia (malignancy), hyponatremia / hyperkalemia (adrenal), CKD"}
+  - {name: "Glucose, HbA1c", note: "uncontrolled diabetes"}
+  - {name: "LFT, albumin", note: "liver disease, metastases, nutritional status"}
+  - {name: TSH (free T4 if abnormal), note: "hyperthyroidism — also excess thyroxine replacement"}
+  - {name: Urinalysis, note: "glycosuria, hematuria, proteinuria"}
+  - {name: "FIT / fecal occult blood", note: "colorectal cancer; national screening age 50–74"}
+  - {name: "HIV, HBsAg, anti-HCV", note: "HIV with any risk or unexplained weight loss; HBV / HCV for liver cancer"}
+  - {name: "Morning cortisol (± ACTH stimulation)", note: "suspected adrenal insufficiency"}
+  - {name: "Sputum AFB smear and culture × 3", note: "chronic cough, abnormal chest X-ray, TB contact"}
+  - {name: Fecal elastase, note: "steatorrhea — pancreatic exocrine insufficiency"}
+  - {name: "PHQ-9 / Mini-Cog", note: "depression and cognitive screening"}
+
+imaging:
+  - {name: Chest X-ray, note: "part of every initial work-up — lung cancer, TB, lymphadenopathy"}
+  - {name: Abdominal ultrasound, note: "liver masses, pancreas, lymph nodes, ascites"}
+  - {name: EGD, note: "dysphagia, early satiety, epigastric pain, anemia; low threshold in Taiwan"}
+  - {name: Colonoscopy, note: "bowel change, bleeding, anemia, positive FIT"}
+  - {name: CT chest / abdomen / pelvis with contrast, note: "when the initial evaluation is unrevealing but suspicion remains"}
+  - {name: Low-dose chest CT, note: "heavy smokers or family history of lung cancer (national program, age 50–74)"}
+
+ddx:
+  - group: Malignancy
+    options: [decreased, cant_eat]
+    diseases: [gastric_cancer, colorectal_cancer, pancreatic_cancer, liver_malignancy, esophageal_cancer,
+               lung_cancer, lymphoma]
+  - group: Upper GI & intake
+    options: [cant_eat]
+    diseases: [peptic_ulcer_disease, gastric_outlet_obstruction, esophageal_cancer, gastric_cancer]
+  - group: Malabsorption
+    options: [normal, increased]
+    diseases: [chronic_pancreatitis, crohns_disease, sibo]
+  - group: Endocrine & metabolic
+    options: [normal, increased]
+    diseases: [hyperthyroidism, uncontrolled_diabetes, adrenal_insufficiency]
+  - group: Infection
+    options: [decreased]
+    diseases: [pulmonary_tuberculosis, hiv_infection, intestinal_tuberculosis]
+  - group: Chronic organ disease
+    options: [decreased]
+    diseases: [heart_failure, copd, ckd]
+  - group: Psychiatric, cognitive & social
+    options: [decreased]
+    diseases: [depression, dementia_frailty, eating_disorder]
+  - group: Medications & alcohol
+    diseases: [drug_alcohol_weight_loss]
+
+hpi:
+  joiner: " "
+  sentences:
+    - always: true
+      parts:
+        - "({@date_roc}) {wl_intent|weight loss}[ of {wl_amount}][ {wl_duration}][, with {appetite}]"
+    - lead: "Supported by "
+      parts: ["{wl_evidence+}"]
+    - lead: "Associated with "
+      parts: ["{assoc_gi+,intake_barrier+,assoc_sys+,wl_systemic+,assoc_other+,extraintestinal+,endo_sx+,congestion_sx+}"]
+    - parts: ["{pain_location}"]
+    - lead: "Denied "
+      parts: ["{assoc_gi-,intake_barrier-,assoc_sys-,wl_systemic-,assoc_other-,extraintestinal-,endo_sx-,congestion_sx-}"]
+    - lead: "Reports "
+      parts: ["{psych_social+}"]
+    - lead: "No "
+      parts: ["{psych_social-}"]
+    - parts: ["{alcohol_use}", "{alcohol_type}", "{alcohol_amount}", "{alcohol_years}", "{alcohol_last}"]
+    - lead: "Medications include "
+      parts: ["{distension_drugs+,diarrhea_drugs+,wl_drugs+}"]
+    - lead: "Not taking "
+      parts: ["{distension_drugs-,diarrhea_drugs-,wl_drugs-}"]
+    - lead: "Relevant history includes "
+      parts: ["{ascites_clues+,organ_history+,risk+,diarrhea_history+}"]
+    - lead: "No history of "
+      parts: ["{ascites_clues-,organ_history-,risk-,diarrhea_history-}"]
+    - lead: "Up to date with "
+      parts: ["{screening+}"]
+    - lead: "Not up to date with "
+      parts: ["{screening-}"]
+
+pe_text:
+  joiner: "\n"
+  sentences:
+    - lead: "General: "
+      parts: ["{general}"]
+    - lead: "Vital signs: "
+      parts: ["{vitals*}"]
+    - lead: "Nutrition: "
+      parts: ["{wasting_pe*}"]
+    - lead: "Head, neck & skin: "
+      parts: ["{skin*,infection_pe*,wl_head_pe*,systemic_pe*}"]
+    - lead: "Chest: "
+      parts: ["{lung_pe*,congestion_pe*}"]
+    - lead: "Abdomen: "
+      parts:
+        - "{guarding}"
+        - "{tenderness}"
+        - "{palpable*}"
+    - lead: "Rectal exam: "
+      parts: ["{rectal}"]

@@ -1,0 +1,40 @@
+id: copd
+name: COPD (advanced, with cachexia)
+must_not_miss: false
+timecourse: [chronic]
+status: draft
+one_liner: >
+  Gradual weight and muscle loss in a long-term smoker with chronic cough and exertional breathlessness — the
+  work of breathing and dyspnea at meals reduce intake; low BMI marks a worse prognosis.
+
+symptoms:
+  - when: organ_history = copd
+    text: Known COPD
+  - when: assoc_other = dyspnea
+    text: Exertional dyspnea, breathless while eating
+  - when: assoc_other = cough
+    text: Chronic cough with sputum
+  - when: risk = smoking
+    text: Long smoking history
+  - when: appetite = decreased
+    text: Reduced intake
+  - when: wl_duration = m6_12 | gt12m
+    text: Slow, over months to years
+
+pe:
+  - when: lung_pe = wheeze | reduced_bs
+    text: Wheeze, prolonged expiration, reduced breath sounds
+  - when: vitals = tachypnea
+    text: Tachypnea
+  - when: wasting_pe = low_bmi | muscle
+    text: Low BMI, muscle wasting
+
+labs:
+  - Spirometry (post-bronchodilator FEV1/FVC < 0.7)
+
+imaging:
+  - Chest X-ray — hyperinflation; and to look for cancer or TB
+
+pitfalls:
+  - Weight loss in COPD should not be blamed on COPD until lung cancer and TB are excluded — they share the risk factors.
+  - Finger clubbing is not a feature of COPD; suspect cancer or bronchiectasis.

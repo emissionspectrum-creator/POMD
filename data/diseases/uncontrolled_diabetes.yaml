@@ -1,0 +1,42 @@
+id: uncontrolled_diabetes
+name: Uncontrolled diabetes mellitus
+must_not_miss: false
+timecourse: [acute, subacute]
+status: draft
+one_liner: >
+  Weight loss despite a normal or increased appetite, with thirst, polyuria and fatigue from glycosuria —
+  new type 1 or LADA in the young, or poorly controlled type 2; can progress to DKA or a hyperosmolar state.
+
+symptoms:
+  - when: assoc_other = polyuria
+    text: Thirst and polyuria
+  - when: appetite = normal | increased
+    text: Normal or increased appetite
+  - when: assoc_sys = malaise
+    text: Fatigue
+  - when: wl_duration = lt1m | m1_6
+    text: Weeks to a few months
+  - when: risk = diabetes
+    text: Known diabetes (poor control) — or new diagnosis
+  - when: wl_drugs = sglt2
+    text: SGLT2 inhibitor adds glycosuric weight loss (and euglycemic DKA risk)
+
+pe:
+  - when: general = dehydrated
+    text: Dry mucous membranes
+  - when: vitals = tachycardia | tachypnea
+    text: Tachycardia; Kussmaul breathing if ketoacidotic
+  - when: wl_head_pe = thrush
+    text: Oral or genital candidiasis
+
+labs:
+  - Glucose, HbA1c, urinalysis (glucose, ketones)
+  - Electrolytes, venous gas and ketones if unwell
+  - GAD antibodies, C-peptide if type 1 / LADA suspected
+
+imaging: []
+
+pitfalls:
+  - Rapid weight loss with high glucose in a lean adult may be type 1 or LADA — insulin, not more tablets.
+  - New diabetes with weight loss after 50 can be the first sign of pancreatic cancer.
+  - On SGLT2 inhibitors, DKA can occur with near-normal glucose; check ketones in anyone unwell.

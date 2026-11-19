@@ -33,6 +33,14 @@ symptoms:
   - when: distension_duration = w1_4 | m1_3
     text: Weeks to months
 
+  # weight_loss complaint
+  - when: appetite = decreased
+    text: Anorexia
+  - when: risk = liver_disease
+    text: Chronic HBV / HCV or cirrhosis
+  - when: wl_duration = lt1m | m1_6
+    text: Rapid weight loss over weeks to months
+
 pe:
   - when: palpable = hepatomegaly | mass
     text: Hard, irregular liver or mass

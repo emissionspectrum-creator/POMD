@@ -1,0 +1,51 @@
+id: lymphoma
+name: Lymphoma
+must_not_miss: true
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Weight loss with fever and drenching night sweats (B symptoms), painless rubbery lymphadenopathy, sometimes
+  itching, early satiety from splenomegaly, or GI symptoms from gastric or intestinal lymphoma.
+
+symptoms:
+  - when: assoc_sys = fever | night_sweats
+    text: Fever and drenching night sweats (B symptoms)
+  - when: wl_amount = gt10
+    text: Weight loss > 10% in 6 months (B symptom)
+  - when: wl_systemic = lump
+    text: Painless, enlarging lumps
+  - when: assoc_sys = pruritus
+    text: Generalized itching (Hodgkin)
+  - when: assoc_sys = malaise
+    text: Fatigue
+  - when: assoc_gi = early_satiety
+    text: Early satiety (splenomegaly, gastric lymphoma)
+  - when: wl_duration = lt1m | m1_6
+    text: Weeks to months
+  - when: risk = immunocompromised | sti_risk
+    text: HIV or immunosuppression
+
+pe:
+  - when: infection_pe = lymphadenopathy
+    text: Rubbery, non-tender cervical nodes
+  - when: wl_head_pe = nodes
+    text: Axillary or inguinal nodes
+  - when: skin = virchow
+    text: Supraclavicular node
+  - when: palpable = splenomegaly | hepatomegaly
+    text: Splenomegaly or hepatomegaly
+  - when: vitals = fever
+    text: Fever
+
+labs:
+  - CBC with smear (cytopenias), LDH, uric acid
+  - HIV, HBV (before rituximab), HCV
+
+imaging:
+  - CT neck / chest / abdomen / pelvis; PET-CT for staging
+  - Excisional (not fine-needle) node biopsy
+
+pitfalls:
+  - Steroids before biopsy can melt lymphoma and spoil the histology.
+  - Fine-needle aspiration rarely suffices; ask for excisional or core biopsy.
+  - Fever and night sweats with nodes in Taiwan also mean TB — biopsy for both histology and culture.

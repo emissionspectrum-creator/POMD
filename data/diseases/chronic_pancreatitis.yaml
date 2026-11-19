@@ -36,6 +36,14 @@ symptoms:
   - when: diarrhea_history = chronic_pancreatitis
     text: Known chronic pancreatitis
 
+  # weight_loss complaint
+  - when: appetite = normal | cant_eat
+    text: Normal appetite (malabsorption) or eats little to avoid pain
+  - when: alcohol_use = heavy | former
+    text: Heavy alcohol use
+  - when: wl_duration = m6_12 | gt12m
+    text: Months to years
+
 pe:
   - when: tenderness = epigastric
     text: Epigastric tenderness

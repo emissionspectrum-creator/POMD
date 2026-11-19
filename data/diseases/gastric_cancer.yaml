@@ -47,6 +47,12 @@ symptoms:
   - when: distension_duration = w1_4 | m1_3
     text: Weeks to months
 
+  # weight_loss complaint
+  - when: appetite = decreased | cant_eat
+    text: Anorexia; wants to eat but fills up quickly
+  - when: wl_duration = m1_6 | m6_12
+    text: Weight loss over months
+
 pe:
   - when: skin = pallor
     text: Pallor (iron-deficiency anemia)

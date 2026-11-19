@@ -1,0 +1,58 @@
+id: pancreatic_cancer
+name: Pancreatic cancer
+must_not_miss: true
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Progressive weight loss and anorexia in an older patient, often with dull epigastric pain boring through to
+  the back, new-onset or worsening diabetes, steatorrhea, or painless jaundice from a tumor in the pancreatic head.
+
+symptoms:
+  - when: appetite = decreased
+    text: Anorexia
+  - when: wl_amount = p5_10 | gt10
+    text: Marked weight loss, often > 10%
+  - when: wl_duration = m1_6 | m6_12
+    text: Over a few months
+  - when: pain_location = epigastric | luq
+    text: Dull epigastric pain, often radiating to the back and worse lying flat
+  - when: wl_systemic = bone_pain
+    text: Back pain (retroperitoneal invasion)
+  - when: assoc_sys = jaundice | pruritus
+    text: Painless jaundice and itching (pancreatic head)
+  - when: assoc_gi = steatorrhea
+    text: Steatorrhea (duct obstruction)
+  - when: risk = diabetes
+    text: New-onset or suddenly worsening diabetes
+  - when: assoc_other = polyuria
+    text: Thirst and polyuria from new diabetes
+  - when: risk = smoking
+    text: Smoking
+  - when: age_group = age_60_plus
+    text: Usually over 60
+
+pe:
+  - when: skin = icterus
+    text: Jaundice
+  - when: palpable = mass | hepatomegaly
+    text: Epigastric mass or hepatomegaly (metastases)
+  - when: skin = virchow
+    text: Left supraclavicular node
+  - when: palpable = ascites
+    text: Ascites (peritoneal spread)
+  - when: wasting_pe = temporal | muscle
+    text: Cachexia
+
+labs:
+  - LFT — cholestatic pattern if the head is involved
+  - Glucose / HbA1c — new diabetes after 50 with weight loss is a warning sign
+  - CA 19-9 supports but does not establish the diagnosis (false positives with cholestasis)
+
+imaging:
+  - Abdominal ultrasound may miss body / tail tumors
+  - Pancreatic-protocol CT is the key test; EUS with FNA for tissue
+
+pitfalls:
+  - New diabetes with weight loss in an older patient should prompt pancreatic imaging, not just a diabetes prescription.
+  - Body and tail tumors present late with pain and weight loss but no jaundice.
+  - Back pain is often blamed on the spine — ask about weight and appetite.

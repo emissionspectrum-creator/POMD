@@ -1,0 +1,48 @@
+id: adrenal_insufficiency
+name: Adrenal insufficiency
+must_not_miss: true
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Insidious fatigue, anorexia, nausea and weight loss with salt craving, postural dizziness and skin
+  pigmentation (primary), or after stopping long-term steroids (secondary) — can tip into adrenal crisis.
+
+symptoms:
+  - when: assoc_sys = malaise
+    text: Profound fatigue and weakness
+  - when: appetite = decreased
+    text: Anorexia
+  - when: assoc_gi = nausea | vomiting
+    text: Nausea, vomiting
+  - when: pain_location = diffuse | epigastric
+    text: Vague abdominal pain
+  - when: endo_sx = salt_craving
+    text: Salt craving
+  - when: endo_sx = skin_darkening
+    text: Skin darkening (primary — high ACTH)
+  - when: ascites_clues = tb
+    text: Prior TB (adrenal TB)
+  - when: risk = new_meds
+    text: Recent stop of steroids, including herbal remedies that contain them
+  - when: wl_duration = m1_6 | m6_12
+    text: Months
+
+pe:
+  - when: vitals = hypotension
+    text: Hypotension, often postural
+  - when: wl_head_pe = hyperpigmentation
+    text: Pigmentation of buccal mucosa, palmar creases, scars
+  - when: general = dehydrated
+    text: Dehydration
+
+labs:
+  - Sodium (low), potassium (high in primary), glucose (low)
+  - 8 a.m. cortisol with ACTH; ACTH (Synacthen) stimulation test if equivocal
+
+imaging:
+  - Adrenal CT if primary (TB calcification, hemorrhage, metastases); pituitary MRI if secondary
+
+pitfalls:
+  - Steroid-containing herbal or "underground" remedies are common in Taiwan — ask specifically, and suspect secondary insufficiency after they stop.
+  - Hyperkalemia is absent in secondary (pituitary) insufficiency.
+  - Never delay hydrocortisone in suspected crisis to obtain tests — draw a cortisol and treat.

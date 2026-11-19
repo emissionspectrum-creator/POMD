@@ -23,6 +23,14 @@ symptoms:
   - when: risk = immunocompromised | diabetes
     text: HIV, diabetes, immunosuppression, or prior TB / TB contact
 
+  # weight_loss complaint
+  - when: assoc_gi = diarrhea | bowel_change
+    text: Diarrhea or change in bowel habit
+  - when: ascites_clues = tb
+    text: Prior TB or TB contact
+  - when: wl_duration = m1_6 | m6_12
+    text: Months
+
 pe:
   - when: palpable = mass
     text: RLQ mass

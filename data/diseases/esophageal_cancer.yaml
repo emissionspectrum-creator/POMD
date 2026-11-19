@@ -1,0 +1,54 @@
+id: esophageal_cancer
+name: Esophageal cancer
+must_not_miss: true
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Progressive dysphagia, first to solids and then to liquids, with rapid weight loss in a man who drinks, smokes
+  or chews betel nut (squamous cell, common in Taiwan) or has long-standing reflux (adenocarcinoma).
+
+symptoms:
+  - when: assoc_gi = dysphagia
+    text: Progressive dysphagia, solids then liquids
+  - when: appetite = cant_eat
+    text: Wants to eat but food sticks
+  - when: intake_barrier = odynophagia
+    text: Painful swallowing
+  - when: wl_amount = p5_10 | gt10
+    text: Marked, rapid weight loss
+  - when: wl_duration = lt1m | m1_6
+    text: Weeks to a few months
+  - when: wl_systemic = hoarseness
+    text: Hoarseness (recurrent laryngeal nerve)
+  - when: assoc_gi = vomiting
+    text: Regurgitation of undigested food
+  - when: assoc_other = cough
+    text: Coughing with meals (aspiration or fistula)
+  - when: alcohol_use = heavy | former
+    text: Heavy alcohol use
+  - when: risk = smoking | betel
+    text: Smoking, betel nut chewing
+  - when: assoc_gi = heartburn
+    text: Long-standing reflux (adenocarcinoma)
+  - when: sex = male
+    text: Male predominance
+
+pe:
+  - when: wasting_pe = low_bmi | temporal | muscle
+    text: Wasting
+  - when: skin = virchow
+    text: Supraclavicular node
+  - when: infection_pe = lymphadenopathy
+    text: Cervical lymphadenopathy
+
+labs:
+  - CBC, albumin — nutritional status
+
+imaging:
+  - EGD with biopsy is the first test for any progressive dysphagia
+  - CT chest / abdomen and PET-CT for staging; EUS for depth
+
+pitfalls:
+  - By the time solids stick, the lumen is usually more than half narrowed — do not wait for a barium study.
+  - Squamous cell cancer often coexists with head and neck cancer in drinkers who chew betel nut; examine the mouth.
+  - Weight loss with dysphagia needs endoscopy even when reflux symptoms are long-standing.

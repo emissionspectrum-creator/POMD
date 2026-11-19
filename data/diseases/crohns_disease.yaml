@@ -44,6 +44,12 @@ symptoms:
   - when: melena_duration = w1_4 | intermittent
     text: Intermittent
 
+  # weight_loss complaint
+  - when: appetite = decreased | cant_eat
+    text: Eats less to avoid pain and diarrhea
+  - when: wl_duration = m1_6 | m6_12 | gt12m
+    text: Months
+
 pe:
   - when: tenderness = rlq
     text: RLQ tenderness
@@ -58,6 +64,10 @@ pe:
   # diarrhea complaint
   - when: systemic_pe = erythema_nodosum | oral_ulcers
     text: Erythema nodosum, oral aphthous ulcers
+
+  # weight_loss complaint
+  - when: wasting_pe = low_bmi | muscle
+    text: Low BMI, growth failure in the young
 
 labs:
   - CBC (anemia, thrombocytosis), CRP, albumin, ferritin, B12

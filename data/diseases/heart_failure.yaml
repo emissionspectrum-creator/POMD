@@ -1,11 +1,12 @@
 id: heart_failure
-name: Heart failure (cardiac ascites)
+name: Heart failure
 must_not_miss: false
 timecourse: [subacute, chronic]
 status: draft
 one_liner: >
   Right-sided or biventricular heart failure, constrictive pericarditis or severe tricuspid regurgitation
-  causing hepatic congestion and ascites, with orthopnea, leg edema, and a raised JVP.
+  causing hepatic congestion and ascites, with orthopnea, leg edema, and a raised JVP. Advanced disease causes
+  cardiac cachexia — anorexia from gut congestion and muscle loss masked by fluid.
 
 symptoms:
   - when: distension_pattern = progressive
@@ -21,6 +22,14 @@ symptoms:
   - when: age_group = age_60_plus
     text: Older patients
 
+  # weight_loss complaint
+  - when: appetite = decreased
+    text: Poor appetite (gut congestion) — cardiac cachexia
+  - when: assoc_other = dyspnea
+    text: Exertional dyspnea
+  - when: wl_duration = m6_12 | gt12m
+    text: Slow, over months (masked by fluid gain)
+
 pe:
   - when: congestion_pe = jvp
     text: Raised JVP — the key finding that separates it from cirrhosis
@@ -33,6 +42,10 @@ pe:
   - when: palpable = ascites
     text: Shifting dullness
 
+  # weight_loss complaint
+  - when: wasting_pe = muscle | temporal
+    text: Muscle wasting hidden by edema
+
 labs:
   - NT-proBNP; ascitic fluid SAAG ≥ 1.1 with high total protein (≥ 2.5 g/dL)
   - Mild cholestatic LFT rise
@@ -43,4 +56,5 @@ imaging:
 
 pitfalls:
   - Always look at the neck veins in new ascites — a raised JVP points away from cirrhosis.
+  - Weigh against fluid status — dry-weight loss in heart failure is easily missed, and cardiac cachexia carries a poor prognosis.
   - Constrictive pericarditis (prior TB, surgery, radiotherapy) can present with ascites before edema.

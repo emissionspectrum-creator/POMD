@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## 2026-11-19 — 新增第六個主訴 Unintentional weight loss（v0.9.0，使用者要求）
+
+依 `data/complaints/weight_loss.md`（與使用者對齊：Q3 口腔／頭頸癌、achalasia、cirrhosis、酒精使用障礙不放，失智／衰弱放；其他照建議）實作。
+
+**程式**
+- 無。
+
+**內容（全部 `draft`）**
+- 追問：確認與量化（是否刻意、幾 %、多久、證據）→ 食慾分流 → Intake & GI → Systemic & chest → Endocrine → Heart, lung & kidney → Mood, cognition & social → 藥物、物質與病史（含癌症篩檢紀錄）。
+- 新詞彙：wl_intent（預設 unintentional）、wl_amount、wl_duration（< 1 月 acute、1–6 月 subacute、> 6 月 chronic）、appetite（`group_item`：減少 → 惡性腫瘤、感染、器官疾病、精神／認知；正常或增加 → 內分泌、吸收不良；想吃吃不下 → 上消化道、惡性腫瘤）、wl_evidence、intake_barrier、wl_systemic、endo_sx、organ_history、psych_social、wl_drugs、screening；PE 新增 wasting_pe、wl_head_pe、lung_pe。
+- 共用 `risk` 新增 betel nut chewing（只在本主訴顯示；其他主訴都列選項子集）。
+- 新疾病 14 個（★：pancreatic、esophageal、lung cancer、lymphoma、adrenal insufficiency、pulmonary TB、HIV、eating disorder）：pancreatic cancer、esophageal cancer、lung cancer、lymphoma、uncontrolled diabetes、adrenal insufficiency、pulmonary tuberculosis、HIV infection (advanced)、COPD、CKD、depression、dementia／frailty with poor intake、eating disorder、medication- or alcohol-related weight loss。
+- 共用疾病補體重減輕特徵：gastric cancer、colorectal cancer、liver malignancy、PUD、gastric outlet obstruction、chronic pancreatitis、Crohn's、SIBO、hyperthyroidism、intestinal TB、heart failure。
+- `heart_failure` 名稱由「Heart failure (cardiac ascites)」改為「Heart failure」（現在也用於 cardiac cachexia），one_liner 與 pitfalls 補充。腹脹主訴右欄的名稱因此改變。
+- 新增端對端測試（30 個測試）。
+
 ## 2026-11-19 — 新增第五個主訴 Abdominal distension / fullness（v0.8.0，使用者要求）
 
 依 `data/complaints/abdominal_distension.md`（與使用者對齊：pregnancy 不放，其他照建議）實作。

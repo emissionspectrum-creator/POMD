@@ -33,6 +33,12 @@ symptoms:
   - when: distension_duration = gt3m | m1_3
     text: Chronic
 
+  # weight_loss complaint
+  - when: appetite = normal
+    text: Normal appetite (malabsorption)
+  - when: wl_duration = m6_12 | gt12m
+    text: Months
+
 pe:
   - when: abd_contour = mild | marked
     text: Abdominal distension

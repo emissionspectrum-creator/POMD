@@ -1,0 +1,52 @@
+id: lung_cancer
+name: Lung cancer
+must_not_miss: true
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Weight loss with a persistent or changed cough, hemoptysis, hoarseness or bone pain in an older smoker — or,
+  common in Taiwan, in a never-smoking woman with adenocarcinoma (EGFR mutations).
+
+symptoms:
+  - when: assoc_other = cough
+    text: Persistent or changed cough
+  - when: wl_systemic = hemoptysis
+    text: Hemoptysis
+  - when: wl_systemic = hoarseness
+    text: Hoarseness (left recurrent laryngeal nerve)
+  - when: wl_systemic = bone_pain
+    text: Bone pain (metastases)
+  - when: assoc_other = dyspnea
+    text: Dyspnea (effusion, obstruction)
+  - when: appetite = decreased
+    text: Anorexia
+  - when: wl_duration = m1_6 | m6_12
+    text: Months
+  - when: risk = smoking
+    text: Smoking (but many Taiwanese patients never smoked)
+  - when: age_group = age_60_plus | age_40_59
+    text: Usually over 50
+
+pe:
+  - when: lung_pe = clubbing
+    text: Finger clubbing
+  - when: lung_pe = reduced_bs
+    text: Reduced breath sounds (effusion, collapse)
+  - when: skin = virchow
+    text: Supraclavicular node
+  - when: palpable = hepatomegaly
+    text: Hepatomegaly (metastases)
+  - when: wasting_pe = temporal | muscle
+    text: Cachexia
+
+labs:
+  - Calcium (hypercalcemia), sodium (SIADH)
+
+imaging:
+  - Chest X-ray first; CT chest with contrast if abnormal or suspicion persists
+  - Tissue by bronchoscopy, CT-guided biopsy, or effusion cytology; EGFR / ALK testing
+
+pitfalls:
+  - A normal chest X-ray does not exclude lung cancer in a high-risk patient — get a CT.
+  - In Taiwan, lung adenocarcinoma is common in never-smokers, especially women; a family history counts for LDCT.
+  - Cough with weight loss also suggests TB — send sputum AFB before starting steroids or empiric treatment.

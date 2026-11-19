@@ -539,6 +539,48 @@ test('built data: abdominal distension complaint — pattern ordering, ascites, 
   assert.equal(Core.rankByMatches(c, data.diseases, g, it)[0].id, 'gastroparesis');
 });
 
+test('built data: weight loss complaint — appetite ordering, betel option, shared diseases, HPI', () => {
+  const data = loadBuiltData();
+  const it = data.items;
+  const c = data.complaints.find((x) => x.id === 'weight_loss');
+  const ab = data.complaints.find((x) => x.id === 'abdominal_pain');
+  assert.ok(c && ab);
+  // betel nut is a new risk option shown only where a complaint lists it
+  assert.ok(Core.itemOptions(c, it.risk).some((o) => o.id === 'betel'));
+  assert.ok(!Core.itemOptions(data.complaints.find((x) => x.id === 'diarrhea'), it.risk).some((o) => o.id === 'betel'));
+  // shared disease: weight-loss features hidden elsewhere
+  const hyper = data.diseases.hyperthyroidism;
+  assert.ok(Core.diseaseFeatures(hyper, c).some((f) => f.item === 'appetite'));
+  assert.ok(!Core.diseaseFeatures(hyper, data.complaints.find((x) => x.id === 'diarrhea')).some((f) => f.item === 'appetite'));
+  // only the default (unintentional) → treated as untouched
+  const d0 = Core.defaultState(c, it);
+  assert.equal(Core.composeText(c.hpi, d0, it, { date_roc: '115/01/05' }), '(115/01/05) unintentional weight loss.');
+  // increased appetite with thyrotoxic symptoms → endocrine / malabsorption first, hyperthyroidism top
+  const s = Core.defaultState(c, it);
+  Core.toggle(s, it.appetite, 'increased');
+  Core.toggle(s, it.wl_duration, 'm1_6');
+  Core.toggle(s, it.extraintestinal, 'thyrotoxic');
+  Core.toggle(s, it.systemic_pe, 'tremor');
+  const order = Core.orderGroups(c, s).map((e) => e.group.group);
+  assert.deepEqual(order.slice(0, 2).sort(), ['Endocrine & metabolic', 'Malabsorption']);
+  assert.deepEqual(Core.selectedTimecourses(c, s, it), ['subacute']);
+  assert.equal(Core.rankByMatches(c, data.diseases, s, it)[0].id, 'hyperthyroidism');
+  // can't eat + dysphagia + betel → upper GI promoted, esophageal cancer top
+  const g = Core.defaultState(c, it);
+  Core.toggle(g, it.appetite, 'cant_eat');
+  Core.toggle(g, it.wl_amount, 'p5_10');
+  Core.toggle(g, it.assoc_gi, 'dysphagia');
+  Core.toggle(g, it.risk, 'betel');
+  Core.toggle(g, it.screening, 'crc_screen');
+  Core.toggle(g, it.screening, 'crc_screen');
+  assert.ok(Core.orderGroups(c, g).slice(0, 2).some((e) => e.group.group === 'Upper GI & intake'));
+  assert.equal(Core.rankByMatches(c, data.diseases, g, it)[0].id, 'esophageal_cancer');
+  const hpi = Core.composeText(c.hpi, g, it, { date_roc: '115/01/05' });
+  assert.match(hpi, /^\(115\/01\/05\) unintentional weight loss of 5–10% of body weight, with a preserved desire to eat/);
+  assert.match(hpi, /Relevant history includes betel nut chewing\./);
+  assert.match(hpi, /Not up to date with colorectal cancer screening\./);
+});
+
 test('details blocks: sub-items count as shown and are summarized', () => {
   const { items } = fixture();
   const complaint = {

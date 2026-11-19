@@ -196,6 +196,7 @@
 | Abnormal liver tests | `data/complaints/abnormal_lft.md` |
 | Black stool | `data/complaints/black_stool.md` |
 | Abdominal distension / fullness | `data/complaints/abdominal_distension.md` |
+| Unintentional weight loss | `data/complaints/weight_loss.md` |
 
 ---
 
@@ -228,3 +229,4 @@
 5. **M5 第三個主訴：Abnormal liver tests**（完成）：依病因分段，新增可收合細項
 6. **M6 第四個主訴：Black stool**（完成）：先確認是否真的 melena、再評估嚴重度、最後找來源；依糞便外觀排序右欄
 7. **M7 第五個主訴：Abdominal distension / fullness**（完成）：先分主觀脹或客觀膨大，再依機轉（氣、胃排空、阻塞、腹水、腫塊）追問；依腹脹型態排序右欄
+8. **M8 第六個主訴：Unintentional weight loss**（完成）：先確認是否真的、有意義的體重減輕，再以食慾分流，最後依系統逐段追問；依食慾排序右欄

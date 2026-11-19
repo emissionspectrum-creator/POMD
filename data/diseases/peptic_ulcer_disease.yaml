@@ -47,6 +47,10 @@ symptoms:
   - when: distension_site = upper
     text: Upper abdomen
 
+  # weight_loss complaint
+  - when: appetite = cant_eat
+    text: Eats less because meals bring on pain
+
 pe:
   - when: tenderness = epigastric
     text: Mild epigastric tenderness

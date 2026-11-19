@@ -1,0 +1,40 @@
+id: eating_disorder
+name: Eating disorder (anorexia nervosa)
+must_not_miss: true
+timecourse: [subacute, chronic]
+status: draft
+one_liner: >
+  Weight loss from deliberate restriction, purging or excessive exercise in a young person — often a woman —
+  with fear of weight gain and distorted body image; denial is common and medical complications can be fatal.
+
+symptoms:
+  - when: psych_social = fear_gain
+    text: Fear of weight gain, deliberate restriction
+  - when: wl_intent = partly | intentional
+    text: Weight loss framed as dieting
+  - when: sex = female
+    text: Usually female
+  - when: age_group = under_40
+    text: Adolescents and young adults
+  - when: assoc_gi = vomiting
+    text: Self-induced vomiting
+  - when: psych_social = low_mood
+    text: Coexisting depression or anxiety
+
+pe:
+  - when: wasting_pe = low_bmi
+    text: Very low BMI
+  - when: vitals = hypotension
+    text: Bradycardia, hypotension, hypothermia
+  - when: wl_head_pe = poor_dentition
+    text: Dental erosion (purging)
+
+labs:
+  - Potassium, phosphate, magnesium, glucose; ECG (bradycardia, QT)
+
+imaging: []
+
+pitfalls:
+  - Bradycardia under 40, hypotension, or low potassium need admission.
+  - Refeeding syndrome — check phosphate before and during refeeding.
+  - Ask about amenorrhea, laxatives, diuretics and diet pills.

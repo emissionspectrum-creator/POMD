@@ -14,6 +14,7 @@
 | 描述症狀（疼痛類） | `data/complaints/abdominal_pain.*` | LQQOPERA；依位置分組，`group_item: pain_location` |
 | 先分流再追問 | `data/complaints/diarrhea.*` | 先依時程、再依糞便型態分流；依機轉分組，`group_item: stool_character`；大量使用共用項目子集 |
 | 依病因逐一排除 | `data/complaints/abnormal_lft.*` | 每個病因一段，右欄群組與左欄分段對應，不設 `group_item`；酒精用可收合細項 |
+| 全身性、不指向器官 | `data/complaints/weight_loss.*` | 先確認與量化，再以食慾（`group_item: appetite`）分流到病因類別；依系統分段，大量借用其他主訴的項目子集 |
 
 4. 瀏覽一下 `data/vocab/history.yaml`、`pe.yaml` 的項目 id 和選項，新主訴盡量沿用。
 
@@ -109,6 +110,9 @@
 - 共用項目新增選項（例如 assoc_gi 的 retching）會出現在**所有顯示整個項目**的主訴；不想讓舊主訴看到，就在舊主訴改用 `{item, options}` 列出子集。
 - 共用疾病補特徵前，先看它原本有沒有同一個 `when`（例如 IBS 早就有 `relieving = defecation`）；項目已在新主訴顯示，舊特徵就會自動參與比對，重複寫會讓同一點選算兩次。
 - 共用選項的 frag 若把兩種發現綁在一起（例如原本的「markedly distended and tympanic」），在新主訴可能與其他發現矛盾；拆開，並在 CHANGELOG 註明舊主訴輸出的改變。
+- 共用項目只能在一個段落出現，借來的項目要挑最合適的段落放並改 `label`（體重減輕把 `assoc_other` 的 cough／dyspnea／polyuria 放在 Systemic & chest）；一個概念只為一個選項而多開一個項目時，考慮直接不問，用 PE 補。
+- `defaults` 也可以用在 single 的「確認」題（體重減輕的 wl_intent = unintentional），讓 HPI 開頭句直接成立；只有預設時仍視為未點選。
+- 疾病名稱帶有主訴限定詞（例如「Heart failure (cardiac ascites)」）時，被新主訴共用前先改成通用名稱。
 - multi 項目的片段以 and 串接，選項要都是可並列的名詞片語；修飾語（如「惡臭」）併入某個選項，不要單獨成選項。
 
 ## 6. 驗證工具

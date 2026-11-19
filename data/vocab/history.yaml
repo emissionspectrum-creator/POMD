@@ -361,6 +361,7 @@
     - {id: af, label: Atrial fibrillation, frag: atrial fibrillation}
     - {id: atherosclerosis, label: CAD / PAD / stroke, frag: atherosclerotic vascular disease}
     - {id: smoking, label: Smoking, frag: smoking}
+    - {id: betel, label: Betel nut chewing, frag: betel nut chewing}
     - {id: aaa, label: Known AAA, frag: a known abdominal aortic aneurysm}
     - {id: diabetes, label: Diabetes, frag: diabetes mellitus}
     - {id: hypertriglyceridemia, label: Hypertriglyceridemia, frag: hypertriglyceridemia}
@@ -987,3 +988,148 @@
   options:
     - {id: glp1, label: "GLP-1 agonist (semaglutide, liraglutide)", frag: GLP-1 receptor agonists}
     - {id: fermentable, label: "Fiber / lactulose / acarbose", frag: "fiber supplements, lactulose, or acarbose"}
+
+# ---------- Unintentional weight loss (data/complaints/weight_loss.yaml) ----------
+# appetite drives the right-column order: decreased → malignancy, infection, organ disease, mood / cognition;
+# normal / increased → endocrine and malabsorption; cant_eat → upper GI and malignancy.
+
+- id: wl_intent
+  label: Intentional?
+  type: single
+  ask:
+    - "Have you been trying to lose weight — dieting, exercising more, or taking anything for it?"
+    - "Is it more weight than you expected to lose?"
+  options:
+    - {id: unintentional, label: Not trying, frag: unintentional weight loss}
+    - {id: partly, label: "Dieting, but more than expected", frag: weight loss greater than expected from dieting}
+    - {id: intentional, label: Intentional, frag: intentional weight loss}
+
+- id: wl_amount
+  label: How much
+  type: single
+  ask:
+    - "How much did you weigh before, and how much now?"
+    - "How do you know — have you weighed yourself, or been weighed at a clinic?"
+  options:
+    - {id: lt5, label: "<5%", frag: less than 5% of body weight}
+    - {id: p5_10, label: "5–10%", frag: 5–10% of body weight}
+    - {id: gt10, label: ">10%", frag: more than 10% of body weight, red_flag: true}
+
+# Weight loss uses its own duration: < 1 month acute, 1–6 months subacute, > 6 months chronic.
+- id: wl_duration
+  label: Over how long
+  type: single
+  ask:
+    - "Over how long have you lost this weight?"
+    - "When did you first notice you were losing weight?"
+  options:
+    - {id: lt1m, label: "<1 mo", frag: over less than 1 month, tc: [acute]}
+    - {id: m1_6, label: "1–6 mo", frag: over 1–6 months, tc: [subacute]}
+    - {id: m6_12, label: "6–12 mo", frag: over 6–12 months, tc: [chronic]}
+    - {id: gt12m, label: ">12 mo", frag: over more than 12 months, tc: [chronic]}
+
+- id: appetite
+  label: Appetite
+  type: single
+  ask:
+    - "How is your appetite — less than usual, the same, or are you hungrier than before?"
+    - "Do you want to eat but find you can't manage much?"
+  options:
+    - {id: decreased, label: Decreased, frag: decreased appetite}
+    - {id: normal, label: Normal, frag: a normal appetite}
+    - {id: increased, label: Increased, frag: an increased appetite}
+    - {id: cant_eat, label: "Wants to eat, but can't", frag: a preserved desire to eat but difficulty eating enough}
+
+- id: wl_evidence
+  label: Evidence
+  type: presence
+  ask:
+    - "Have your clothes, belt, or rings become loose?"
+    - "Has anyone else told you that you look thinner?"
+  options:
+    - {id: weighed, label: Documented weights, frag: documented weights}
+    - {id: loose_clothes, label: Clothes looser, frag: looser clothes}
+    - {id: others_noticed, label: Others noticed, frag: comments from others}
+
+- id: intake_barrier
+  label: Eating problems
+  type: presence
+  ask:
+    - "Does it hurt when you swallow?"
+    - "Do you have any trouble with your teeth, dentures, or chewing?"
+  options:
+    - {id: odynophagia, label: Painful swallowing, frag: odynophagia}
+    - {id: dental, label: Teeth / chewing problems, frag: dental or chewing problems}
+
+- id: wl_systemic
+  label: Lumps, bones & chest
+  type: presence
+  ask:
+    - "Have you noticed any lumps or swollen glands — in your neck, armpits, or groin?"
+    - "Any pain in your bones or back that keeps you awake?"
+    - "Have you coughed up blood? Has your voice been hoarse for more than a few weeks?"
+  options:
+    - {id: lump, label: Lump / swollen glands, frag: a lump or swollen glands, red_flag: true}
+    - {id: bone_pain, label: Bone / back pain, frag: bone or back pain}
+    - {id: hemoptysis, label: Coughing up blood, frag: hemoptysis, red_flag: true}
+    - {id: hoarseness, label: Persistent hoarseness, frag: persistent hoarseness}
+
+- id: endo_sx
+  label: Adrenal
+  type: presence
+  ask:
+    - "Have you been craving salty food?"
+    - "Has your skin, gums, or the creases of your hands become darker?"
+  options:
+    - {id: salt_craving, label: Salt craving, frag: salt craving}
+    - {id: skin_darkening, label: Skin darkening, frag: darkening of the skin}
+
+- id: organ_history
+  label: Lung & kidney
+  type: presence
+  ask:
+    - "Do you have COPD, emphysema, or chronic bronchitis?"
+    - "Have you been told your kidneys are weak? Are you on dialysis?"
+  options:
+    - {id: copd, label: COPD, frag: COPD}
+    - {id: ckd, label: CKD / dialysis, frag: chronic kidney disease}
+
+- id: psych_social
+  label: Mood, memory & living situation
+  type: presence
+  ask:
+    - "How has your mood been? Do you still enjoy the things you used to?"
+    - "Has your memory been worse? Who does the shopping and cooking at home?"
+    - "Do you worry a lot about gaining weight, or cut down on food on purpose?"
+  options:
+    - {id: low_mood, label: Low mood / loss of interest, frag: low mood or loss of interest}
+    - {id: poor_sleep, label: Poor sleep, frag: poor sleep}
+    - {id: memory, label: Memory decline, frag: memory decline}
+    - {id: needs_help, label: Needs help with shopping / meals, frag: needing help with shopping or meals}
+    - {id: lives_alone, label: Lives alone, frag: living alone}
+    - {id: financial, label: Financial difficulty, frag: financial difficulty}
+    - {id: fear_gain, label: Fear of weight gain / restricting, frag: fear of weight gain or deliberate food restriction, red_flag: true}
+
+- id: wl_drugs
+  label: Other medications
+  type: presence
+  ask:
+    - "Are you taking any diabetes tablets like dapagliflozin or empagliflozin?"
+    - "Do you take thyroid tablets, topiramate, or ADHD medicine?"
+  options:
+    - {id: sglt2, label: SGLT2 inhibitor, frag: SGLT2 inhibitors}
+    - {id: topiramate, label: Topiramate, frag: topiramate}
+    - {id: thyroxine, label: Thyroxine, frag: thyroxine}
+    - {id: stimulants, label: Stimulants (ADHD), frag: stimulants}
+
+- id: screening
+  label: Cancer screening
+  type: presence
+  ask:
+    - "Have you had the stool test or a colonoscopy for bowel cancer screening?"
+    - "Have you had a low-dose CT of your chest? (Women) A mammogram or Pap smear recently?"
+  options:
+    - {id: crc_screen, label: FIT / colonoscopy, frag: colorectal cancer screening}
+    - {id: ldct, label: Low-dose chest CT, frag: low-dose chest CT screening}
+    - {id: mammogram, label: Mammogram, frag: mammography}
+    - {id: pap, label: Pap smear, frag: cervical screening}

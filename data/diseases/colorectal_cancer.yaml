@@ -50,6 +50,12 @@ symptoms:
   - when: distension_duration = w1_4 | m1_3
     text: Weeks to months
 
+  # weight_loss complaint
+  - when: wl_duration = m1_6 | m6_12
+    text: Weight loss over months
+  - when: screening = no crc_screen
+    text: Not up to date with colorectal screening
+
 pe:
   - when: skin = pallor
     text: Pallor

@@ -248,3 +248,33 @@
     - {id: succussion, label: Succussion splash, frag: a succussion splash, frag_neg: no succussion splash, red_flag: true}
     - {id: peristalsis, label: Visible peristalsis, frag: visible peristalsis}
     - {id: caput, label: Dilated abdominal veins, frag: dilated abdominal wall veins}
+
+# ---------- Unintentional weight loss (data/complaints/weight_loss.yaml) ----------
+
+- id: wasting_pe
+  label: Nutrition
+  type: presence
+  join: ","
+  options:
+    - {id: low_bmi, label: "BMI < 18.5", frag: BMI below 18.5, frag_neg: BMI 18.5 or above}
+    - {id: temporal, label: Temporal wasting, frag: temporal wasting}
+    - {id: muscle, label: Muscle wasting, frag: generalized muscle wasting, frag_neg: no obvious muscle wasting}
+
+- id: wl_head_pe
+  label: Mouth, nodes & skin
+  type: presence
+  join: ","
+  options:
+    - {id: thrush, label: Oral thrush, frag: oral thrush}
+    - {id: poor_dentition, label: Poor dentition, frag: poor dentition}
+    - {id: hyperpigmentation, label: Buccal / palmar crease pigmentation, frag: hyperpigmentation of the buccal mucosa or palmar creases}
+    - {id: nodes, label: Axillary / inguinal nodes, frag: axillary or inguinal lymphadenopathy, frag_neg: no axillary or inguinal lymphadenopathy}
+
+- id: lung_pe
+  label: Lungs
+  type: presence
+  join: ","
+  options:
+    - {id: wheeze, label: Wheeze / prolonged expiration, frag: wheeze with prolonged expiration}
+    - {id: reduced_bs, label: Reduced breath sounds, frag: reduced breath sounds, frag_neg: normal breath sounds}
+    - {id: clubbing, label: Clubbing, frag: finger clubbing, frag_neg: no clubbing}
