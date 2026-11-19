@@ -97,6 +97,21 @@
     - {id: waves, label: Comes in waves, frag: coming in waves}
     - {id: attacks, label: Discrete attacks (pain-free between), frag: occurring in discrete attacks with pain-free intervals}
 
+# How long each episode lasts (for intermittent pain); separate from `duration` (since onset).
+- id: episode_duration
+  label: Each episode lasts
+  type: single
+  template: "each episode lasting {}"
+  ask:
+    - "When the pain comes on, how long does it usually last?"
+    - "Does each attack last a few minutes, or more like an hour or longer?"
+  options:
+    - {id: lt5m, label: "<5 min", frag: less than 5 minutes}
+    - {id: m5_30, label: "5–30 min", frag: 5–30 minutes}
+    - {id: m30_60, label: "30–60 min", frag: 30–60 minutes}
+    - {id: h1_6, label: "1–6 h", frag: 1–6 hours}
+    - {id: gt6h, label: ">6 h", frag: more than 6 hours}
+
 # ---------- Quantity ----------
 
 - id: severity

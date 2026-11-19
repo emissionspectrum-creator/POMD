@@ -12,7 +12,7 @@
 |---|---|
 | Patient | sex, age_group, repro_status |
 | Location | pain_location, pain_migration |
-| Quality | pain_quality, pain_pattern |
+| Quality | pain_quality, pain_pattern, episode_duration |
 | Quantity | severity, nocturnal |
 | Onset / duration | onset, duration, episodes |
 | Precipitating factors | precipitant |

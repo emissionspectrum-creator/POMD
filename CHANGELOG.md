@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2026-11-19 — Abdominal pain：新增每次發作的持續時間（v0.6.2，使用者要求）
+
+- 新詞彙 `episode_duration`（Each episode lasts）：<5 min／5–30 min／30–60 min／1–6 h／>6 h，放在 Quality 段的 Pattern 之後；與 `duration`（從發病至今）分開。
+- HPI 輸出 "each episode lasting …"，接在 pattern 之後；精簡版預設顯示。
+- biliary colic 加上特徵 `episode_duration = m30_60 | h1_6`（draft）。
+
 ## 2026-11-18 — Abnormal liver tests：題目收合整理、補病毒性疾病（v0.6.1，使用者要求）
 
 - 比照 Alcohol，把三段改成「主項目＋收合細項」：

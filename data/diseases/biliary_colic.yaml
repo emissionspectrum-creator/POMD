@@ -12,6 +12,8 @@ symptoms:
     text: RUQ or epigastric pain
   - when: pain_pattern = attacks
     text: Discrete attacks lasting 30 min to a few hours, pain-free in between
+  - when: episode_duration = m30_60 | h1_6
+    text: Each attack lasts 30 min to a few hours (>6 h suggests cholecystitis)
   - when: pain_quality = dull | pressure
     text: Steady, intense ache — not truly "colicky" despite the name
   - when: precipitant = fatty_meal
